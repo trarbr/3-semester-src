@@ -33,45 +33,8 @@ namespace SimpleServer
             IPEndPoint clientEndPoint = (IPEndPoint)client.RemoteEndPoint;
             Console.WriteLine("Client connected! " + clientEndPoint.Address + " " + clientEndPoint.Port);
 
-            NetworkStream networkStream = new NetworkStream(client);
-            StreamWriter writer = new StreamWriter(networkStream);
-            StreamReader reader = new StreamReader(networkStream);
-
-            writer.WriteLine("Ready");
-            writer.Flush();
-
-            bool clientConnected = true;
-
-            while (clientConnected)
-            {
-                string input = reader.ReadLine().Trim().ToLower();
-
-                if (input == "time?")
-                {
-                    writer.WriteLine(String.Format("{0:HH:mm:ss}", DateTime.Now));
-                    writer.Flush();
-                }
-                else if (input == "date?")
-                {
-                    writer.WriteLine(String.Format("{0:yyyy-MM-dd}", DateTime.Now));
-                    writer.Flush();
-                }
-                else if (input == "exit")
-                {
-                    Console.WriteLine("Client disconnected");
-                    clientConnected = false;
-                }
-                else
-                {
-                    writer.WriteLine("Unkown command");
-                    writer.Flush();
-                }
-            }
-
-            reader.Close();
-            writer.Close();
-            networkStream.Close();
-            client.Close();
+            DateTimeHandler handler = new DateTimeHandler(client);
+            handler.Handle();
         }
     }
 }
