@@ -10,16 +10,7 @@ namespace SimpleClient
 {
     class SimpleClient
     {
-        private string serverIP;
-        private int serverPort;
-
-        public SimpleClient(string serverIP, int serverPort)
-        {
-            this.serverIP = serverIP;
-            this.serverPort = serverPort;
-        }
-
-        internal void Run()
+        internal void Connect(string serverIP, int serverPort)
         {
             TcpClient server = new TcpClient(serverIP, serverPort);
 
@@ -40,7 +31,6 @@ namespace SimpleClient
             writer.Close();
             networkStream.Close();
             server.Close();
-
         }
     }
 }

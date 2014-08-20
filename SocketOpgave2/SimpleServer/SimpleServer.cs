@@ -26,12 +26,14 @@ namespace SimpleServer
 
             listener.Start();
 
-            Console.WriteLine("Now listening on " + serverIP + " " + serverPort);
+            Console.WriteLine(String.Format("Now listening on IP {0} and port {1}", 
+                serverIP, serverPort));
 
             Socket client = listener.AcceptSocket();
 
             IPEndPoint clientEndPoint = (IPEndPoint)client.RemoteEndPoint;
-            Console.WriteLine("Client connected! " + clientEndPoint.Address + " " + clientEndPoint.Port);
+            Console.WriteLine(String.Format("Client connected! IP: {0} and port: {1}",
+                clientEndPoint.Address, clientEndPoint.Port));
 
             NetworkStream networkStream = new NetworkStream(client);
             StreamWriter writer = new StreamWriter(networkStream);
@@ -58,6 +60,5 @@ namespace SimpleServer
             networkStream.Close();
             client.Close();
         }
-
     }
 }

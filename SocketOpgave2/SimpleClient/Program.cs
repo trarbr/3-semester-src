@@ -12,9 +12,9 @@ namespace SimpleClient
         {
             string serverIP = "127.0.0.1";
             int serverPort = 12333;
-            SimpleClient client = new SimpleClient(serverIP, serverPort);
+            SimpleClient client = new SimpleClient();
 
-            client.Run();
+            client.Connect(serverIP, serverPort);
 
             Console.ReadLine();
         }
