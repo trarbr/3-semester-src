@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadedServer", "ThreadedS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClient", "SimpleClient\SimpleClient.csproj", "{D50BDC2C-0E1B-4582-8C08-DAC0075D9247}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadedClient", "ThreadedClient\ThreadedClient.csproj", "{13132C9E-7CE8-4A70-9683-5A913A87BB62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{D50BDC2C-0E1B-4582-8C08-DAC0075D9247}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D50BDC2C-0E1B-4582-8C08-DAC0075D9247}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D50BDC2C-0E1B-4582-8C08-DAC0075D9247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13132C9E-7CE8-4A70-9683-5A913A87BB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13132C9E-7CE8-4A70-9683-5A913A87BB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13132C9E-7CE8-4A70-9683-5A913A87BB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13132C9E-7CE8-4A70-9683-5A913A87BB62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

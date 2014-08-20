@@ -15,9 +15,19 @@ namespace ThreadedServer
             int serverPort = 12333;
             ThreadedServer server = new ThreadedServer(serverIP, serverPort);
 
+            // put this part on its own thread
             server.Serve();
 
-            Console.ReadLine();
+            string userInput = Console.ReadLine();
+
+            if (userInput.Equals("exit"))
+            {
+                // request server shut down:
+                // call out to all clients that they should shut down
+                // meaning clients have to be threaded as well
+                // unclean shutdown can be forced anyway with CTRL+c
+            }
+
         }
     }
 }

@@ -33,11 +33,8 @@ namespace ThreadedServer
             {
                 Socket client = listener.AcceptSocket();
 
-                // Difference - is the DateTimeHandler initialized in main thread or new thread?
                 DateTimeHandler handler = new DateTimeHandler(client);
                 ThreadStart starter = new ThreadStart(handler.Handle);
-                // ThreadStart starter = new ThreadStart(new DateTimeHandler().Handle);
-
                 Thread thread = new Thread(starter);
 
                 thread.Start();
