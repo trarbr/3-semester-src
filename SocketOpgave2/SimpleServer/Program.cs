@@ -15,7 +15,7 @@ namespace SimpleServer
             int serverPort = 12333;
             SimpleServer server = new SimpleServer(serverIP, serverPort);
 
-            server.Run();
+            server.Serve();
 
             Console.ReadLine();
         }

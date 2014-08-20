@@ -20,7 +20,7 @@ namespace SimpleServer
             this.serverPort = serverPort;
         }
 
-        public void Run()
+        public void Serve()
         {
             TcpListener listener = new TcpListener(serverIP, serverPort);
 
