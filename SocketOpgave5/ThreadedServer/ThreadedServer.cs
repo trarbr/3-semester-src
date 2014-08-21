@@ -20,7 +20,7 @@ namespace ThreadedServer
             this.serverPort = serverPort;
         }
 
-        public void Serve()
+        public void ServeForever()
         {
             TcpListener listener = new TcpListener(serverIP, serverPort);
 
@@ -29,15 +29,13 @@ namespace ThreadedServer
             Console.WriteLine(String.Format("Now listening on IP {0} and port {1}",
                 serverIP, serverPort));
 
+            // Keep serving forever
             while (true)
             {
                 Socket client = listener.AcceptSocket();
 
-                // Difference - is the DateTimeHandler initialized in main thread or new thread?
                 DateTimeHandler handler = new DateTimeHandler(client);
                 ThreadStart starter = new ThreadStart(handler.Handle);
-                // ThreadStart starter = new ThreadStart(new DateTimeHandler().Handle);
-
                 Thread thread = new Thread(starter);
 
                 thread.Start();

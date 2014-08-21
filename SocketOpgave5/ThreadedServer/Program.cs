@@ -15,7 +15,7 @@ namespace ThreadedServer
             int serverPort = 12333;
             ThreadedServer server = new ThreadedServer(serverIP, serverPort);
 
-            server.Serve();
+            server.ServeForever();
 
             Console.ReadLine();
         }
