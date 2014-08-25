@@ -34,7 +34,7 @@ namespace ThreadedServer
             {
                 Socket client = listener.AcceptSocket();
 
-                DateTimeHandler handler = new DateTimeHandler(client);
+                GenericHandler handler = new GenericHandler(client);
                 ThreadStart starter = new ThreadStart(handler.Handle);
                 Thread thread = new Thread(starter);
 

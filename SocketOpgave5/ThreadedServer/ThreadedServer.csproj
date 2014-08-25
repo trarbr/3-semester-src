@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DateTimeHandler.cs" />
+    <Compile Include="DateTimeService.cs" />
+    <Compile Include="GenericHandler.cs" />
+    <Compile Include="IService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadedServer.cs" />
