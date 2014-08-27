@@ -49,12 +49,12 @@ namespace HttpClient
             }
 
             // parse response
-            string amount = "";
+            string content = "";
             for (int i = 0; i < contentLength; i++)
             {
-                amount += (char)reader.Read();
+                content += (char)reader.Read();
             }
-            Console.WriteLine(amount);
+            Console.WriteLine(content);
 
             reader.Close();
             writer.Close();
