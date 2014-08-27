@@ -10,6 +10,7 @@ namespace HttpClient
 {
     class Program
     {
+        // Warning: Cowboy coding and throwaway design
         static void Main(string[] args)
         {
             string serverName = "webservicedemo.datamatiker-skolen.dk";
@@ -37,7 +38,7 @@ namespace HttpClient
 
             int contentLength = 0;
 
-            // throwaway headers, get content
+            // write headers, get content length
             while (response != null && response != "")
             {
                 Console.WriteLine(response);
@@ -48,7 +49,7 @@ namespace HttpClient
                 }
             }
 
-            // parse response
+            // read and display content
             string content = "";
             for (int i = 0; i < contentLength; i++)
             {
