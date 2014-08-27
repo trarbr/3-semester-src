@@ -13,11 +13,11 @@ namespace HttpClient
         {
             WebClient client = new WebClient();
 
-            string besked = client.DownloadString("http://webservicedemo.datamatiker-skolen.dk/RegneWcfService.svc/RESTjson/Add?a=5&b=8");
-            Console.WriteLine(besked);
+            string response = client.DownloadString("http://webservicedemo.datamatiker-skolen.dk/RegneWcfService.svc/RESTjson/Add?a=5&b=8");
+            Console.WriteLine(response);
 
+            // Profit?!
             Console.ReadLine();
-
         }
     }
 }
