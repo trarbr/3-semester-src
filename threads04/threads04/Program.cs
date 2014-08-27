@@ -28,9 +28,8 @@ namespace threads04
             {
                 lock ((object)counter)
                 {
-                    int castedCounter = (int)counter;
-                    castedCounter += 2;
-                    Console.WriteLine(castedCounter);
+                    counter += 2;
+                    Console.WriteLine(counter);
                 }
                 Thread.Sleep(100);
             }
@@ -42,9 +41,8 @@ namespace threads04
             {
                 lock ((object)counter)
                 {
-                    int castedCounter = (int)counter;
-                    castedCounter += -1;
-                    Console.WriteLine(castedCounter);
+                    counter += -1;
+                    Console.WriteLine(counter);
                 }
                 Thread.Sleep(100);
             }
