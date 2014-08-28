@@ -13,19 +13,27 @@ namespace ParkingHouse
         {
             ParkingMonitor monitor = new ParkingMonitor();
 
-            Entrance entrance = new Entrance(monitor);
-            Exit exit = new Exit(monitor);
+            Entrance carEntrance = new Entrance(monitor, "Car");
+            Exit carExit = new Exit(monitor, "Car");
+            Entrance truckEntrance = new Entrance(monitor, "Truck");
+            Exit truckExit = new Exit(monitor, "Truck");
 
-            Thread entranceThread = new Thread(entrance.Open);
-            Thread exitThread = new Thread(exit.Open);
+            Thread carEntranceThread = new Thread(carEntrance.Open);
+            Thread carExitThread = new Thread(carExit.Open);
+            Thread truckEntranceThread = new Thread(truckEntrance.Open);
+            Thread truckExitThread = new Thread(truckExit.Open);
 
-            entranceThread.Start();
-            exitThread.Start();
+            carEntranceThread.Start();
+            carExitThread.Start();
+            truckEntranceThread.Start();
+            truckExitThread.Start();
 
             Console.ReadLine();
 
-            entrance.Close();
-            exit.Close();
+            carEntrance.Close();
+            carExit.Close();
+            truckEntrance.Close();
+            truckExit.Close();
 
             Console.ReadLine();
         }

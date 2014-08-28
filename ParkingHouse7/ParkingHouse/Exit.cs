@@ -11,21 +11,30 @@ namespace ParkingHouse
     {
         private ParkingMonitor monitor;
         private volatile bool open;
+        private string vehicleType;
 
-        public Exit(ParkingMonitor monitor)
+        public Exit(ParkingMonitor monitor, string vehicleType)
         {
             this.monitor = monitor;
+            this.vehicleType = vehicleType;
+            open = true;
         }
 
         public void Open()
         {
             Random sleepTime = new Random();
 
-            open = true;
             while (open)
             {
-                monitor.ExitCar();
-                Thread.Sleep(sleepTime.Next(10, 5000));
+                if (vehicleType.Equals("Truck"))
+                {
+                    monitor.ExitTruck();
+                }
+                else 
+                {
+                    monitor.ExitCar();
+                }
+                Thread.Sleep(sleepTime.Next(10, 500));
             }
         }
 
