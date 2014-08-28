@@ -26,12 +26,8 @@ namespace threads05
         {
             for (int i = 0; i < 100; i++)
             {
-                lock ((object)counter)
-                {
-                    counter += 60;
-                    Console.WriteLine("************************************************************ " + counter);
-                    Thread.Sleep(100);
-                }
+                write("************************************************************");
+                Thread.Sleep(100);
             }
         }
 
@@ -39,14 +35,18 @@ namespace threads05
         {
             for (int i = 0; i < 100; i++)
             {
-                lock ((object)counter)
-                {
-                    counter += 60;
-                    Console.WriteLine("############################################################ " + counter);
-                    Thread.Sleep(100);
-                }
+                write("############################################################");
+                Thread.Sleep(100);
             }
         }
-
+        
+        static void write(string signs)
+        {
+            lock ((object)counter)
+            {
+                counter += 60;
+                Console.WriteLine("{0} {1}", signs, counter);
+            }
+        }
     }
 }
