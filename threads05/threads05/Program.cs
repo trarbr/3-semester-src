@@ -10,7 +10,7 @@ namespace threads05
     class Program
     {
         static int counter;
-        static object lock_ = new object();
+        static object counterLock = new object();
 
         static void Main(string[] args)
         {
@@ -43,7 +43,7 @@ namespace threads05
         
         static void write(string signs)
         {
-            lock (lock_)
+            lock (counterLock)
             {
                 counter += 60;
                 Console.WriteLine("{0} {1}", signs, counter);
