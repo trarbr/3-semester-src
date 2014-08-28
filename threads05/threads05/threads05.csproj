@@ -41,8 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HashPrinter.cs" />
+    <Compile Include="PrintMonitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StarPrinter.cs" />
+    <Compile Include="IThreadedPrinter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

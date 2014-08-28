@@ -9,45 +9,28 @@ namespace threads05
 {
     class Program
     {
-        static int counter;
-        static object counterLock = new object();
-
         static void Main(string[] args)
         {
-            Thread thread1 = new Thread(printStars);
-            Thread thread2 = new Thread(printHashes);
+            PrintMonitor monitor = new PrintMonitor();
+            IThreadedPrinter starPrinter = new StarPrinter(monitor);
+            IThreadedPrinter hashPrinter = new HashPrinter(monitor);
 
-            thread1.Start();
-            thread2.Start();
+            Thread starThread = new Thread(starPrinter.Print);
+            Thread hashThread = new Thread(hashPrinter.Print);
 
+            starThread.Start();
+            hashThread.Start();
+
+            Thread.Sleep(10000);
+
+            starPrinter.RequestStop();
+            hashPrinter.RequestStop();
+
+            starThread.Join();
+            hashThread.Join();
+
+            Console.WriteLine("All printer threads stopped!");
             Console.ReadLine();
-        }
-
-        static void printStars()
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                write("************************************************************");
-                Thread.Sleep(100);
-            }
-        }
-
-        static void printHashes()
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                write("############################################################");
-                Thread.Sleep(100);
-            }
-        }
-        
-        static void write(string signs)
-        {
-            lock (counterLock)
-            {
-                counter += 60;
-                Console.WriteLine("{0} {1}", signs, counter);
-            }
         }
     }
 }
