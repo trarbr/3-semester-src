@@ -26,14 +26,6 @@ namespace ParkingHouse
         {
             lock (parkedCarsLock)
             {
-                // Busy waiting: 
-                //if (parkedCars < parkingPlacesForCars)
-                //{
-                //    parkedCars++;
-                //    Console.WriteLine("Car entered! Number of parked cars: " + parkedCars);
-                //}
-
-                // Wait and pulse:
                 while (parkedCars == parkingPlacesForCars)
                 {
                     Console.WriteLine("Too many cars, can't enter");
