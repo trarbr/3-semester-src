@@ -36,6 +36,7 @@ namespace ThreadedServer
             while (clientConnected)
             {
                 string input = reader.ReadLine().Trim().ToLower();
+                Console.WriteLine("Client says " + input);
 
                 switch (input)
                 {
@@ -48,6 +49,8 @@ namespace ThreadedServer
                         writer.Flush();
                         break;
                     case "exit":
+                        writer.WriteLine("Shutting down");
+                        writer.Flush();
                         Console.WriteLine("Client disconnected");
                         clientConnected = false;
                         break;
@@ -62,6 +65,8 @@ namespace ThreadedServer
             writer.Close();
             networkStream.Close();
             client.Close();
+
+            Console.WriteLine("Everything closed");
         }
     }
 }

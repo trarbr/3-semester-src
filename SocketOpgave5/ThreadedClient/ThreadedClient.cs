@@ -27,12 +27,9 @@ namespace ThreadedClient
 
             running = true;
 
-            new Thread(new ThreadStart(new ThreadedClient().read)).Start();
+            new Thread(new ThreadStart(this.read)).Start();
 
-            while (running)
-            {
-                write();
-            }
+            write();
 
             Thread.Sleep(10);
 
@@ -46,10 +43,11 @@ namespace ThreadedClient
         {
             while (running)
             {
+                // beware of io exception! if server has shut down. But how can running be true??
                 string serverSays = reader.ReadLine();
                 Console.WriteLine("Server said: " + serverSays);
 
-                if (serverSays.Equals("exit"))
+                if (serverSays == null || serverSays.Equals("exit"))
                 {
                     running = false;
                 }
@@ -69,6 +67,9 @@ namespace ThreadedClient
                 {
                     running = false;
                 }
+
+                // Wait to receive answer before putting >>> on the console
+                Thread.Sleep(100);
             }
         }
     }
