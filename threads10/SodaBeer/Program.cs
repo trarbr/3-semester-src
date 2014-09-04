@@ -26,7 +26,7 @@ namespace SodaBeer
             SodaBeerProducer sodaBeerProducer = new SodaBeerProducer(sodaBeerConveyor);
             SodaBeerSplitter sodaBeerSplitter = new SodaBeerSplitter(sodaBeerConveyor, sodaConveyor, beerConveyor);
             SodaBeerConsumer sodaConsumer = new SodaBeerConsumer("Soda", sodaConveyor, 1000);
-            SodaBeerConsumer beerConsumer = new SodaBeerConsumer("Beer", beerConveyor);
+            SodaBeerConsumer beerConsumer = new SodaBeerConsumer("Beer", beerConveyor, 500);
 
             Thread producerThread = new Thread(sodaBeerProducer.StartProduction);
             Thread splitterThread = new Thread(sodaBeerSplitter.StartProduction);
@@ -47,14 +47,11 @@ namespace SodaBeer
             // The reason: if any of the conveyors that the thread uses is full or empty at the
             // time of shutdown, the thread is in waiting and thus will never wake up to receive
             // the signal.
-            // To fix it for real, make sure no conveyors are empty at the time of shutdown.
-            // Problem is not properly solved yet, but the below shutdown order happens to work in 
-            // this case
-            sodaBeerProducer.StopProduction();
-            sodaBeerSplitter.StopProduction();
-            beerConsumer.StopProduction();
-            // always shut down the slowest consumer last...
-            sodaConsumer.StopProduction();
+            // The below seems to work in most cases. Notable exception: Consumers too fast.
+            new Thread(sodaBeerProducer.StopProduction).Start();
+            new Thread(sodaBeerSplitter.StopProduction).Start();
+            new Thread(sodaConsumer.StopProduction).Start();
+            new Thread(beerConsumer.StopProduction).Start();
 
             Thread.Sleep(1000);
 
