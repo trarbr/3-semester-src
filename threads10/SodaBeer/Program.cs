@@ -25,7 +25,7 @@ namespace SodaBeer
 
             SodaBeerProducer sodaBeerProducer = new SodaBeerProducer(sodaBeerConveyor);
             SodaBeerSplitter sodaBeerSplitter = new SodaBeerSplitter(sodaBeerConveyor, sodaConveyor, beerConveyor);
-            SodaBeerConsumer sodaConsumer = new SodaBeerConsumer("Soda", sodaConveyor);
+            SodaBeerConsumer sodaConsumer = new SodaBeerConsumer("Soda", sodaConveyor, 1000);
             SodaBeerConsumer beerConsumer = new SodaBeerConsumer("Beer", beerConveyor);
 
             Thread producerThread = new Thread(sodaBeerProducer.StartProduction);

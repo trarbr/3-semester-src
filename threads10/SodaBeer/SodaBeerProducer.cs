@@ -15,12 +15,13 @@ namespace SodaBeer
         private Conveyor conveyor;
         private Random bottleTypeGenerator;
 
-        public SodaBeerProducer(Conveyor conveyor)
+        public SodaBeerProducer(Conveyor conveyor, int sleepTime = 50)
         {
             this.conveyor = conveyor;
             nextBeerSerialNumber = 1;
             nextSodaSerialNumber = 1;
             bottleTypeGenerator = new Random();
+            this.sleepTime = sleepTime;
         }
 
         public void StartProduction()
@@ -34,7 +35,7 @@ namespace SodaBeer
                 Bottle bottle = new Bottle(bottleType, serialNumber);
                 conveyor.Enqueue(bottle);
 
-                Thread.Sleep(500);
+                Thread.Sleep(sleepTime);
             }
         }
 
@@ -73,5 +74,7 @@ namespace SodaBeer
 
             return bottleType;
         }
+
+        public int sleepTime { get; set; }
     }
 }

@@ -13,12 +13,15 @@ namespace SodaBeer
         private Conveyor inputConveyor;
         private Conveyor sodaConveyor;
         private Conveyor beerConveyor;
+        private int sleepTime;
 
-        public SodaBeerSplitter(Conveyor sodaBeerConveyor, Conveyor sodaConveyor, Conveyor beerConveyor)
+        public SodaBeerSplitter(Conveyor sodaBeerConveyor, Conveyor sodaConveyor, 
+            Conveyor beerConveyor, int sleepTime = 50)
         {
             this.inputConveyor = sodaBeerConveyor;
             this.sodaConveyor = sodaConveyor;
             this.beerConveyor = beerConveyor;
+            this.sleepTime = sleepTime;
         }
 
         public void StartProduction()
@@ -29,6 +32,9 @@ namespace SodaBeer
             {
                 Bottle bottle = inputConveyor.Dequeue();
 
+                Console.WriteLine("Splitter took {0} number {1}", bottle.BottleType, 
+                    bottle.SerialNumber);
+
                 if (bottle.BottleType == BottleType.Soda)
                 {
                     sodaConveyor.Enqueue(bottle);
@@ -38,7 +44,7 @@ namespace SodaBeer
                     beerConveyor.Enqueue(bottle);
                 }
 
-                Thread.Sleep(500);
+                Thread.Sleep(sleepTime);
             }
         }
 

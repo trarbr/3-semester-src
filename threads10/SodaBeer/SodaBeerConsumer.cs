@@ -12,11 +12,13 @@ namespace SodaBeer
         private volatile bool productionRunning;
         private string name;
         private Conveyor conveyor;
+        private int sleepTime;
 
-        public SodaBeerConsumer(string name, Conveyor conveyor)
+        public SodaBeerConsumer(string name, Conveyor conveyor, int sleepTime=100)
         {
             this.name = name;
             this.conveyor = conveyor;
+            this.sleepTime = sleepTime;
         }
 
         public void StartProduction()
@@ -30,7 +32,7 @@ namespace SodaBeer
                 Console.WriteLine(String.Format("{0}Consumer got {1} number {2}.", name, 
                     bottle.BottleType, bottle.SerialNumber));
 
-                Thread.Sleep(1000);
+                Thread.Sleep(sleepTime);
             }
         }
 
