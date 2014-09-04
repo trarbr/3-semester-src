@@ -29,7 +29,9 @@ namespace SodaBeer
                 while (bottleQueue.Count == maxQueueSize)
                 {
                     // can't put bottle in
-                    Monitor.PulseAll(bottleQueueLock);
+                    Console.WriteLine(String.Format("{0} is full! Queued {1} number {2}", name, 
+                        bottle.BottleType, bottle.SerialNumber));
+                    Monitor.Wait(bottleQueueLock);
                 }
 
                 bottleQueue.Enqueue(bottle);
@@ -61,6 +63,8 @@ namespace SodaBeer
                 if (bottleQueue.Count == (maxQueueSize - 1))
                 {
                     // queue is no longer full
+                    Console.WriteLine(String.Format("{0} is no longer full! Dequeued {1} number {2}", 
+                        name, bottle.BottleType, bottle.SerialNumber));
                     Monitor.PulseAll(bottleQueueLock);
                 }
 
