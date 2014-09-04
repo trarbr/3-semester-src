@@ -42,7 +42,10 @@ namespace SodaBeer
 
             Console.ReadLine();
 
+            // stop production on producer first, then sleep to wait for consumers to catch up to 
+            // avoid a thread getting stucked in Waiting mode
             sodaBeerProducer.StopProduction();
+            Thread.Sleep(10000);
             sodaBeerSplitter.StopProduction();
             sodaConsumer.StopProduction();
             beerConsumer.StopProduction();
