@@ -10,7 +10,7 @@ namespace SodaBeer
     class SodaBeerSplitter
     {
         private volatile bool productionRunning;
-        private Conveyor inputConveyor;
+        private Conveyor sodaBeerConveyor;
         private Conveyor sodaConveyor;
         private Conveyor beerConveyor;
         private int sleepTime;
@@ -18,7 +18,7 @@ namespace SodaBeer
         public SodaBeerSplitter(Conveyor sodaBeerConveyor, Conveyor sodaConveyor, 
             Conveyor beerConveyor, int sleepTime = 50)
         {
-            this.inputConveyor = sodaBeerConveyor;
+            this.sodaBeerConveyor = sodaBeerConveyor;
             this.sodaConveyor = sodaConveyor;
             this.beerConveyor = beerConveyor;
             this.sleepTime = sleepTime;
@@ -30,7 +30,7 @@ namespace SodaBeer
 
             while (productionRunning)
             {
-                Bottle bottle = inputConveyor.Dequeue();
+                Bottle bottle = sodaBeerConveyor.Dequeue();
 
                 Console.WriteLine("Splitter took {0} number {1}", bottle.BottleType, 
                     bottle.SerialNumber);
@@ -46,10 +46,24 @@ namespace SodaBeer
 
                 Thread.Sleep(sleepTime);
             }
+
+            Console.WriteLine("==> SodaBeerSplitter: shutdown completed.");
+        }
+
+        public void EmergencyStopProduction()
+        {
+            productionRunning = false;
         }
 
         public void StopProduction()
         {
+            Console.WriteLine("==> SodaBeerSplitter: shutdown requested.");
+            while (sodaBeerConveyor.CurrentQueueSize != 0)
+            {
+                // wait until conveyor is empty
+                Thread.Sleep(sleepTime);
+            }
+
             productionRunning = false;
         }
     }

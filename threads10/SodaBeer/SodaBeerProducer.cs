@@ -14,6 +14,7 @@ namespace SodaBeer
         private int nextSodaSerialNumber;
         private Conveyor conveyor;
         private Random bottleTypeGenerator;
+        private int sleepTime;
 
         public SodaBeerProducer(Conveyor conveyor, int sleepTime = 50)
         {
@@ -37,10 +38,14 @@ namespace SodaBeer
 
                 Thread.Sleep(sleepTime);
             }
+
+            Console.WriteLine("==> SodaBeerProducer: shutdown completed.");
         }
 
         public void StopProduction()
         {
+            Console.WriteLine("==> SodaBeerProducer: shutdown forced.");
+            Thread.Sleep(2 * sleepTime);
             productionRunning = false;
         }
 
@@ -74,7 +79,5 @@ namespace SodaBeer
 
             return bottleType;
         }
-
-        public int sleepTime { get; set; }
     }
 }

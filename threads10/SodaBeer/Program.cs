@@ -41,14 +41,22 @@ namespace SodaBeer
             beerConsumerThread.Start();
 
             Console.ReadLine();
+            Console.WriteLine("Received shutdown notice.");
 
-            // stop production on producer first, then sleep to wait for consumers to catch up to 
-            // avoid a thread getting stucked in Waiting mode
+            // It is difficult to shut down without a thread getting stuck in waiting.
+            // The reason: if any of the conveyors that the thread uses is full or empty at the
+            // time of shutdown, the thread is in waiting and thus will never wake up to receive
+            // the signal.
+            // To fix it for real, make sure no conveyors are empty at the time of shutdown.
+            // Problem is not properly solved yet, but the below shutdown order happens to work in 
+            // this case
             sodaBeerProducer.StopProduction();
-            Thread.Sleep(10000);
             sodaBeerSplitter.StopProduction();
-            sodaConsumer.StopProduction();
             beerConsumer.StopProduction();
+            // always shut down the slowest consumer last...
+            sodaConsumer.StopProduction();
+
+            Thread.Sleep(1000);
 
             producerThread.Join();
             splitterThread.Join();

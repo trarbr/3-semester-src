@@ -34,10 +34,24 @@ namespace SodaBeer
 
                 Thread.Sleep(sleepTime);
             }
+
+            Console.WriteLine(String.Format("==> {0}: shutdown completed.", name));
+        }
+
+        public void EmergencyStopProduction()
+        {
+            productionRunning = false;
         }
 
         public void StopProduction()
         {
+            Console.WriteLine(String.Format("==> {0}: shutdown requested.", name));
+            while (conveyor.CurrentQueueSize != 0)
+            {
+                // wait until conveyor is empty
+                Thread.Sleep(sleepTime);
+            }
+
             productionRunning = false;
         }
     }

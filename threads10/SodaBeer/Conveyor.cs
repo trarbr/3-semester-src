@@ -14,6 +14,11 @@ namespace SodaBeer
         private int maxQueueSize;
         private string name;
 
+        public int CurrentQueueSize
+        {
+            get { return bottleQueue.Count; }
+        }
+
         public Conveyor(string name, int maxQueueSize)
         {
             bottleQueueLock = new Object();
@@ -69,6 +74,14 @@ namespace SodaBeer
                 }
 
                 return bottle;
+            }
+        }
+
+        internal void PulseForShutdown()
+        {
+            lock (bottleQueueLock)
+            {
+                Monitor.PulseAll(bottleQueueLock);
             }
         }
     }
