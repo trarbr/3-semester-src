@@ -67,7 +67,7 @@ namespace ThermometerUI
                     return _minTemperature;   
                 }
             }
-            set
+            private set
             {
                 lock (temperatureLock)
                 {
@@ -85,7 +85,7 @@ namespace ThermometerUI
                     return _maxTemperature;    
                 }
             }
-            set
+            private set
             {
                 lock (temperatureLock)
                 {
@@ -103,7 +103,6 @@ namespace ThermometerUI
                     return _minAllowedTemperature;
                 }
             }
-
             set 
             {
                 lock (temperatureLock)
@@ -122,7 +121,6 @@ namespace ThermometerUI
                     return _maxAllowedTemperature;
                 }
             }
-
             set 
             {
                 lock (temperatureLock)

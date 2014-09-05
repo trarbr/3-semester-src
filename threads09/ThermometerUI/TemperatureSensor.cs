@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace ThermometerUI
 {
-    class TemperatureGenerator
+    class TemperatureSensor
     {
-        private volatile bool generatingTemperatures;
+        private volatile bool on;
         private ThermometerMonitor thermometer;
 
-        public TemperatureGenerator(ThermometerMonitor thermometer)
+        public TemperatureSensor(ThermometerMonitor thermometer)
         {
             this.thermometer = thermometer;
         }
 
-        public void Generate()
+        public void On()
         {
-            generatingTemperatures = true;
+            on = true;
 
             Random generator = new Random();
 
-            while (generatingTemperatures)
+            while (on)
             {
                 thermometer.CurrentTemperature = generator.Next(-20, 120);
 
@@ -31,9 +31,9 @@ namespace ThermometerUI
             }
         }
 
-        public void StopGenerating()
+        public void Off()
         {
-            generatingTemperatures = false;
+            on = false;
         }
 
 

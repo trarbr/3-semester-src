@@ -22,18 +22,32 @@ namespace ThermometerUI
     public partial class MainWindow : Window
     {
         ThermometerMonitor thermometer;
-        TemperatureGenerator generator;
+        TemperatureSensor sensor;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        public void HandleThermometerAlert()
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            thermometer = new ThermometerMonitor();
+
+            thermometer.MaxAllowedTemperatureReached += handleThermometerAlert;
+            thermometer.MinAllowedTemperatureReached += handleThermometerAlert;
+
+            sensor = new TemperatureSensor(thermometer);
+
+            Thread sensorThread = new Thread(sensor.On);
+
+            sensorThread.Start();
+        }
+
+        private void handleThermometerAlert()
         {
             if (!this.Dispatcher.CheckAccess())
             {
-                this.Dispatcher.Invoke(new ThermometerMonitor.TemperatureAlert(HandleThermometerAlert));
+                this.Dispatcher.Invoke(new ThermometerMonitor.TemperatureAlert(handleThermometerAlert));
 
                 return;
             }
@@ -76,21 +90,7 @@ namespace ThermometerUI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            generator.StopGenerating();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            thermometer = new ThermometerMonitor();
-
-            thermometer.MaxAllowedTemperatureReached += HandleThermometerAlert;
-            thermometer.MinAllowedTemperatureReached += HandleThermometerAlert;
-
-            generator = new TemperatureGenerator(thermometer);
-
-            Thread generatorThread = new Thread(generator.Generate);
-
-            generatorThread.Start();
+            sensor.Off();
         }
     }
 }
