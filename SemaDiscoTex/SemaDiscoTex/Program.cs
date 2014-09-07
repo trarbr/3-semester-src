@@ -16,7 +16,6 @@ namespace SemaDiscoTex
             disco.Open();
 
             Console.ReadLine();
-
         }
     }
 
@@ -30,8 +29,6 @@ namespace SemaDiscoTex
             Name = name;
             Duration = duration;
         }
-
-
     }
 
     class Disco
@@ -101,6 +98,7 @@ namespace SemaDiscoTex
         private Disco disco;
         private int guestNumber;
         private Song favoriteSong;
+
         public Guest(Disco disco, int guestNumber, Song favoriteSong)
         {
             this.disco = disco;
@@ -108,6 +106,7 @@ namespace SemaDiscoTex
             this.favoriteSong = favoriteSong;
 
         }
+
         public void EnterDisco()
         {
             disco.danceFloor.Wait();
