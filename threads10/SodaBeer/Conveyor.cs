@@ -76,13 +76,5 @@ namespace SodaBeer
                 return bottle;
             }
         }
-
-        internal void PulseForShutdown()
-        {
-            lock (bottleQueueLock)
-            {
-                Monitor.PulseAll(bottleQueueLock);
-            }
-        }
     }
 }
