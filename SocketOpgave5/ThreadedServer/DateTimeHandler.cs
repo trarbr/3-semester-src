@@ -51,7 +51,8 @@ namespace ThreadedServer
                     case "exit":
                         writer.WriteLine("Shutting down");
                         writer.Flush();
-                        Console.WriteLine("Client disconnected");
+                        Console.WriteLine(String.Format("Client disconnected! IP: {0} Port {1}",
+                            clientEndPoint.Address, clientEndPoint.Port));
                         clientConnected = false;
                         break;
                     default:

@@ -20,7 +20,7 @@ namespace ThreadedServer
             this.serverPort = serverPort;
         }
 
-        public void Serve()
+        public void ServeForever()
         {
             TcpListener listener = new TcpListener(serverIP, serverPort);
 
@@ -29,11 +29,12 @@ namespace ThreadedServer
             Console.WriteLine(String.Format("Now listening on IP {0} and port {1}",
                 serverIP, serverPort));
 
+            // Keep serving forever
             while (true)
             {
                 Socket client = listener.AcceptSocket();
 
-                DateTimeHandler handler = new DateTimeHandler(client);
+                GenericHandler handler = new GenericHandler(client);
                 ThreadStart starter = new ThreadStart(handler.Handle);
                 Thread thread = new Thread(starter);
 

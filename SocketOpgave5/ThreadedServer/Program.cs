@@ -16,7 +16,7 @@ namespace ThreadedServer
             ThreadedServer server = new ThreadedServer(serverIP, serverPort);
 
             // put this part on its own thread
-            server.Serve();
+            server.ServeForever();
 
             string userInput = Console.ReadLine();
 
