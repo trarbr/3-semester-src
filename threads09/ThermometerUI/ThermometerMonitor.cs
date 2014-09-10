@@ -132,6 +132,12 @@ namespace ThermometerUI
 
         public void Clear()
         {
+            // No explicit locking here - uses locks in getter/setter of properties.
+            // Get the CurrentTemperature at the time of calling, set Min- and MaxTemperatures.
+            // Note that CurrentTemperature may have changed by the time MaxTemperature is set, as
+            // lack of explicit lock means values change.
+            // Atomicity
+
             int currentTemperature = CurrentTemperature;
             MinTemperature = currentTemperature;
             MaxTemperature = currentTemperature;
