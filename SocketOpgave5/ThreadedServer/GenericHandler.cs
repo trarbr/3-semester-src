@@ -81,6 +81,7 @@ namespace ThreadedServer
                 string response = service.ResolveRequest(request);
                 if (response == null)
                 {
+                    sendMessage("Closing connection.");
                     clientConnected = false;
                 }
                 else
@@ -89,7 +90,6 @@ namespace ThreadedServer
                 }
             }
         }
-
 
         private void sendMessage(string message)
         {
