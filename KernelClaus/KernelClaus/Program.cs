@@ -9,10 +9,11 @@ namespace KernelClaus
 {
     class Program
     {
+        static int years;
         static int elfCounter;
         static int reindeerCounter;
         static Mutex theDoor;
-        static Mutex elfMutex;
+        static SemaphoreSlim elfDoorSemaphore;
         static SemaphoreSlim santaSemaphore;
         static SemaphoreSlim elfSemaphore;
         static SemaphoreSlim reindeerSemaphore;
@@ -20,76 +21,100 @@ namespace KernelClaus
         static void Main(string[] args)
         {
             theDoor = new Mutex();
-            elfMutex = new Mutex();
+            elfDoorSemaphore = new SemaphoreSlim(1);
             santaSemaphore = new SemaphoreSlim(0);
             elfSemaphore = new SemaphoreSlim(0);
-            reindeerSemaphore = new SemaphoreSlim(0);
+            reindeerSemaphore = new SemaphoreSlim(9);
 
             Thread santaThread = new Thread(goSanta);
             santaThread.Start();
 
-            //for (int i = 0; i < 9; i++)
-            //{
-            //    Thread.Sleep(500);
-            //    new Thread(goReindeer).Start();
-            //}
+            Thread elfStarter = new Thread(startElves);
+            elfStarter.Start();
 
-            for (int i = 0; i < 3; i++)
-            {
-                Thread.Sleep(1000);
-                new Thread(goElves).Start();
-            }
-
+            Thread reindeerStarter = new Thread(startReindeer);
+            reindeerStarter.Start();
 
             Console.ReadLine();
+            santaThread.Abort();
+            elfStarter.Abort();
+            reindeerStarter.Abort();
+
+            Console.WriteLine("Everyone is dead. No one believes in Santa anymore.");
+            Console.ReadLine();
+        }
+
+        private static void startReindeer(object obj)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                new Thread(goReindeer).Start();
+            }
+        }
+
+        private static void startElves(object obj)
+        {
+            while (true)
+            {
+                Thread.Sleep(100);
+                new Thread(goElves).Start();
+            }
         }
 
         static void goSanta()
         {
-            santaSemaphore.Wait();
-            Console.WriteLine("Santa got signal!");
-            theDoor.WaitOne();
-            if (reindeerCounter == 9)
+            while (true)
             {
-                reindeerCounter = 0;
-                prepSleigh();
-                reindeerSemaphore.Release(9);
-            }
-            else
-            {
-                elfSemaphore.Release(3);
-                helpElves();
-            }
+                santaSemaphore.Wait();
+                Console.WriteLine("Santa got signal!");
+                theDoor.WaitOne();
+                if (reindeerCounter == 9)
+                {
+                    reindeerCounter = 0;
+                    prepSleigh();
+                    reindeerSemaphore.Release(9);
+                }
+                else
+                {
+                    elfSemaphore.Release(3);
+                    helpElves();
+                }
 
-            theDoor.ReleaseMutex();
+                theDoor.ReleaseMutex();
+            }
         }
 
         static void goReindeer()
         {
-            theDoor.WaitOne();
-            reindeerCounter++;
-            if (reindeerCounter == 9)
+            while (true)
             {
-                santaSemaphore.Release();
+                Thread.Sleep(1000);
+                theDoor.WaitOne();
+                reindeerCounter++;
+                if (reindeerCounter == 9)
+                {
+                    santaSemaphore.Release();
+                }
+                theDoor.ReleaseMutex();
+                reindeerSemaphore.Wait();
+                getHitched();
             }
-            theDoor.ReleaseMutex();
-            reindeerSemaphore.Wait();
-            getHitched();
         }
 
         static void goElves()
         {
-            elfMutex.WaitOne();
+            elfDoorSemaphore.Wait();
             theDoor.WaitOne();
             elfCounter++;   
             if (elfCounter == 3)
             {
+                // Bug: Santa doesn't wake up?!
                 santaSemaphore.Release();
                 Console.WriteLine("3 elves");
             }
             else
             {
-                elfMutex.ReleaseMutex();
+                elfDoorSemaphore.Release();
             }
             theDoor.ReleaseMutex();
             elfSemaphore.Wait();
@@ -98,7 +123,7 @@ namespace KernelClaus
             elfCounter--;
             if (elfCounter == 0)
             {
-                elfMutex.ReleaseMutex();
+                elfDoorSemaphore.Release();
             }
             theDoor.ReleaseMutex();
             Console.WriteLine("Elf done");
@@ -117,6 +142,7 @@ namespace KernelClaus
         private static void prepSleigh()
         {
             Console.WriteLine("Prepping sleigh");
+            Console.WriteLine("Year {0} passed", years++);
         }
 
         private static void getHitched()
