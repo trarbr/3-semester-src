@@ -25,5 +25,8 @@ namespace ValutaWcfService
 
         [OperationContract]
         string[] GetDoneConversions();
+
+        [OperationContract]
+        void SetValutaExchangeRate(Valuta valuta);
     }
 }

@@ -12,12 +12,11 @@ namespace ValutaConsole
         {
             ValutaWcfService.IValutaService valutaService = new ValutaWcfService.ValutaServiceClient();
             string amountAsString;
+
             //Console.Write("Amount of DKK to convert to EUR: ");
-            //string amountAsString = Console.ReadLine();
+            //amountAsString = Console.ReadLine();
             //decimal dkkAmount = decimal.Parse(amountAsString);
-
             //decimal eurAmount = valutaService.FromDkkToEur(dkkAmount);
-
             //Console.WriteLine("In EUR, that is " + eurAmount.ToString("N2"));
             //Console.ReadLine();
 
@@ -37,25 +36,45 @@ namespace ValutaConsole
             //}
             //Console.ReadLine();
 
-            Console.Write("Amount to convert: ");
-            amountAsString = Console.ReadLine();
-            decimal fromAmount = decimal.Parse(amountAsString);
-            Console.Write("From ISO code: ");
-            string fromIso = Console.ReadLine();
-            Console.Write("To ISO code: ");
-            string toIso = Console.ReadLine();
-            decimal toAmount = valutaService.ConvertFromIsoToIso(fromIso, toIso, fromAmount);
-            Console.WriteLine(String.Format("{0} {1} is {2} {3}", 
-                fromAmount.ToString("N2"), fromIso, toAmount.ToString("N2"), toIso));
+            //Console.Write("Amount to convert: ");
+            //amountAsString = Console.ReadLine();
+            //decimal fromAmount = decimal.Parse(amountAsString);
+            //Console.Write("From ISO code: ");
+            //string fromIso = Console.ReadLine();
+            //Console.Write("To ISO code: ");
+            //string toIso = Console.ReadLine();
+            //decimal toAmount = valutaService.ConvertFromIsoToIso(fromIso, toIso, fromAmount);
+            //Console.WriteLine(String.Format("{0} {1} is {2} {3}", 
+            //    fromAmount.ToString("N2"), fromIso, toAmount.ToString("N2"), toIso));
+            //Console.ReadLine();
+
+            //valutaService.ConvertFromIsoToIso("EUR", "USD", 100);
+
+            //string[] conversions = valutaService.GetDoneConversions();
+            //foreach (string conversion in conversions)
+            //{
+            //    Console.WriteLine(conversion);
+            //}
+            //Console.ReadLine();
+
+            foreach (ValutaWcfService.Valuta valuta in valutaService.GetValutas())
+            {
+                Console.WriteLine(valuta.ExchangeRate);
+            }
+
             Console.ReadLine();
 
-            valutaService.ConvertFromIsoToIso("EUR", "USD", 100);
+            ValutaWcfService.Valuta valutaToEdit = valutaService.GetValutas()[0];
 
-            string[] conversions = valutaService.GetDoneConversions();
-            foreach (string conversion in conversions)
+            valutaToEdit.ExchangeRate = 1000m;
+
+            valutaService.SetValutaExchangeRate(valutaToEdit);
+
+            foreach (ValutaWcfService.Valuta valuta in valutaService.GetValutas())
             {
-                Console.WriteLine(conversion);
+                Console.WriteLine(valuta.ExchangeRate);
             }
+
             Console.ReadLine();
         }
     }

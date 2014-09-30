@@ -38,6 +38,12 @@
   <wsdl:message name="IValutaService_GetDoneConversions_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDoneConversionsResponse" />
   </wsdl:message>
+  <wsdl:message name="IValutaService_SetValutaExchangeRate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetValutaExchangeRate" />
+  </wsdl:message>
+  <wsdl:message name="IValutaService_SetValutaExchangeRate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetValutaExchangeRateResponse" />
+  </wsdl:message>
   <wsdl:portType name="IValutaService">
     <wsdl:operation name="FromDkkToEur">
       <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/FromDkkToEur" message="tns:IValutaService_FromDkkToEur_InputMessage" />
@@ -58,6 +64,10 @@
     <wsdl:operation name="GetDoneConversions">
       <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/GetDoneConversions" message="tns:IValutaService_GetDoneConversions_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IValutaService/GetDoneConversionsResponse" message="tns:IValutaService_GetDoneConversions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetValutaExchangeRate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/SetValutaExchangeRate" message="tns:IValutaService_SetValutaExchangeRate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse" message="tns:IValutaService_SetValutaExchangeRate_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IValutaService" type="tns:IValutaService">
@@ -100,6 +110,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetDoneConversions">
       <soap:operation soapAction="http://tempuri.org/IValutaService/GetDoneConversions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetValutaExchangeRate">
+      <soap:operation soapAction="http://tempuri.org/IValutaService/SetValutaExchangeRate" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

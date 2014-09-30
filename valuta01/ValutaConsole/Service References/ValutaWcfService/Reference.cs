@@ -123,6 +123,12 @@ namespace ValutaConsole.ValutaWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetDoneConversions", ReplyAction="http://tempuri.org/IValutaService/GetDoneConversionsResponse")]
         System.Threading.Tasks.Task<string[]> GetDoneConversionsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/SetValutaExchangeRate", ReplyAction="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse")]
+        void SetValutaExchangeRate(ValutaConsole.ValutaWcfService.Valuta valuta);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/SetValutaExchangeRate", ReplyAction="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse")]
+        System.Threading.Tasks.Task SetValutaExchangeRateAsync(ValutaConsole.ValutaWcfService.Valuta valuta);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -190,6 +196,14 @@ namespace ValutaConsole.ValutaWcfService {
         
         public System.Threading.Tasks.Task<string[]> GetDoneConversionsAsync() {
             return base.Channel.GetDoneConversionsAsync();
+        }
+        
+        public void SetValutaExchangeRate(ValutaConsole.ValutaWcfService.Valuta valuta) {
+            base.Channel.SetValutaExchangeRate(valuta);
+        }
+        
+        public System.Threading.Tasks.Task SetValutaExchangeRateAsync(ValutaConsole.ValutaWcfService.Valuta valuta) {
+            return base.Channel.SetValutaExchangeRateAsync(valuta);
         }
     }
 }

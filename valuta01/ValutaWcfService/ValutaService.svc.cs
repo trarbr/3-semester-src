@@ -14,8 +14,30 @@ namespace ValutaWcfService
     [AspNetCompatibilityRequirements(RequirementsMode=AspNetCompatibilityRequirementsMode.Required)]
     public class ValutaService : IValutaService
     {
-        private Valuta[] valutas;
+        private Valuta[] valutas
+        {
+            get
+            {
+                if (HttpContext.Current.Application["valutas"] == null)
+                {
+                    HttpContext.Current.Application["valutas"] = new Valuta[]
+                    {
+                        new Valuta("Canada", "CAD", 492.27m),
+                        new Valuta("Euro", "EUR", 745.99m),
+                        new Valuta("Storbritannien", "GBP", 947.99m),
+                        new Valuta("Norge", "NOK", 90.34m),
+                        new Valuta("Sverige", "SEK", 78.21m),
+                        new Valuta("Amerika", "USD", 524.02m),
+                    };
 
+                }
+                return (Valuta[])HttpContext.Current.Application["valutas"];
+            }
+            set
+            {
+                HttpContext.Current.Application["valutas"] = value;
+            }
+        }
         private List<string> conversions
         {
             get
@@ -32,22 +54,9 @@ namespace ValutaWcfService
             }
         }
 
-        public ValutaService()
-        {
-            valutas = new Valuta[]
-            {
-                new Valuta("Canada", "CAD", 492.27m),
-                new Valuta("Euro", "EUR", 745.99m),
-                new Valuta("Storbritannien", "GBP", 947.99m),
-                new Valuta("Norge", "NOK", 90.34m),
-                new Valuta("Sverige", "SEK", 78.21m),
-                new Valuta("Amerika", "USD", 524.02m),
-            };
-        }
-
         public decimal FromDkkToEur(decimal dkkAmount)
         {
-            decimal dkkToEurRate = findExchangeRate("EUR");
+            decimal dkkToEurRate = findValuta("EUR").ExchangeRate;
             decimal euroAmount = dkkAmount / dkkToEurRate * 100;
 
             return euroAmount;
@@ -55,7 +64,7 @@ namespace ValutaWcfService
 
         public decimal GetExchangeRate(string iso)
         {
-            decimal exchangeRate = findExchangeRate(iso);
+            decimal exchangeRate = findValuta(iso).ExchangeRate;
 
             return exchangeRate;
         }
@@ -67,7 +76,7 @@ namespace ValutaWcfService
 
         public decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount)
         {
-            decimal newAmount = amount * findExchangeRate(fromIso) / findExchangeRate(toIso);
+            decimal newAmount = amount * findValuta(fromIso).ExchangeRate / findValuta(toIso).ExchangeRate;
 
             conversions.Add(String.Format("{0} {1} {2} {3}", 
                 amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
@@ -88,20 +97,26 @@ namespace ValutaWcfService
             return conversionsArray;
         }
 
-        private decimal findExchangeRate(string iso)
+        public void SetValutaExchangeRate(Valuta valuta)
         {
-            decimal exchangeRate = 0;
+            Valuta actualValuta = findValuta(valuta.Iso);
+            actualValuta.ExchangeRate = valuta.ExchangeRate;
+        }
+
+        private Valuta findValuta(string iso)
+        {
+            Valuta foundValuta = null;
 
             foreach (Valuta valuta in valutas)
             {
                 if (valuta.Iso.Equals(iso))
                 {
-                    exchangeRate = valuta.ExchangeRate;
+                    foundValuta = valuta;
                     break;
                 }
             }
 
-            return exchangeRate;
+            return foundValuta;
         }
     }
 }
