@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="df8a3911-fe12-41b7-865d-7ccf7550493b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://webservicedemo.datamatiker-skolen.dk/PersonWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PersonWcfService.wsdl" MetadataType="Wsdl" ID="132d3717-fef1-4b48-8593-8b7bde84382f" SourceId="1" SourceUrl="http://webservicedemo.datamatiker-skolen.dk/PersonWcfService.svc?wsdl" />
+    <MetadataFile FileName="PersonWcfService.disco" MetadataType="Disco" ID="3de96e2c-7bc7-4807-974d-8c7187b0c249" SourceId="1" SourceUrl="http://webservicedemo.datamatiker-skolen.dk/PersonWcfService.svc?disco" />
+    <MetadataFile FileName="PersonWcfService.xsd" MetadataType="Schema" ID="9ebae53d-b644-4159-a020-8182929b8add" SourceId="1" SourceUrl="http://webservicedemo.datamatiker-skolen.dk/PersonWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PersonWcfService1.xsd" MetadataType="Schema" ID="01478c14-2849-4fa9-ae9d-0b10519eb57a" SourceId="1" SourceUrl="http://webservicedemo.datamatiker-skolen.dk/PersonWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PersonWcfService2.xsd" MetadataType="Schema" ID="dcfe1ebe-bea2-48ac-a9f3-acc9c077e2a0" SourceId="1" SourceUrl="http://webservicedemo.datamatiker-skolen.dk/PersonWcfService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
