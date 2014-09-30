@@ -47,6 +47,13 @@ namespace ValutaWcfService
             return valutas;
         }
 
+        public decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount)
+        {
+            decimal newAmount = amount * findExchangeRate(fromIso) / findExchangeRate(toIso);
+
+            return newAmount;
+        }
+
         private decimal findExchangeRate(string iso)
         {
             decimal exchangeRate = 0;

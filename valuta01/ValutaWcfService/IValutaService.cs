@@ -19,5 +19,8 @@ namespace ValutaWcfService
 
         [OperationContract]
         Valuta[] GetValutas();
+
+        [OperationContract]
+        decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount);
     }
 }

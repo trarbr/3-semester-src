@@ -28,5 +28,16 @@ namespace UnitTests
 
             Assert.AreEqual(expectedRate, actualRate);
         }
+
+        [TestMethod]
+        public void Test_ConvertFromIsoToIso()
+        {
+            IValutaService service = new ValutaService();
+            decimal expectedAmount = 100;
+
+            decimal actualAmount = service.ConvertFromIsoToIso("EUR", "USD", 100);
+
+            Assert.AreEqual(expectedAmount, actualAmount);
+        }
     }
 }
