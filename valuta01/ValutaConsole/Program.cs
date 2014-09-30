@@ -11,31 +11,31 @@ namespace ValutaConsole
         static void Main(string[] args)
         {
             ValutaWcfService.IValutaService valutaService = new ValutaWcfService.ValutaServiceClient();
+            string amountAsString;
+            //Console.Write("Amount of DKK to convert to EUR: ");
+            //string amountAsString = Console.ReadLine();
+            //decimal dkkAmount = decimal.Parse(amountAsString);
 
-            Console.Write("Amount of DKK to convert to EUR: ");
-            string amountAsString = Console.ReadLine();
-            decimal dkkAmount = decimal.Parse(amountAsString);
+            //decimal eurAmount = valutaService.FromDkkToEur(dkkAmount);
 
-            decimal eurAmount = valutaService.FromDkkToEur(dkkAmount);
+            //Console.WriteLine("In EUR, that is " + eurAmount.ToString("N2"));
+            //Console.ReadLine();
 
-            Console.WriteLine("In EUR, that is " + eurAmount.ToString("N2"));
-            Console.ReadLine();
+            //Console.Write("Enter ISO code you want exchange rate for: ");
+            //string iso = Console.ReadLine();
 
-            Console.Write("Enter ISO code you want exchange rate for: ");
-            string iso = Console.ReadLine();
+            //decimal exchangeRate = valutaService.GetExchangeRate(iso);
 
-            decimal exchangeRate = valutaService.GetExchangeRate(iso);
+            //Console.WriteLine("The exchange rate is " + exchangeRate.ToString("N2"));
+            //Console.ReadLine();
 
-            Console.WriteLine("The exchange rate is " + exchangeRate.ToString("N2"));
-            Console.ReadLine();
-
-            ValutaWcfService.Valuta[] valutas = valutaService.GetValutas();
-            foreach (ValutaWcfService.Valuta valuta in valutas)
-            {
-                Console.WriteLine(String.Format("{0} ({1}): {2}", 
-                    valuta.Iso, valuta.Name, valuta.ExchangeRate.ToString("N2")));
-            }
-            Console.ReadLine();
+            //ValutaWcfService.Valuta[] valutas = valutaService.GetValutas();
+            //foreach (ValutaWcfService.Valuta valuta in valutas)
+            //{
+            //    Console.WriteLine(String.Format("{0} ({1}): {2}", 
+            //        valuta.Iso, valuta.Name, valuta.ExchangeRate.ToString("N2")));
+            //}
+            //Console.ReadLine();
 
             Console.Write("Amount to convert: ");
             amountAsString = Console.ReadLine();
@@ -47,6 +47,15 @@ namespace ValutaConsole
             decimal toAmount = valutaService.ConvertFromIsoToIso(fromIso, toIso, fromAmount);
             Console.WriteLine(String.Format("{0} {1} is {2} {3}", 
                 fromAmount.ToString("N2"), fromIso, toAmount.ToString("N2"), toIso));
+            Console.ReadLine();
+
+            valutaService.ConvertFromIsoToIso("EUR", "USD", 100);
+
+            string[] conversions = valutaService.GetDoneConversions();
+            foreach (string conversion in conversions)
+            {
+                Console.WriteLine(conversion);
+            }
             Console.ReadLine();
         }
     }
