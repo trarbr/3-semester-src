@@ -129,6 +129,12 @@ namespace ValutaConsole.ValutaWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/SetValutaExchangeRate", ReplyAction="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse")]
         System.Threading.Tasks.Task SetValutaExchangeRateAsync(ValutaConsole.ValutaWcfService.Valuta valuta);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/AddValuta", ReplyAction="http://tempuri.org/IValutaService/AddValutaResponse")]
+        void AddValuta(ValutaConsole.ValutaWcfService.Valuta valuta);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/AddValuta", ReplyAction="http://tempuri.org/IValutaService/AddValutaResponse")]
+        System.Threading.Tasks.Task AddValutaAsync(ValutaConsole.ValutaWcfService.Valuta valuta);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -204,6 +210,14 @@ namespace ValutaConsole.ValutaWcfService {
         
         public System.Threading.Tasks.Task SetValutaExchangeRateAsync(ValutaConsole.ValutaWcfService.Valuta valuta) {
             return base.Channel.SetValutaExchangeRateAsync(valuta);
+        }
+        
+        public void AddValuta(ValutaConsole.ValutaWcfService.Valuta valuta) {
+            base.Channel.AddValuta(valuta);
+        }
+        
+        public System.Threading.Tasks.Task AddValutaAsync(ValutaConsole.ValutaWcfService.Valuta valuta) {
+            return base.Channel.AddValutaAsync(valuta);
         }
     }
 }

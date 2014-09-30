@@ -44,6 +44,12 @@
   <wsdl:message name="IValutaService_SetValutaExchangeRate_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetValutaExchangeRateResponse" />
   </wsdl:message>
+  <wsdl:message name="IValutaService_AddValuta_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddValuta" />
+  </wsdl:message>
+  <wsdl:message name="IValutaService_AddValuta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddValutaResponse" />
+  </wsdl:message>
   <wsdl:portType name="IValutaService">
     <wsdl:operation name="FromDkkToEur">
       <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/FromDkkToEur" message="tns:IValutaService_FromDkkToEur_InputMessage" />
@@ -68,6 +74,10 @@
     <wsdl:operation name="SetValutaExchangeRate">
       <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/SetValutaExchangeRate" message="tns:IValutaService_SetValutaExchangeRate_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse" message="tns:IValutaService_SetValutaExchangeRate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddValuta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/AddValuta" message="tns:IValutaService_AddValuta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValutaService/AddValutaResponse" message="tns:IValutaService_AddValuta_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IValutaService" type="tns:IValutaService">
@@ -119,6 +129,15 @@
     </wsdl:operation>
     <wsdl:operation name="SetValutaExchangeRate">
       <soap:operation soapAction="http://tempuri.org/IValutaService/SetValutaExchangeRate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddValuta">
+      <soap:operation soapAction="http://tempuri.org/IValutaService/AddValuta" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

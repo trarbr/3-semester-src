@@ -82,4 +82,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddValuta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ValutaWcfService" minOccurs="0" name="valuta" nillable="true" type="q4:Valuta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddValutaResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

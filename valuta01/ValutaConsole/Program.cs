@@ -64,7 +64,7 @@ namespace ValutaConsole
 
             Console.ReadLine();
 
-            ValutaWcfService.Valuta valutaToEdit = valutaService.GetValutas()[0];
+            ValutaWcfService.Valuta valutaToEdit = valutaService.GetValutas()[3];
 
             valutaToEdit.ExchangeRate = 1000m;
 
@@ -75,6 +75,25 @@ namespace ValutaConsole
                 Console.WriteLine(valuta.ExchangeRate);
             }
 
+            Console.ReadLine();
+
+            ValutaWcfService.Valuta newValuta = new ValutaWcfService.Valuta()
+            {
+                Name = "Rusland",
+                Iso = "RUB",
+                ExchangeRate = 14.8300m,
+            };
+
+            valutaService.AddValuta(newValuta);
+
+            foreach (ValutaWcfService.Valuta valuta in valutaService.GetValutas())
+            {
+                Console.WriteLine(valuta.ExchangeRate);
+            }
+
+            Console.ReadLine();
+
+            Console.WriteLine(valutaService.ConvertFromIsoToIso("CAD", "RUB", 1));
             Console.ReadLine();
         }
     }

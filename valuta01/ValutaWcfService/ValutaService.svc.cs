@@ -14,13 +14,13 @@ namespace ValutaWcfService
     [AspNetCompatibilityRequirements(RequirementsMode=AspNetCompatibilityRequirementsMode.Required)]
     public class ValutaService : IValutaService
     {
-        private Valuta[] valutas
+        private List<Valuta> valutas
         {
             get
             {
                 if (HttpContext.Current.Application["valutas"] == null)
                 {
-                    HttpContext.Current.Application["valutas"] = new Valuta[]
+                    List<Valuta> theList = new List<Valuta>()
                     {
                         new Valuta("Canada", "CAD", 492.27m),
                         new Valuta("Euro", "EUR", 745.99m),
@@ -29,9 +29,10 @@ namespace ValutaWcfService
                         new Valuta("Sverige", "SEK", 78.21m),
                         new Valuta("Amerika", "USD", 524.02m),
                     };
+                    HttpContext.Current.Application["valutas"] = theList;
 
                 }
-                return (Valuta[])HttpContext.Current.Application["valutas"];
+                return (List<Valuta>)HttpContext.Current.Application["valutas"];
             }
             set
             {
@@ -71,7 +72,14 @@ namespace ValutaWcfService
 
         public Valuta[] GetValutas()
         {
-            return valutas;
+            Valuta[] valutasArray = new Valuta[valutas.Count];
+
+            for (int i = 0; i < valutas.Count; i++)
+            {
+                valutasArray[i] = valutas[i];
+            }
+
+            return valutasArray;
         }
 
         public decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount)
@@ -101,6 +109,11 @@ namespace ValutaWcfService
         {
             Valuta actualValuta = findValuta(valuta.Iso);
             actualValuta.ExchangeRate = valuta.ExchangeRate;
+        }
+
+        public void AddValuta(Valuta valuta)
+        {
+            valutas.Add(valuta);
         }
 
         private Valuta findValuta(string iso)
