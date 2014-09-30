@@ -16,7 +16,7 @@ namespace ValutaConsole
             string amountAsString = Console.ReadLine();
             decimal dkkAmount = decimal.Parse(amountAsString);
 
-            decimal eurAmount = valutaService.FromDkkToEur(100);
+            decimal eurAmount = valutaService.FromDkkToEur(dkkAmount);
 
             Console.WriteLine("In EUR, that is " + eurAmount.ToString("N2"));
 
