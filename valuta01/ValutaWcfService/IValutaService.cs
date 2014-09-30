@@ -16,5 +16,8 @@ namespace ValutaWcfService
 
         [OperationContract]
         decimal GetExchangeRate(string iso);
+
+        [OperationContract]
+        Valuta[] GetValutas();
     }
 }

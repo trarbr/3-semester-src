@@ -11,24 +11,24 @@ namespace ValutaWcfService
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class ValutaService : IValutaService
     {
-        private Dictionary<string, decimal> exchangeRates;
+        private Valuta[] valutas;
 
         public ValutaService()
         {
-            exchangeRates = new Dictionary<string, decimal>()
+            valutas = new Valuta[]
             {
-                {"CAD", 492.27m},
-                {"EUR", 745.99m},
-                {"GBP", 947.53m},
-                {"NOK", 90.34m},
-                {"SEK", 78.21m},
-                {"USD", 524.02m},
+                new Valuta("Canada", "CAD", 492.27m),
+                new Valuta("Euro", "EUR", 745.99m),
+                new Valuta("Storbritannien", "GBP", 947.99m),
+                new Valuta("Norge", "NOK", 90.34m),
+                new Valuta("Sverige", "SEK", 78.21m),
+                new Valuta("Amerika", "USD", 524.02m),
             };
         }
 
         public decimal FromDkkToEur(decimal dkkAmount)
         {
-            decimal dkkToEurRate = exchangeRates["EUR"];
+            decimal dkkToEurRate = findExchangeRate("EUR");
             decimal euroAmount = dkkAmount / dkkToEurRate * 100;
 
             return euroAmount;
@@ -37,8 +37,28 @@ namespace ValutaWcfService
 
         public decimal GetExchangeRate(string iso)
         {
+            decimal exchangeRate = findExchangeRate(iso);
+
+            return exchangeRate;
+        }
+
+        public Valuta[] GetValutas()
+        {
+            return valutas;
+        }
+
+        private decimal findExchangeRate(string iso)
+        {
             decimal exchangeRate = 0;
-            exchangeRates.TryGetValue(iso, out exchangeRate);
+
+            foreach (Valuta valuta in valutas)
+            {
+                if (valuta.Iso.Equals(iso))
+                {
+                    exchangeRate = valuta.ExchangeRate;
+                    break;
+                }
+            }
 
             return exchangeRate;
         }

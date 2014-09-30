@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="IValutaService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Valuta.cs" />
     <Compile Include="ValutaService.svc.cs">
       <DependentUpon>ValutaService.svc</DependentUpon>
     </Compile>

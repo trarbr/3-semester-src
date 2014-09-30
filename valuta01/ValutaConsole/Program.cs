@@ -28,6 +28,14 @@ namespace ValutaConsole
 
             Console.WriteLine("The exchange rate is " + exchangeRate.ToString("N2"));
             Console.ReadLine();
+
+            ValutaWcfService.Valuta[] valutas = valutaService.GetValutas();
+            foreach (ValutaWcfService.Valuta valuta in valutas)
+            {
+                Console.WriteLine(String.Format("{0} ({1}): {2}", 
+                    valuta.Iso, valuta.Name, valuta.ExchangeRate.ToString("N2")));
+            }
+            Console.ReadLine();
         }
     }
 }

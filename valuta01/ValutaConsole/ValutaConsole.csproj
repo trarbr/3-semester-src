@@ -53,11 +53,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Service References\ValutaWcfService\ValutaConsole.ValutaWcfService.Valuta.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ValutaWcfService\ValutaService.wsdl" />
     <None Include="Service References\ValutaWcfService\ValutaService.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ValutaWcfService\ValutaService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ValutaWcfService\ValutaService2.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

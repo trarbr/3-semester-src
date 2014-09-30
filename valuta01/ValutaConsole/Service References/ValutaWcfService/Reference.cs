@@ -9,7 +9,86 @@
 //------------------------------------------------------------------------------
 
 namespace ValutaConsole.ValutaWcfService {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Valuta", Namespace="http://schemas.datacontract.org/2004/07/ValutaWcfService")]
+    [System.SerializableAttribute()]
+    public partial class Valuta : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal ExchangeRateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IsoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal ExchangeRate {
+            get {
+                return this.ExchangeRateField;
+            }
+            set {
+                if ((this.ExchangeRateField.Equals(value) != true)) {
+                    this.ExchangeRateField = value;
+                    this.RaisePropertyChanged("ExchangeRate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Iso {
+            get {
+                return this.IsoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IsoField, value) != true)) {
+                    this.IsoField = value;
+                    this.RaisePropertyChanged("Iso");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ValutaWcfService.IValutaService")]
@@ -26,6 +105,12 @@ namespace ValutaConsole.ValutaWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetExchangeRate", ReplyAction="http://tempuri.org/IValutaService/GetExchangeRateResponse")]
         System.Threading.Tasks.Task<decimal> GetExchangeRateAsync(string iso);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetValutas", ReplyAction="http://tempuri.org/IValutaService/GetValutasResponse")]
+        ValutaConsole.ValutaWcfService.Valuta[] GetValutas();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetValutas", ReplyAction="http://tempuri.org/IValutaService/GetValutasResponse")]
+        System.Threading.Tasks.Task<ValutaConsole.ValutaWcfService.Valuta[]> GetValutasAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +154,14 @@ namespace ValutaConsole.ValutaWcfService {
         
         public System.Threading.Tasks.Task<decimal> GetExchangeRateAsync(string iso) {
             return base.Channel.GetExchangeRateAsync(iso);
+        }
+        
+        public ValutaConsole.ValutaWcfService.Valuta[] GetValutas() {
+            return base.Channel.GetValutas();
+        }
+        
+        public System.Threading.Tasks.Task<ValutaConsole.ValutaWcfService.Valuta[]> GetValutasAsync() {
+            return base.Channel.GetValutasAsync();
         }
     }
 }

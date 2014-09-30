@@ -25,6 +25,7 @@
     <MetadataFile FileName="ValutaService.xsd" MetadataType="Schema" ID="e59c9562-fa17-483e-a910-e77a9f5379df" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?xsd=xsd1" />
     <MetadataFile FileName="ValutaService.wsdl" MetadataType="Wsdl" ID="0640eb10-024e-4ed0-a88d-71fd0e17e77a" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?wsdl" />
     <MetadataFile FileName="ValutaService1.xsd" MetadataType="Schema" ID="9731d086-338d-483a-be06-5fd0db26b135" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ValutaService2.xsd" MetadataType="Schema" ID="33b06332-c980-4f26-8a8d-f119e9b554e9" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?xsd=xsd2" />
     <MetadataFile FileName="ValutaService.disco" MetadataType="Disco" ID="39ab4d43-70f7-44c4-aeef-21004345bb67" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?disco" />
   </Metadata>
   <Extensions>
