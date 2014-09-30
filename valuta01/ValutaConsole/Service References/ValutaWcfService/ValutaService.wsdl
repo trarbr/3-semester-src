@@ -12,16 +12,35 @@
   <wsdl:message name="IValutaService_FromDkkToEur_OutputMessage">
     <wsdl:part name="parameters" element="tns:FromDkkToEurResponse" />
   </wsdl:message>
+  <wsdl:message name="IValutaService_GetExchangeRate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExchangeRate" />
+  </wsdl:message>
+  <wsdl:message name="IValutaService_GetExchangeRate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExchangeRateResponse" />
+  </wsdl:message>
   <wsdl:portType name="IValutaService">
     <wsdl:operation name="FromDkkToEur">
       <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/FromDkkToEur" message="tns:IValutaService_FromDkkToEur_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IValutaService/FromDkkToEurResponse" message="tns:IValutaService_FromDkkToEur_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExchangeRate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/GetExchangeRate" message="tns:IValutaService_GetExchangeRate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValutaService/GetExchangeRateResponse" message="tns:IValutaService_GetExchangeRate_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IValutaService" type="tns:IValutaService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="FromDkkToEur">
       <soap:operation soapAction="http://tempuri.org/IValutaService/FromDkkToEur" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExchangeRate">
+      <soap:operation soapAction="http://tempuri.org/IValutaService/GetExchangeRate" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

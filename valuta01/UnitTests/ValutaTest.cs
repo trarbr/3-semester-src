@@ -10,12 +10,23 @@ namespace UnitTests
         [TestMethod]
         public void Test_FromDkkToEur()
         {
-            ValutaService service = new ValutaService();
+            IValutaService service = new ValutaService();
             decimal expectedEur = 13.40500542902719875601549619m;
 
             decimal actualEur = service.FromDkkToEur(100);
 
             Assert.AreEqual(expectedEur, actualEur);
+        }
+
+        [TestMethod]
+        public void Test_GetExchangeRate()
+        {
+            IValutaService service = new ValutaService();
+            decimal expectedRate = 492.27m;
+
+            decimal actualRate = service.GetExchangeRate("CAD");
+
+            Assert.AreEqual(expectedRate, actualRate);
         }
     }
 }

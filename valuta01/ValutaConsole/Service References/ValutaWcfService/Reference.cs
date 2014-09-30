@@ -20,6 +20,12 @@ namespace ValutaConsole.ValutaWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/FromDkkToEur", ReplyAction="http://tempuri.org/IValutaService/FromDkkToEurResponse")]
         System.Threading.Tasks.Task<decimal> FromDkkToEurAsync(decimal dkkAmount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetExchangeRate", ReplyAction="http://tempuri.org/IValutaService/GetExchangeRateResponse")]
+        decimal GetExchangeRate(string iso);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetExchangeRate", ReplyAction="http://tempuri.org/IValutaService/GetExchangeRateResponse")]
+        System.Threading.Tasks.Task<decimal> GetExchangeRateAsync(string iso);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +61,14 @@ namespace ValutaConsole.ValutaWcfService {
         
         public System.Threading.Tasks.Task<decimal> FromDkkToEurAsync(decimal dkkAmount) {
             return base.Channel.FromDkkToEurAsync(dkkAmount);
+        }
+        
+        public decimal GetExchangeRate(string iso) {
+            return base.Channel.GetExchangeRate(iso);
+        }
+        
+        public System.Threading.Tasks.Task<decimal> GetExchangeRateAsync(string iso) {
+            return base.Channel.GetExchangeRateAsync(iso);
         }
     }
 }

@@ -13,5 +13,8 @@ namespace ValutaWcfService
     {
         [OperationContract]
         decimal FromDkkToEur(decimal dkkAmount);
+
+        [OperationContract]
+        decimal GetExchangeRate(string iso);
     }
 }
