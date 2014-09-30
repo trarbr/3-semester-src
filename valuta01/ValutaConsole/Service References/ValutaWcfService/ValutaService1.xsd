@@ -41,4 +41,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ConvertFromIsoToIso">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fromIso" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="toIso" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="amount" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConvertFromIsoToIsoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConvertFromIsoToIsoResult" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

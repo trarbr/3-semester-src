@@ -111,6 +111,12 @@ namespace ValutaConsole.ValutaWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetValutas", ReplyAction="http://tempuri.org/IValutaService/GetValutasResponse")]
         System.Threading.Tasks.Task<ValutaConsole.ValutaWcfService.Valuta[]> GetValutasAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/ConvertFromIsoToIso", ReplyAction="http://tempuri.org/IValutaService/ConvertFromIsoToIsoResponse")]
+        decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/ConvertFromIsoToIso", ReplyAction="http://tempuri.org/IValutaService/ConvertFromIsoToIsoResponse")]
+        System.Threading.Tasks.Task<decimal> ConvertFromIsoToIsoAsync(string fromIso, string toIso, decimal amount);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -162,6 +168,14 @@ namespace ValutaConsole.ValutaWcfService {
         
         public System.Threading.Tasks.Task<ValutaConsole.ValutaWcfService.Valuta[]> GetValutasAsync() {
             return base.Channel.GetValutasAsync();
+        }
+        
+        public decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount) {
+            return base.Channel.ConvertFromIsoToIso(fromIso, toIso, amount);
+        }
+        
+        public System.Threading.Tasks.Task<decimal> ConvertFromIsoToIsoAsync(string fromIso, string toIso, decimal amount) {
+            return base.Channel.ConvertFromIsoToIsoAsync(fromIso, toIso, amount);
         }
     }
 }

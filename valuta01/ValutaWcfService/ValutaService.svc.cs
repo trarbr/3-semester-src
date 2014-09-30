@@ -34,7 +34,6 @@ namespace ValutaWcfService
             return euroAmount;
         }
 
-
         public decimal GetExchangeRate(string iso)
         {
             decimal exchangeRate = findExchangeRate(iso);

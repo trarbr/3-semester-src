@@ -36,6 +36,18 @@ namespace ValutaConsole
                     valuta.Iso, valuta.Name, valuta.ExchangeRate.ToString("N2")));
             }
             Console.ReadLine();
+
+            Console.Write("Amount to convert: ");
+            amountAsString = Console.ReadLine();
+            decimal fromAmount = decimal.Parse(amountAsString);
+            Console.Write("From ISO code: ");
+            string fromIso = Console.ReadLine();
+            Console.Write("To ISO code: ");
+            string toIso = Console.ReadLine();
+            decimal toAmount = valutaService.ConvertFromIsoToIso(fromIso, toIso, fromAmount);
+            Console.WriteLine(String.Format("{0} {1} is {2} {3}", 
+                fromAmount.ToString("N2"), fromIso, toAmount.ToString("N2"), toIso));
+            Console.ReadLine();
         }
     }
 }

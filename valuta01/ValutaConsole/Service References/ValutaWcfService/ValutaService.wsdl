@@ -25,6 +25,12 @@
   <wsdl:message name="IValutaService_GetValutas_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetValutasResponse" />
   </wsdl:message>
+  <wsdl:message name="IValutaService_ConvertFromIsoToIso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConvertFromIsoToIso" />
+  </wsdl:message>
+  <wsdl:message name="IValutaService_ConvertFromIsoToIso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConvertFromIsoToIsoResponse" />
+  </wsdl:message>
   <wsdl:portType name="IValutaService">
     <wsdl:operation name="FromDkkToEur">
       <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/FromDkkToEur" message="tns:IValutaService_FromDkkToEur_InputMessage" />
@@ -37,6 +43,10 @@
     <wsdl:operation name="GetValutas">
       <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/GetValutas" message="tns:IValutaService_GetValutas_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IValutaService/GetValutasResponse" message="tns:IValutaService_GetValutas_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConvertFromIsoToIso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValutaService/ConvertFromIsoToIso" message="tns:IValutaService_ConvertFromIsoToIso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValutaService/ConvertFromIsoToIsoResponse" message="tns:IValutaService_ConvertFromIsoToIso_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IValutaService" type="tns:IValutaService">
@@ -61,6 +71,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetValutas">
       <soap:operation soapAction="http://tempuri.org/IValutaService/GetValutas" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConvertFromIsoToIso">
+      <soap:operation soapAction="http://tempuri.org/IValutaService/ConvertFromIsoToIso" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
