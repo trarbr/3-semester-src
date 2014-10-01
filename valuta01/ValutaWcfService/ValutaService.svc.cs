@@ -20,7 +20,7 @@ namespace ValutaWcfService
             {
                 if (HttpContext.Current.Application["valutas"] == null)
                 {
-                    List<Valuta> theList = new List<Valuta>()
+                    HttpContext.Current.Application["valutas"] = new List<Valuta>()
                     {
                         new Valuta("Canada", "CAD", 492.27m),
                         new Valuta("Euro", "EUR", 745.99m),
@@ -29,8 +29,6 @@ namespace ValutaWcfService
                         new Valuta("Sverige", "SEK", 78.21m),
                         new Valuta("Amerika", "USD", 524.02m),
                     };
-                    HttpContext.Current.Application["valutas"] = theList;
-
                 }
                 return (List<Valuta>)HttpContext.Current.Application["valutas"];
             }
@@ -55,9 +53,17 @@ namespace ValutaWcfService
             }
         }
 
+        // use this to lock when changing the lists
+        private object serviceLock; 
+
+        public ValutaService()
+        {
+            serviceLock = new object();
+        }
+
         public decimal FromDkkToEur(decimal dkkAmount)
         {
-            decimal dkkToEurRate = findValuta("EUR").ExchangeRate;
+            decimal dkkToEurRate = findExchangeRate("EUR");
             decimal euroAmount = dkkAmount / dkkToEurRate * 100;
 
             return euroAmount;
@@ -77,7 +83,16 @@ namespace ValutaWcfService
 
         public decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount)
         {
-            decimal newAmount = amount * findValuta(fromIso).ExchangeRate / findValuta(toIso).ExchangeRate;
+            decimal newAmount;
+
+            try
+            {
+                newAmount = amount * findExchangeRate(fromIso) / findExchangeRate(toIso);
+            }
+            catch (DivideByZeroException)
+            {
+                newAmount = 0m;
+            }
 
             conversions.Add(String.Format("{0} {1} {2} {3}", 
                 amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
@@ -116,6 +131,19 @@ namespace ValutaWcfService
             }
 
             return foundValuta;
+        }
+
+        private decimal findExchangeRate(string iso)
+        {
+            decimal exchangeRate = 0m;
+
+            Valuta valuta = findValuta(iso);
+            if (valuta != null)
+            {
+                exchangeRate = valuta.ExchangeRate;
+            }
+
+            return exchangeRate;
         }
     }
 }
