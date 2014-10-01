@@ -49,6 +49,7 @@ namespace ValutaConsole
             Console.ReadLine();
 
             valutaService.ConvertFromIsoToIso("EUR", "USD", 100);
+            valutaService.ConvertFromIsoToIso("EUR", "USD", 700);
 
             string[] conversions = valutaService.GetDoneConversions();
             foreach (string conversion in conversions)

@@ -48,21 +48,15 @@ namespace ValutaWcfService
         // use this as a coarse grained lock for atomic operations
         // could have one coarse grained lock and one lock for each of valutas and conversions
         // might be useful for reducing the scope of each lock, but also a hassle to implement correctly
-        private object serviceLock; 
-
-        public ValutaService()
-        {
-            serviceLock = new object();
-        }
 
         public decimal FromDkkToEur(decimal dkkAmount)
         {
             decimal euroAmount = 0m;
-            lock (serviceLock)
-            {
-                decimal dkkToEurRate = findExchangeRate("EUR");
-                euroAmount = dkkAmount / dkkToEurRate * 100;
-            }
+            HttpContext.Current.Application.Lock();
+            decimal dkkToEurRate = findExchangeRate("EUR");
+            euroAmount = dkkAmount / dkkToEurRate * 100;
+            HttpContext.Current.Application.UnLock();
+            
 
             return euroAmount;
         }
@@ -70,10 +64,9 @@ namespace ValutaWcfService
         public decimal GetExchangeRate(string iso)
         {
             decimal exchangeRate;
-            lock (serviceLock)
-            {
-                exchangeRate = findExchangeRate(iso);
-            }
+            HttpContext.Current.Application.Lock();
+            exchangeRate = findExchangeRate(iso);
+            HttpContext.Current.Application.UnLock();
 
             return exchangeRate;
         }
@@ -81,10 +74,9 @@ namespace ValutaWcfService
         public Valuta[] GetValutas()
         {
             Valuta[] valutasArray;
-            lock (serviceLock)
-            {
-                valutasArray = valutas.ToArray();
-            }
+            HttpContext.Current.Application.Lock();
+            valutasArray = valutas.ToArray();
+            HttpContext.Current.Application.UnLock();
 
             return valutasArray;
         }
@@ -92,21 +84,20 @@ namespace ValutaWcfService
         public decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount)
         {
             decimal newAmount;
-            lock (serviceLock)
+            HttpContext.Current.Application.Lock();
+            try
             {
-                try
-                {
-                    newAmount = amount * findExchangeRate(fromIso) / findExchangeRate(toIso);
-                }
-                catch (DivideByZeroException)
-                {
-                    newAmount = 0m;
-                }
-
-                conversions.Add(String.Format("{0} {1} {2} {3}",
-                    amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
-                HttpContext.Current.Session["conversions"] = conversions;
+                newAmount = amount * findExchangeRate(fromIso) / findExchangeRate(toIso);
             }
+            catch (DivideByZeroException)
+            {
+                newAmount = 0m;
+            }
+
+            conversions.Add(String.Format("{0} {1} {2} {3}",
+            amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
+
+            HttpContext.Current.Application.UnLock();
 
             return newAmount;
         }
@@ -114,29 +105,26 @@ namespace ValutaWcfService
         public string[] GetDoneConversions()
         {
             string[] conversionsArray;
-            lock (serviceLock)
-            {
-                conversionsArray = conversions.ToArray();
-            }
+            HttpContext.Current.Application.Lock();
+            conversionsArray = conversions.ToArray();
+            HttpContext.Current.Application.UnLock();
 
             return conversionsArray;
         }
 
         public void SetValutaExchangeRate(Valuta valuta)
         {
-            lock (serviceLock)
-            {
-                Valuta actualValuta = findValuta(valuta.Iso);
-                actualValuta.ExchangeRate = valuta.ExchangeRate;
-            }
+            HttpContext.Current.Application.Lock();
+            Valuta actualValuta = findValuta(valuta.Iso);
+            actualValuta.ExchangeRate = valuta.ExchangeRate;
+            HttpContext.Current.Application.UnLock();
         }
 
         public void AddValuta(Valuta valuta)
         {
-            lock (serviceLock)
-            {
-                valutas.Add(valuta);
-            }
+            HttpContext.Current.Application.Lock();
+            valutas.Add(valuta);
+            HttpContext.Current.Application.UnLock();
         }
 
         private Valuta findValuta(string iso)
