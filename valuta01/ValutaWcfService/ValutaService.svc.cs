@@ -9,8 +9,6 @@ using System.Web;
 
 namespace ValutaWcfService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     [AspNetCompatibilityRequirements(RequirementsMode=AspNetCompatibilityRequirementsMode.Required)]
     public class ValutaService : IValutaService
     {
@@ -44,10 +42,6 @@ namespace ValutaWcfService
                 return (List<string>)HttpContext.Current.Session["conversions"];
             }
         }
-
-        // use this as a coarse grained lock for atomic operations
-        // could have one coarse grained lock and one lock for each of valutas and conversions
-        // might be useful for reducing the scope of each lock, but also a hassle to implement correctly
 
         public decimal FromDkkToEur(decimal dkkAmount)
         {
@@ -112,6 +106,8 @@ namespace ValutaWcfService
             return conversionsArray;
         }
 
+        // try and add a optimistic offline lock here
+        // return false if update fails
         public void SetValutaExchangeRate(Valuta valuta)
         {
             HttpContext.Current.Application.Lock();
