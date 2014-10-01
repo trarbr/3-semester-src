@@ -72,14 +72,7 @@ namespace ValutaWcfService
 
         public Valuta[] GetValutas()
         {
-            Valuta[] valutasArray = new Valuta[valutas.Count];
-
-            for (int i = 0; i < valutas.Count; i++)
-            {
-                valutasArray[i] = valutas[i];
-            }
-
-            return valutasArray;
+            return valutas.ToArray();
         }
 
         public decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount)
@@ -95,14 +88,7 @@ namespace ValutaWcfService
 
         public string[] GetDoneConversions()
         {
-            string[] conversionsArray = new string[conversions.Count];
-
-            for (int i = 0; i < conversions.Count; i++)
-            {
-                conversionsArray[i] = conversions[i];
-            }
-
-            return conversionsArray;
+            return conversions.ToArray();
         }
 
         public void SetValutaExchangeRate(Valuta valuta)
