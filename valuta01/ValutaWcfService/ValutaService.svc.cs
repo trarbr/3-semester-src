@@ -32,10 +32,6 @@ namespace ValutaWcfService
                 }
                 return (List<Valuta>)HttpContext.Current.Application["valutas"];
             }
-            set
-            {
-                HttpContext.Current.Application["valutas"] = value;
-            }
         }
         private List<string> conversions
         {
@@ -47,13 +43,9 @@ namespace ValutaWcfService
                 }
                 return (List<string>)HttpContext.Current.Session["conversions"];
             }
-            set
-            {
-                HttpContext.Current.Session["conversions"] = value;
-            }
         }
 
-        // use this as a coarse grained lock
+        // use this as a coarse grained lock for atomic operations
         // could have one coarse grained lock and one lock for each of valutas and conversions
         // might be useful for reducing the scope of each lock, but also a hassle to implement correctly
         private object serviceLock; 
