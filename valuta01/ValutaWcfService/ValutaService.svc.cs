@@ -18,6 +18,7 @@ namespace ValutaWcfService
         {
             get
             {
+                // The persistence class is stored in the Application.
                 if (HttpContext.Current.Application["persistence"] == null)
                 {
                     IPersistence persistence = new RavenDbPersistence();
