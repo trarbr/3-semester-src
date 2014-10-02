@@ -13,7 +13,7 @@ namespace ValutaWcfService.Persistence
 
         public RavenDbPersistence()
         {
-            store = new EmbeddableDocumentStore{RunInMemory = true};
+            store = new EmbeddableDocumentStore { RunInMemory = true };
             //store = new EmbeddableDocumentStore
             //{
             //    DataDirectory = "Data",
@@ -66,16 +66,6 @@ namespace ValutaWcfService.Persistence
             {
                 session.Store(valuta);
                 session.SaveChanges();
-
-                //Valuta oldValuta = session.Load<Valuta>(valuta.Id);
-                //oldValuta.Name = valuta.Name;
-                //oldValuta.Iso = valuta.Iso;
-                //oldValuta.ExchangeRate = valuta.ExchangeRate;
-                //session.SaveChanges();
-
-                //Valuta v = session.Load<Valuta>(valuta.Id);
-                //v.Name = "John";
-                //session.SaveChanges();
             }
         }
     }
