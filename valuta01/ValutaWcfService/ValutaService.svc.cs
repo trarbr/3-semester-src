@@ -112,8 +112,7 @@ namespace ValutaWcfService
             return conversionsArray;
         }
 
-        // try and add a optimistic offline lock here
-        // return false if update fails
+        // Optimistic offline lock
         public bool SetValutaExchangeRate(Valuta valuta)
         {
             bool updated = false;
