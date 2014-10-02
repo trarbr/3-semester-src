@@ -82,9 +82,16 @@ namespace ValutaGUI
                 ExchangeRate = exchangeRate
             };
 
-            valutaService.AddValuta(valuta);
+            bool added = valutaService.AddValuta(valuta);
+            if (!added)
+            {
+                MessageBox.Show("A valuta with the specified ISO already exists. Please find and update the existing one");
+            }
+            else
+            {
+                clearTextBoxes();
+            }
             refreshUI();
-            clearTextBoxes();
         }
 
         private void clearTextBoxes()

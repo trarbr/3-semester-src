@@ -163,10 +163,10 @@ namespace ValutaGUI.ValutaWcfService {
         System.Threading.Tasks.Task<bool> SetValutaExchangeRateAsync(ValutaGUI.ValutaWcfService.Valuta valuta);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/AddValuta", ReplyAction="http://tempuri.org/IValutaService/AddValutaResponse")]
-        void AddValuta(ValutaGUI.ValutaWcfService.Valuta valuta);
+        bool AddValuta(ValutaGUI.ValutaWcfService.Valuta valuta);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/AddValuta", ReplyAction="http://tempuri.org/IValutaService/AddValutaResponse")]
-        System.Threading.Tasks.Task AddValutaAsync(ValutaGUI.ValutaWcfService.Valuta valuta);
+        System.Threading.Tasks.Task<bool> AddValutaAsync(ValutaGUI.ValutaWcfService.Valuta valuta);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -244,11 +244,11 @@ namespace ValutaGUI.ValutaWcfService {
             return base.Channel.SetValutaExchangeRateAsync(valuta);
         }
         
-        public void AddValuta(ValutaGUI.ValutaWcfService.Valuta valuta) {
-            base.Channel.AddValuta(valuta);
+        public bool AddValuta(ValutaGUI.ValutaWcfService.Valuta valuta) {
+            return base.Channel.AddValuta(valuta);
         }
         
-        public System.Threading.Tasks.Task AddValutaAsync(ValutaGUI.ValutaWcfService.Valuta valuta) {
+        public System.Threading.Tasks.Task<bool> AddValutaAsync(ValutaGUI.ValutaWcfService.Valuta valuta) {
             return base.Channel.AddValutaAsync(valuta);
         }
     }
