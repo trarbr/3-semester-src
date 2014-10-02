@@ -31,7 +31,7 @@ namespace ValutaWcfService
         {
             get
             {
-                // The service has its own cache of valutas that it keeps up to date it self
+                // The service has its own cache of valutas that it keeps up to date 
                 if (HttpContext.Current.Application["valutas"] == null)
                 {
                     HttpContext.Current.Application["valutas"] = persistence.GetAllValutas();
