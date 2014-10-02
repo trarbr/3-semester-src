@@ -31,12 +31,12 @@ namespace ValutaWcfService
         {
             get
             {
-                //if (HttpContext.Current.Application["valutas"] == null)
-                //{
-                //    HttpContext.Current.Application["valutas"] = persistence.GetAllValutas();
-                //}
-                //return (List<Valuta>)HttpContext.Current.Application["valutas"];
-                return persistence.GetAllValutas();
+                // The service has its own cache of valutas that it keeps up to date it self
+                if (HttpContext.Current.Application["valutas"] == null)
+                {
+                    HttpContext.Current.Application["valutas"] = persistence.GetAllValutas();
+                }
+                return (List<Valuta>)HttpContext.Current.Application["valutas"];
             }
         }
         private List<string> conversions
@@ -117,8 +117,8 @@ namespace ValutaWcfService
         public void SetValutaExchangeRate(Valuta valuta)
         {
             HttpContext.Current.Application.Lock();
-            //Valuta actualValuta = findValuta(valuta.Iso);
-            //actualValuta.ExchangeRate = valuta.ExchangeRate;
+            Valuta actualValuta = findValuta(valuta.Iso);
+            actualValuta.ExchangeRate = valuta.ExchangeRate;
             persistence.UpdateValuta(valuta); // ??? updating the old one?!
             HttpContext.Current.Application.UnLock();
         }
