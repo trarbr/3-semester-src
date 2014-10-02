@@ -52,6 +52,8 @@ namespace ValutaGUI
                 nameTextBox.Text = selectedValuta.Name;
                 isoTextBox.Text = selectedValuta.Iso;
                 exchangeRateTextBox.Text = selectedValuta.ExchangeRate.ToString("N2");
+                addValutaButton.IsEnabled = false;
+                setExchangeRateButton.IsEnabled = true;
             }
             else
             {
@@ -59,6 +61,8 @@ namespace ValutaGUI
                 nameTextBox.Text = "";
                 isoTextBox.Text = "";
                 exchangeRateTextBox.Text = "";
+                addValutaButton.IsEnabled = true;
+                setExchangeRateButton.IsEnabled = false;
             }
         }
 
