@@ -12,6 +12,8 @@ namespace ValutaWcfService
         [DataMember]
         public string Id { get; set; }
         [DataMember]
+        public int Version { get; set; }
+        [DataMember]
         public string Name { get; set; }
         [DataMember]
         public string Iso { get; set; }

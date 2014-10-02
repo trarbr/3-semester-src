@@ -114,13 +114,22 @@ namespace ValutaWcfService
 
         // try and add a optimistic offline lock here
         // return false if update fails
-        public void SetValutaExchangeRate(Valuta valuta)
+        public bool SetValutaExchangeRate(Valuta valuta)
         {
+            bool updated = false;
             HttpContext.Current.Application.Lock();
             Valuta actualValuta = findValuta(valuta.Iso);
-            actualValuta.ExchangeRate = valuta.ExchangeRate;
-            persistence.UpdateValuta(valuta); // ??? updating the old one?!
+            if (valuta.Version == actualValuta.Version)
+            {
+                valuta.Version++;
+                actualValuta.Version = valuta.Version;
+                actualValuta.ExchangeRate = valuta.ExchangeRate;
+                persistence.UpdateValuta(valuta);
+                updated = true;
+            }
             HttpContext.Current.Application.UnLock();
+
+            return updated;
         }
 
         // check that the iso is not in the list before adding
