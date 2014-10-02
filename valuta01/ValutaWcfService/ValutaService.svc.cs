@@ -116,6 +116,8 @@ namespace ValutaWcfService
             HttpContext.Current.Application.UnLock();
         }
 
+        // check that the iso is not in the list before adding
+        // if it's already there, return false
         public void AddValuta(Valuta valuta)
         {
             HttpContext.Current.Application.Lock();
@@ -126,14 +128,14 @@ namespace ValutaWcfService
         private Valuta findValuta(string iso)
         {
             Valuta foundValuta = null;
-
-            foreach (Valuta valuta in valutas)
+            int i = 0;
+            while (foundValuta == null && i < valutas.Count)
             {
-                if (valuta.Iso.Equals(iso))
+                if (valutas[i].Iso.Equals(iso))
                 {
-                    foundValuta = valuta;
-                    break;
+                    foundValuta = valutas[i];
                 }
+                i++;
             }
 
             return foundValuta;
