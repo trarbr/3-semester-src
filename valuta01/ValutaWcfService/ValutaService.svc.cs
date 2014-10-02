@@ -131,14 +131,20 @@ namespace ValutaWcfService
             return updated;
         }
 
-        // check that the iso is not in the list before adding
-        // if it's already there, return false
-        public void AddValuta(Valuta valuta)
+        // Only add valuta if it's not already there
+        public bool AddValuta(Valuta valuta)
         {
+            bool added = false;
             HttpContext.Current.Application.Lock();
-            valutas.Add(valuta);
-            persistence.InsertValuta(valuta);
+            if (findValuta(valuta.Iso) == null)
+            {
+                valutas.Add(valuta);
+                persistence.InsertValuta(valuta);
+                added = true;
+            }
             HttpContext.Current.Application.UnLock();
+
+            return added;
         }
 
         private Valuta findValuta(string iso)

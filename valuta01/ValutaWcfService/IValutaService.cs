@@ -30,6 +30,6 @@ namespace ValutaWcfService
         bool SetValutaExchangeRate(Valuta valuta);
 
         [OperationContract]
-        void AddValuta(Valuta valuta);
+        bool AddValuta(Valuta valuta);
     }
 }
