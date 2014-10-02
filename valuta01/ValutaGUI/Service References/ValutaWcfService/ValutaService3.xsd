@@ -9,8 +9,10 @@
   <xs:complexType name="Valuta">
     <xs:sequence>
       <xs:element minOccurs="0" name="ExchangeRate" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Iso" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Version" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Valuta" nillable="true" type="tns:Valuta" />

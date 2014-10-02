@@ -26,10 +26,16 @@ namespace ValutaGUI.ValutaWcfService {
         private decimal ExchangeRateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IsoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int VersionField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -50,6 +56,19 @@ namespace ValutaGUI.ValutaWcfService {
                 if ((this.ExchangeRateField.Equals(value) != true)) {
                     this.ExchangeRateField = value;
                     this.RaisePropertyChanged("ExchangeRate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -76,6 +95,19 @@ namespace ValutaGUI.ValutaWcfService {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Version {
+            get {
+                return this.VersionField;
+            }
+            set {
+                if ((this.VersionField.Equals(value) != true)) {
+                    this.VersionField = value;
+                    this.RaisePropertyChanged("Version");
                 }
             }
         }
@@ -125,10 +157,10 @@ namespace ValutaGUI.ValutaWcfService {
         System.Threading.Tasks.Task<string[]> GetDoneConversionsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/SetValutaExchangeRate", ReplyAction="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse")]
-        void SetValutaExchangeRate(ValutaGUI.ValutaWcfService.Valuta valuta);
+        bool SetValutaExchangeRate(ValutaGUI.ValutaWcfService.Valuta valuta);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/SetValutaExchangeRate", ReplyAction="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse")]
-        System.Threading.Tasks.Task SetValutaExchangeRateAsync(ValutaGUI.ValutaWcfService.Valuta valuta);
+        System.Threading.Tasks.Task<bool> SetValutaExchangeRateAsync(ValutaGUI.ValutaWcfService.Valuta valuta);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/AddValuta", ReplyAction="http://tempuri.org/IValutaService/AddValutaResponse")]
         void AddValuta(ValutaGUI.ValutaWcfService.Valuta valuta);
@@ -204,11 +236,11 @@ namespace ValutaGUI.ValutaWcfService {
             return base.Channel.GetDoneConversionsAsync();
         }
         
-        public void SetValutaExchangeRate(ValutaGUI.ValutaWcfService.Valuta valuta) {
-            base.Channel.SetValutaExchangeRate(valuta);
+        public bool SetValutaExchangeRate(ValutaGUI.ValutaWcfService.Valuta valuta) {
+            return base.Channel.SetValutaExchangeRate(valuta);
         }
         
-        public System.Threading.Tasks.Task SetValutaExchangeRateAsync(ValutaGUI.ValutaWcfService.Valuta valuta) {
+        public System.Threading.Tasks.Task<bool> SetValutaExchangeRateAsync(ValutaGUI.ValutaWcfService.Valuta valuta) {
             return base.Channel.SetValutaExchangeRateAsync(valuta);
         }
         

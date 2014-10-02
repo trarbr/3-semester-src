@@ -101,7 +101,11 @@ namespace ValutaGUI
                 decimal exchangeRate;
                 decimal.TryParse(exchangeRateTextBox.Text, out exchangeRate);
                 selectedValuta.ExchangeRate = exchangeRate;
-                valutaService.SetValutaExchangeRate(selectedValuta);
+                bool updated = valutaService.SetValutaExchangeRate(selectedValuta);
+                if (!updated)
+                {
+                    MessageBox.Show("Something went wrong. Please try again.");
+                }
                 refreshUI();
             }
             else
