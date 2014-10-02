@@ -31,7 +31,6 @@ namespace ValutaWcfService.Persistence
             return valutas;
         }
 
-
         public void UpdateValuta(Valuta valuta)
         {
         }

@@ -14,16 +14,29 @@ namespace ValutaWcfService
     [AspNetCompatibilityRequirements(RequirementsMode=AspNetCompatibilityRequirementsMode.Required)]
     public class ValutaService : IValutaService
     {
-        private IPersistence persistence;
+        private IPersistence persistence
+        {
+            get
+            {
+                if (HttpContext.Current.Application["persistence"] == null)
+                {
+                    IPersistence persistence = new RavenDbPersistence();
+                    persistence.Initialize();
+                    HttpContext.Current.Application["persistence"] = persistence;
+                }
+                return (IPersistence)HttpContext.Current.Application["persistence"];
+            }
+        }
         private List<Valuta> valutas
         {
             get
             {
-                if (HttpContext.Current.Application["valutas"] == null)
-                {
-                    HttpContext.Current.Application["valutas"] = persistence.GetAllValutas();
-                }
-                return (List<Valuta>)HttpContext.Current.Application["valutas"];
+                //if (HttpContext.Current.Application["valutas"] == null)
+                //{
+                //    HttpContext.Current.Application["valutas"] = persistence.GetAllValutas();
+                //}
+                //return (List<Valuta>)HttpContext.Current.Application["valutas"];
+                return persistence.GetAllValutas();
             }
         }
         private List<string> conversions
@@ -36,12 +49,6 @@ namespace ValutaWcfService
                 }
                 return (List<string>)HttpContext.Current.Session["conversions"];
             }
-        }
-
-        public ValutaService()
-        {
-            persistence = new FakePersistence();
-            persistence.Initialize();
         }
 
         public decimal FromDkkToEur(decimal dkkAmount)
@@ -110,9 +117,9 @@ namespace ValutaWcfService
         public void SetValutaExchangeRate(Valuta valuta)
         {
             HttpContext.Current.Application.Lock();
-            Valuta actualValuta = findValuta(valuta.Iso);
-            actualValuta.ExchangeRate = valuta.ExchangeRate;
-            persistence.UpdateValuta(actualValuta); // ??? updating the old one?!
+            //Valuta actualValuta = findValuta(valuta.Iso);
+            //actualValuta.ExchangeRate = valuta.ExchangeRate;
+            persistence.UpdateValuta(valuta); // ??? updating the old one?!
             HttpContext.Current.Application.UnLock();
         }
 

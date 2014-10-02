@@ -9,8 +9,8 @@ namespace ValutaWcfService
     [DataContract]
     public class Valuta
     {
-        private object valutaLock; // use this to lock on getters and setters - weird in DTO?
-
+        [DataMember]
+        public string Id { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]
