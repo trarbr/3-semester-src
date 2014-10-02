@@ -21,8 +21,6 @@ namespace ValutaWcfService
             {
                 if (HttpContext.Current.Application["valutas"] == null)
                 {
-                    persistence = new FakePersistence();
-                    persistence.Initialize();
                     HttpContext.Current.Application["valutas"] = persistence.GetAllValutas();
                 }
                 return (List<Valuta>)HttpContext.Current.Application["valutas"];
@@ -38,6 +36,12 @@ namespace ValutaWcfService
                 }
                 return (List<string>)HttpContext.Current.Session["conversions"];
             }
+        }
+
+        public ValutaService()
+        {
+            persistence = new FakePersistence();
+            persistence.Initialize();
         }
 
         public decimal FromDkkToEur(decimal dkkAmount)

@@ -24,7 +24,6 @@ namespace ValutaWcfService.Persistence
 
         public void InsertValuta(Valuta valuta)
         {
-            valutas.Add(valuta);
         }
 
         public List<Valuta> GetAllValutas()
@@ -35,7 +34,6 @@ namespace ValutaWcfService.Persistence
 
         public void UpdateValuta(Valuta valuta)
         {
-            throw new NotImplementedException();
         }
     }
 }
