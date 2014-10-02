@@ -41,14 +41,14 @@
             </Grid>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <Button x:Name="clearButton" Content="New Valuta" Margin="10" 
+            <Button x:Name="refreshButton" Content="Refresh the list" Margin="10" 
+                    Click="refreshButton_Click"/>
+            <Button x:Name="clearButton" Content="Clear" Margin="10" 
                     Click="clearButton_Click"/> 
             <Button x:Name="addValutaButton" Content="Add Valuta" Margin="10" 
                     Click="addValutaButton_Click"/>
             <Button x:Name="setExchangeRateButton" Content="Set Exchange Rate" Margin="10" 
                     IsEnabled="False" Click="setExchangeRateButton_Click"/>
-            <Button x:Name="refreshButton" Content="Refresh the list" Margin="10" 
-                    Click="refreshButton_Click"/>
         </StackPanel>
         <!--<TextBlock x:Name="messagesTextBox" Grid.Row="1" Text="bla"/>-->
     </Grid>

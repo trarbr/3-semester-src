@@ -57,10 +57,8 @@ namespace ValutaGUI
             }
             else
             {
+                clearTextBoxes();
                 selectedValuta = null;
-                nameTextBox.Text = "";
-                isoTextBox.Text = "";
-                exchangeRateTextBox.Text = "";
                 addValutaButton.IsEnabled = true;
                 setExchangeRateButton.IsEnabled = false;
             }
@@ -86,6 +84,14 @@ namespace ValutaGUI
 
             valutaService.AddValuta(valuta);
             refreshUI();
+            clearTextBoxes();
+        }
+
+        private void clearTextBoxes()
+        {
+            nameTextBox.Text = "";
+            isoTextBox.Text = "";
+            exchangeRateTextBox.Text = "";
         }
 
         private void setExchangeRateButton_Click(object sender, RoutedEventArgs e)
