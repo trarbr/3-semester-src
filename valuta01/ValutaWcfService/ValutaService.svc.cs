@@ -50,7 +50,6 @@ namespace ValutaWcfService
             decimal dkkToEurRate = findExchangeRate("EUR");
             euroAmount = dkkAmount / dkkToEurRate * 100;
             HttpContext.Current.Application.UnLock();
-            
 
             return euroAmount;
         }
@@ -90,7 +89,6 @@ namespace ValutaWcfService
 
             conversions.Add(String.Format("{0} {1} {2} {3}",
             amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
-
             HttpContext.Current.Application.UnLock();
 
             return newAmount;
