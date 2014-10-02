@@ -13,37 +13,21 @@ namespace ValutaWcfService.Persistence
 
         public RavenDbPersistence()
         {
-            store = new EmbeddableDocumentStore { RunInMemory = true };
-            //store = new EmbeddableDocumentStore
-            //{
-            //    DataDirectory = "Data",
-            //};
+            //store = new EmbeddableDocumentStore { RunInMemory = true };
+            store = new EmbeddableDocumentStore
+            {
+                DataDirectory = "Data",
+            };
         }
 
         public void Initialize()
         {
             store.Initialize();
-            FakePersistence p = new FakePersistence();
-            p.Initialize();
-            List<Valuta> valutas = p.GetAllValutas();
-
-            using (IDocumentSession session = store.OpenSession())
-            {
-                foreach (Valuta valuta in valutas)
-                {
-                    session.Store(valuta);
-                }
-                session.SaveChanges();
-            }
         }
 
         public void InsertValuta(Valuta valuta)
         {
-            using (IDocumentSession session = store.OpenSession())
-            {
-                session.Store(valuta);
-                session.SaveChanges();
-            }
+            saveValuta(valuta);
         }
 
         public List<Valuta> GetAllValutas()
@@ -61,6 +45,11 @@ namespace ValutaWcfService.Persistence
         }
 
         public void UpdateValuta(Valuta valuta)
+        {
+            saveValuta(valuta);
+        }
+
+        private void saveValuta(Valuta valuta)
         {
             using (IDocumentSession session = store.OpenSession())
             {
