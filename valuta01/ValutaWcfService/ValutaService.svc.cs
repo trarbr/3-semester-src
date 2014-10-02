@@ -7,26 +7,23 @@ using System.ServiceModel.Activation;
 using System.Text;
 using System.Web;
 
+using ValutaWcfService.Persistence;
+
 namespace ValutaWcfService
 {
     [AspNetCompatibilityRequirements(RequirementsMode=AspNetCompatibilityRequirementsMode.Required)]
     public class ValutaService : IValutaService
     {
+        private IPersistence persistence;
         private List<Valuta> valutas
         {
             get
             {
                 if (HttpContext.Current.Application["valutas"] == null)
                 {
-                    HttpContext.Current.Application["valutas"] = new List<Valuta>()
-                    {
-                        new Valuta("Canada", "CAD", 492.27m),
-                        new Valuta("Euro", "EUR", 745.99m),
-                        new Valuta("Storbritannien", "GBP", 947.99m),
-                        new Valuta("Norge", "NOK", 90.34m),
-                        new Valuta("Sverige", "SEK", 78.21m),
-                        new Valuta("Amerika", "USD", 524.02m),
-                    };
+                    persistence = new FakePersistence();
+                    persistence.Initialize();
+                    HttpContext.Current.Application["valutas"] = persistence.GetAllValutas();
                 }
                 return (List<Valuta>)HttpContext.Current.Application["valutas"];
             }
@@ -113,6 +110,7 @@ namespace ValutaWcfService
             HttpContext.Current.Application.Lock();
             Valuta actualValuta = findValuta(valuta.Iso);
             actualValuta.ExchangeRate = valuta.ExchangeRate;
+            persistence.UpdateValuta(actualValuta); // ??? updating the old one?!
             HttpContext.Current.Application.UnLock();
         }
 
@@ -120,6 +118,7 @@ namespace ValutaWcfService
         {
             HttpContext.Current.Application.Lock();
             valutas.Add(valuta);
+            persistence.InsertValuta(valuta);
             HttpContext.Current.Application.UnLock();
         }
 
