@@ -18,7 +18,7 @@ namespace ValutaWcfService
         {
             get
             {
-                // The persistence class is stored in the Application.
+                // The persistence class is global for the entire Application.
                 if (HttpContext.Current.Application["persistence"] == null)
                 {
                     IPersistence persistence = new RavenDbPersistence();
@@ -97,7 +97,7 @@ namespace ValutaWcfService
             }
 
             conversions.Add(String.Format("{0} {1} {2} {3}",
-            amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
+                amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
             HttpContext.Current.Application.UnLock();
 
             return newAmount;

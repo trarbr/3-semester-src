@@ -41,6 +41,15 @@ namespace ValutaGUI
 
             masterView.ItemsSource = null;
             masterView.ItemsSource = valutas;
+
+            fromValutaComboBox.Items.Clear();
+            toValutaComboBox.Items.Clear();
+
+            foreach (ValutaWcfService.Valuta valuta in valutas)
+            {
+                fromValutaComboBox.Items.Add(valuta.Iso);
+                toValutaComboBox.Items.Add(valuta.Iso);
+            }
         }
 
         private void masterView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -124,6 +133,25 @@ namespace ValutaGUI
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
             refreshUI();
+        }
+
+        private void convertButton_Click(object sender, RoutedEventArgs e)
+        {
+            decimal fromAmount;
+            decimal.TryParse(fromAmountTextBox.Text, out fromAmount);
+            string fromIso = (string)fromValutaComboBox.SelectedItem;
+            string toIso = (string)toValutaComboBox.SelectedItem;
+
+            decimal toAmount = valutaService.ConvertFromIsoToIso(fromIso, toIso, fromAmount);
+
+            toAmountTextBox.Text = toAmount.ToString("N2");
+        }
+
+        private void listConversionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            string[] conversions = valutaService.GetDoneConversions();
+            conversionsListBox.ItemsSource = null;
+            conversionsListBox.ItemsSource = conversions;
         }
     }
 }
