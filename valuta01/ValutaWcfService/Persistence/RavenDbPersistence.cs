@@ -11,13 +11,16 @@ namespace ValutaWcfService.Persistence
     {
         private IDocumentStore store;
 
-        public RavenDbPersistence()
+        public RavenDbPersistence(bool runInMemory)
         {
-            //store = new EmbeddableDocumentStore { RunInMemory = true };
-            store = new EmbeddableDocumentStore
+            if (runInMemory)
             {
-                DataDirectory = "Data",
-            };
+                store = new EmbeddableDocumentStore { RunInMemory = true };
+            }
+            else
+            {
+                store = new EmbeddableDocumentStore { DataDirectory = "Data" };
+            }
         }
 
         public void Initialize()
