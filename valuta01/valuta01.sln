@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValutaGUI", "ValutaGUI\Valu
 		{98EC84F7-B6E1-4BD5-927E-83F6D50FD661} = {98EC84F7-B6E1-4BD5-927E-83F6D50FD661}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValutaWebForm", "ValutaWebForm\ValutaWebForm.csproj", "{07711EB0-7C35-488B-B91C-AAC6BBC10215}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98EC84F7-B6E1-4BD5-927E-83F6D50FD661} = {98EC84F7-B6E1-4BD5-927E-83F6D50FD661}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +36,10 @@ Global
 		{649F5C79-81DB-4DD2-9854-67BD19396819}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{649F5C79-81DB-4DD2-9854-67BD19396819}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{649F5C79-81DB-4DD2-9854-67BD19396819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07711EB0-7C35-488B-B91C-AAC6BBC10215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07711EB0-7C35-488B-B91C-AAC6BBC10215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07711EB0-7C35-488B-B91C-AAC6BBC10215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07711EB0-7C35-488B-B91C-AAC6BBC10215}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

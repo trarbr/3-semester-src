@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ValutaGUI.ValutaWcfService {
+namespace ValutaWebForm.ValutaService {
     using System.Runtime.Serialization;
     using System;
     
@@ -123,7 +123,7 @@ namespace ValutaGUI.ValutaWcfService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ValutaWcfService.IValutaService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ValutaService.IValutaService")]
     public interface IValutaService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/FromDkkToEur", ReplyAction="http://tempuri.org/IValutaService/FromDkkToEurResponse")]
@@ -139,10 +139,10 @@ namespace ValutaGUI.ValutaWcfService {
         System.Threading.Tasks.Task<decimal> GetExchangeRateAsync(string iso);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetValutas", ReplyAction="http://tempuri.org/IValutaService/GetValutasResponse")]
-        ValutaGUI.ValutaWcfService.Valuta[] GetValutas();
+        ValutaWebForm.ValutaService.Valuta[] GetValutas();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/GetValutas", ReplyAction="http://tempuri.org/IValutaService/GetValutasResponse")]
-        System.Threading.Tasks.Task<ValutaGUI.ValutaWcfService.Valuta[]> GetValutasAsync();
+        System.Threading.Tasks.Task<ValutaWebForm.ValutaService.Valuta[]> GetValutasAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/ConvertFromIsoToIso", ReplyAction="http://tempuri.org/IValutaService/ConvertFromIsoToIsoResponse")]
         decimal ConvertFromIsoToIso(string fromIso, string toIso, decimal amount);
@@ -157,25 +157,25 @@ namespace ValutaGUI.ValutaWcfService {
         System.Threading.Tasks.Task<string[]> GetDoneConversionsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/SetValutaExchangeRate", ReplyAction="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse")]
-        bool SetValutaExchangeRate(ValutaGUI.ValutaWcfService.Valuta valuta);
+        bool SetValutaExchangeRate(ValutaWebForm.ValutaService.Valuta valuta);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/SetValutaExchangeRate", ReplyAction="http://tempuri.org/IValutaService/SetValutaExchangeRateResponse")]
-        System.Threading.Tasks.Task<bool> SetValutaExchangeRateAsync(ValutaGUI.ValutaWcfService.Valuta valuta);
+        System.Threading.Tasks.Task<bool> SetValutaExchangeRateAsync(ValutaWebForm.ValutaService.Valuta valuta);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/AddValuta", ReplyAction="http://tempuri.org/IValutaService/AddValutaResponse")]
-        bool AddValuta(ValutaGUI.ValutaWcfService.Valuta valuta);
+        bool AddValuta(ValutaWebForm.ValutaService.Valuta valuta);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IValutaService/AddValuta", ReplyAction="http://tempuri.org/IValutaService/AddValutaResponse")]
-        System.Threading.Tasks.Task<bool> AddValutaAsync(ValutaGUI.ValutaWcfService.Valuta valuta);
+        System.Threading.Tasks.Task<bool> AddValutaAsync(ValutaWebForm.ValutaService.Valuta valuta);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IValutaServiceChannel : ValutaGUI.ValutaWcfService.IValutaService, System.ServiceModel.IClientChannel {
+    public interface IValutaServiceChannel : ValutaWebForm.ValutaService.IValutaService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ValutaServiceClient : System.ServiceModel.ClientBase<ValutaGUI.ValutaWcfService.IValutaService>, ValutaGUI.ValutaWcfService.IValutaService {
+    public partial class ValutaServiceClient : System.ServiceModel.ClientBase<ValutaWebForm.ValutaService.IValutaService>, ValutaWebForm.ValutaService.IValutaService {
         
         public ValutaServiceClient() {
         }
@@ -212,11 +212,11 @@ namespace ValutaGUI.ValutaWcfService {
             return base.Channel.GetExchangeRateAsync(iso);
         }
         
-        public ValutaGUI.ValutaWcfService.Valuta[] GetValutas() {
+        public ValutaWebForm.ValutaService.Valuta[] GetValutas() {
             return base.Channel.GetValutas();
         }
         
-        public System.Threading.Tasks.Task<ValutaGUI.ValutaWcfService.Valuta[]> GetValutasAsync() {
+        public System.Threading.Tasks.Task<ValutaWebForm.ValutaService.Valuta[]> GetValutasAsync() {
             return base.Channel.GetValutasAsync();
         }
         
@@ -236,19 +236,19 @@ namespace ValutaGUI.ValutaWcfService {
             return base.Channel.GetDoneConversionsAsync();
         }
         
-        public bool SetValutaExchangeRate(ValutaGUI.ValutaWcfService.Valuta valuta) {
+        public bool SetValutaExchangeRate(ValutaWebForm.ValutaService.Valuta valuta) {
             return base.Channel.SetValutaExchangeRate(valuta);
         }
         
-        public System.Threading.Tasks.Task<bool> SetValutaExchangeRateAsync(ValutaGUI.ValutaWcfService.Valuta valuta) {
+        public System.Threading.Tasks.Task<bool> SetValutaExchangeRateAsync(ValutaWebForm.ValutaService.Valuta valuta) {
             return base.Channel.SetValutaExchangeRateAsync(valuta);
         }
         
-        public bool AddValuta(ValutaGUI.ValutaWcfService.Valuta valuta) {
+        public bool AddValuta(ValutaWebForm.ValutaService.Valuta valuta) {
             return base.Channel.AddValuta(valuta);
         }
         
-        public System.Threading.Tasks.Task<bool> AddValutaAsync(ValutaGUI.ValutaWcfService.Valuta valuta) {
+        public System.Threading.Tasks.Task<bool> AddValutaAsync(ValutaWebForm.ValutaService.Valuta valuta) {
             return base.Channel.AddValutaAsync(valuta);
         }
     }

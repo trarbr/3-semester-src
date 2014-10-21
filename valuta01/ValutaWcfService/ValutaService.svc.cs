@@ -22,7 +22,8 @@ namespace ValutaWcfService
                 if (HttpContext.Current.Application["persistence"] == null)
                 {
                     bool runInMemory = false;
-                    IPersistence persistence = new RavenDbPersistence(runInMemory);
+                    //IPersistence persistence = new RavenDbPersistence(runInMemory);
+                    IPersistence persistence = new FakePersistence();
                     persistence.Initialize();
                     HttpContext.Current.Application["persistence"] = persistence;
                 }
