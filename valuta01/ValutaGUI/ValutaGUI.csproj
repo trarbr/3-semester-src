@@ -55,11 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Service References\ValutaWcfService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -96,46 +91,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\ValutaWcfService\ValutaGUI.ValutaWcfService.Valuta.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ValutaWcfService\ValutaService.wsdl" />
-    <None Include="Service References\ValutaWcfService\ValutaService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ValutaWcfService\ValutaService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ValutaWcfService\ValutaService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ValutaWcfService\ValutaService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ValutaWcfService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ValutaWcfService\ValutaService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ValutaWcfService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ValutaWcfService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ValutaWcfService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
