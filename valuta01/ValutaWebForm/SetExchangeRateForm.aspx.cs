@@ -11,15 +11,11 @@ namespace ValutaWebForm
 {
     public partial class FindValutaForm : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                //Valuta[] valutas = ValutaServiceContainer.ValutaService.GetValutas();
-                var service = new ValutaServiceClient();
-                var valutas = service.GetValutas();
-                ViewState["valutas"] = valutas;
+                Valuta[] valutas = ValutaServiceContainer.ValutaService.GetValutas();
                 foreach (var valuta in valutas)
                 {
                     valutaDropDown.Items.Add(valuta.Iso);
@@ -35,13 +31,20 @@ namespace ValutaWebForm
 
             selectedValuta.ExchangeRate = exchangeRate;
 
-            ValutaServiceContainer.ValutaService.SetValutaExchangeRate(selectedValuta);
+            bool success = ValutaServiceContainer.ValutaService.SetValutaExchangeRate(selectedValuta);
+            if (success)
+            {
+                successLabel.Text = "Exchange Rate updated.";
+            }
+            else
+            {
+                successLabel.Text = "Setting the exchange rate failed.";
+            }
         }
 
         private Valuta findValuta(string iso)
         {
-            //Valuta[] valutas = ValutaServiceContainer.ValutaService.GetValutas();
-            Valuta[] valutas = (Valuta[])ViewState["valutas"];
+            Valuta[] valutas = ValutaServiceContainer.ValutaService.GetValutas();
 
             return valutas.Where(v => v.Iso == iso).FirstOrDefault();
         }
