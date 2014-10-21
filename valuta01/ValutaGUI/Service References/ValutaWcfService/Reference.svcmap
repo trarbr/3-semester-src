@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="df6f297d-c310-404c-beaf-f6a2a04df329" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1065/ValutaService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ValutaService.xsd" MetadataType="Schema" ID="edcd5f57-42dd-4058-862e-c0ae9ab35156" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ValutaService.wsdl" MetadataType="Wsdl" ID="2c93cabd-c4cf-4455-b00c-107bac3f4421" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?wsdl" />
+    <MetadataFile FileName="ValutaService1.xsd" MetadataType="Schema" ID="95fbf16b-9d41-40a6-a6b4-001b7f907cea" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ValutaService2.xsd" MetadataType="Schema" ID="b74d5dbe-7315-4aa4-8aa4-52ef302f6112" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ValutaService3.xsd" MetadataType="Schema" ID="c9f10fdf-2b7b-47f2-93a1-8e67355761a0" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ValutaService.disco" MetadataType="Disco" ID="2df2562b-4c3a-4ea0-a5fb-27b0a41d91ea" SourceId="1" SourceUrl="http://localhost:1065/ValutaService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
