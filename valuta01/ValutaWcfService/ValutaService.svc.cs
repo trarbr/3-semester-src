@@ -22,8 +22,8 @@ namespace ValutaWcfService
                 if (HttpContext.Current.Application["persistence"] == null)
                 {
                     bool runInMemory = false;
-                    //IPersistence persistence = new RavenDbPersistence(runInMemory);
-                    IPersistence persistence = new FakePersistence();
+                    IPersistence persistence = new RavenDbPersistence(runInMemory);
+                    //IPersistence persistence = new FakePersistence();
                     persistence.Initialize();
                     HttpContext.Current.Application["persistence"] = persistence;
                 }
@@ -58,9 +58,16 @@ namespace ValutaWcfService
         {
             decimal euroAmount = 0m;
             HttpContext.Current.Application.Lock();
-            decimal dkkToEurRate = findExchangeRate("EUR");
-            euroAmount = dkkAmount / dkkToEurRate * 100;
-            HttpContext.Current.Application.UnLock();
+
+            try
+            {
+                decimal dkkToEurRate = findExchangeRate("EUR");
+                euroAmount = dkkAmount / dkkToEurRate * 100;
+            }
+            finally
+            {
+                HttpContext.Current.Application.UnLock();
+            }
 
             return euroAmount;
         }
@@ -69,8 +76,14 @@ namespace ValutaWcfService
         {
             decimal exchangeRate;
             HttpContext.Current.Application.Lock();
-            exchangeRate = findExchangeRate(iso);
-            HttpContext.Current.Application.UnLock();
+            try
+            {
+                exchangeRate = findExchangeRate(iso);
+            }
+            finally
+            {
+                HttpContext.Current.Application.UnLock();
+            }
 
             return exchangeRate;
         }
@@ -79,8 +92,14 @@ namespace ValutaWcfService
         {
             Valuta[] valutasArray;
             HttpContext.Current.Application.Lock();
-            valutasArray = valutas.ToArray();
-            HttpContext.Current.Application.UnLock();
+            try
+            {
+                valutasArray = valutas.ToArray();
+            }
+            finally
+            {
+                HttpContext.Current.Application.UnLock();
+            }
 
             return valutasArray;
         }
@@ -92,15 +111,17 @@ namespace ValutaWcfService
             try
             {
                 newAmount = amount * findExchangeRate(fromIso) / findExchangeRate(toIso);
+                conversions.Add(String.Format("{0} {1} {2} {3}",
+                    amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
             }
             catch (DivideByZeroException)
             {
                 newAmount = 0m;
             }
-
-            conversions.Add(String.Format("{0} {1} {2} {3}",
-                amount.ToString("N2"), fromIso, newAmount.ToString("N2"), toIso));
-            HttpContext.Current.Application.UnLock();
+            finally
+            {
+                HttpContext.Current.Application.UnLock();
+            }
 
             return newAmount;
         }
@@ -109,8 +130,14 @@ namespace ValutaWcfService
         {
             string[] conversionsArray;
             HttpContext.Current.Application.Lock();
-            conversionsArray = conversions.ToArray();
-            HttpContext.Current.Application.UnLock();
+            try
+            {
+                conversionsArray = conversions.ToArray();
+            }
+            finally
+            {
+                HttpContext.Current.Application.UnLock();
+            }
 
             return conversionsArray;
         }
@@ -120,16 +147,22 @@ namespace ValutaWcfService
         {
             bool updated = false;
             HttpContext.Current.Application.Lock();
-            Valuta actualValuta = findValuta(valuta.Iso);
-            if (valuta.Version == actualValuta.Version)
+            try
             {
-                valuta.Version++;
-                actualValuta.Version = valuta.Version;
-                actualValuta.ExchangeRate = valuta.ExchangeRate;
-                persistence.UpdateValuta(valuta);
-                updated = true;
+                Valuta actualValuta = findValuta(valuta.Iso);
+                if (valuta.Version == actualValuta.Version)
+                {
+                    valuta.Version++;
+                    actualValuta.Version = valuta.Version;
+                    actualValuta.ExchangeRate = valuta.ExchangeRate;
+                    persistence.UpdateValuta(valuta);
+                    updated = true;
+                }
             }
-            HttpContext.Current.Application.UnLock();
+            finally
+            {
+                HttpContext.Current.Application.UnLock();
+            }
 
             return updated;
         }
@@ -139,13 +172,19 @@ namespace ValutaWcfService
         {
             bool added = false;
             HttpContext.Current.Application.Lock();
-            if (findValuta(valuta.Iso) == null)
+            try
             {
-                valutas.Add(valuta);
-                persistence.InsertValuta(valuta);
-                added = true;
+                if (findValuta(valuta.Iso) == null)
+                {
+                    valutas.Add(valuta);
+                    persistence.InsertValuta(valuta);
+                    added = true;
+                }
             }
-            HttpContext.Current.Application.UnLock();
+            finally
+            {
+                HttpContext.Current.Application.UnLock();
+            }
 
             return added;
         }
