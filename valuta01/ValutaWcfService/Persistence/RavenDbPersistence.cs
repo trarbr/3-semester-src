@@ -1,4 +1,5 @@
 ﻿using Raven.Client;
+using Raven.Client.Document;
 using Raven.Client.Embedded;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,12 @@ namespace ValutaWcfService.Persistence
             }
             else
             {
-                store = new EmbeddableDocumentStore { DataDirectory = "Data" };
+                //store = new EmbeddableDocumentStore { DataDirectory = "Data" };
+                store = new DocumentStore 
+                { 
+                    Url = "http://localhost:8080",
+                    DefaultDatabase = "ValutaDB"
+                };
             }
         }
 
