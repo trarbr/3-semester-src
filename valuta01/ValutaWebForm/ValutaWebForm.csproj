@@ -59,6 +59,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddValutaForm.aspx" />
     <Content Include="SetExchangeRateForm.aspx" />
     <Content Include="Service References\ValutaService\ValutaService.disco" />
     <Content Include="Service References\ValutaService\configuration91.svcinfo" />
@@ -74,6 +75,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddValutaForm.aspx.cs">
+      <DependentUpon>AddValutaForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddValutaForm.aspx.designer.cs">
+      <DependentUpon>AddValutaForm.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SetExchangeRateForm.aspx.cs">
       <DependentUpon>SetExchangeRateForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -98,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Service References\ValutaService\ValutaService.wsdl" />
+    <Content Include="App_Themes\NiceTheme\ButtonSkin.skin" />
     <None Include="Service References\ValutaService\ValutaService.xsd">
       <SubType>Designer</SubType>
     </None>
