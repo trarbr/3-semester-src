@@ -11,12 +11,14 @@ namespace ValutaWcfService.Persistence
     public class RavenDbPersistence : IPersistence
     {
         private IDocumentStore store;
+        private bool runsInMemory;
 
         public RavenDbPersistence(bool runInMemory)
         {
             if (runInMemory)
             {
                 store = new EmbeddableDocumentStore { RunInMemory = true };
+                runsInMemory = true;
             }
             else
             {
@@ -32,6 +34,17 @@ namespace ValutaWcfService.Persistence
         public void Initialize()
         {
             store.Initialize();
+            if (runsInMemory)
+            {
+                // feed it starter values from fakepersistence
+                IPersistence fakes = new FakePersistence();
+                fakes.Initialize();
+                var valutas = fakes.GetAllValutas();
+                foreach (var valuta in valutas)
+                {
+                    saveValuta(valuta);
+                }
+            }
         }
 
         public void InsertValuta(Valuta valuta)
