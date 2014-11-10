@@ -21,7 +21,7 @@ namespace ValutaWcfService
                 // The persistence class is global for the entire Application.
                 if (HttpContext.Current.Application["persistence"] == null)
                 {
-                    bool runInMemory = false;
+                    bool runInMemory = true;
                     IPersistence persistence = new RavenDbPersistence(runInMemory);
                     //IPersistence persistence = new FakePersistence();
                     persistence.Initialize();
