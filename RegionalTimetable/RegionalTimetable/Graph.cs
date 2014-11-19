@@ -23,12 +23,12 @@ namespace RegionalTimetable
             {22, -1, -1, -1, -1, -1, -1, 67, -1}
         };
 
-        public void PrintWidthFirstTraversal()
+        public List<string> GetBreadthFirstTraversal()
         {
             List<string> visitedNodes = new List<string>();
             Queue<string> nodesToVisit = new Queue<string>();
 
-            string startingCity = cities[2];
+            string startingCity = cities[7];
             nodesToVisit.Enqueue(startingCity);
 
             while (nodesToVisit.Count != 0)
@@ -49,11 +49,10 @@ namespace RegionalTimetable
                         }
                     }
                     visitedNodes.Add(city);
-                    Console.WriteLine("Visited " + city);
                 }
             }
 
-            Console.WriteLine("No more cities to print");
+            return visitedNodes;
         }
 
         public string GetMatrixAsString()
