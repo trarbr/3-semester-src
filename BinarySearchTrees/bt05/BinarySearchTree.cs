@@ -8,16 +8,16 @@ namespace bt05
 {
     public class BinarySearchTree
     {
-        Node root; 
+        public Node Root { get; private set; }
 
         public BinarySearchTree()
         {
-            root = null;
+            Root = null;
         }
 
         public int Search(int value)
         {
-            Node foundNode = search(root, value);
+            Node foundNode = search(Root, value);
 
             if (foundNode == null)
             {
@@ -54,13 +54,13 @@ namespace bt05
             Node nodeToInsert = new Node() { Value = value };
 
             // move the null check into insert?
-            if (root == null)
+            if (Root == null)
             {
-                root = nodeToInsert;
+                Root = nodeToInsert;
             }
             else
             {
-                insert(root, nodeToInsert);
+                insert(Root, nodeToInsert);
             }
         }
         
@@ -92,7 +92,7 @@ namespace bt05
 
         public void Delete(int value)
         {
-            root = delete(root, value);
+            Root = delete(Root, value);
         }
 
         private Node delete(Node nodeToCheck, int valueToDelete)
@@ -153,7 +153,7 @@ namespace bt05
         public int[] GetInOrder()
         {
             List<Node> nodes = new List<Node>();
-            addNodeInOrder(root, nodes);
+            addNodeInOrder(Root, nodes);
             int[] nodeValues = nodes.Select<Node, int>(node => node.Value).ToArray();
 
             return nodeValues;
@@ -173,7 +173,7 @@ namespace bt05
         public int[] GetPreOrder()
         {
             List<Node> nodes = new List<Node>();
-            addNodePreOrder(root, nodes);
+            addNodePreOrder(Root, nodes);
             int[] nodeValues = nodes.Select<Node, int>(node => node.Value).ToArray();
 
             return nodeValues;
@@ -193,7 +193,7 @@ namespace bt05
         public int[] GetPostOrder()
         {
             List<Node> nodes = new List<Node>();
-            addNodePostOrder(root, nodes);
+            addNodePostOrder(Root, nodes);
             int[] nodeValues = nodes.Select<Node, int>(node => node.Value).ToArray();
 
             return nodeValues;
@@ -210,7 +210,7 @@ namespace bt05
             nodes.Add(nodeToAdd);
         }
 
-        class Node
+        public class Node
         {
             public int Value { get; set; }
             public Node LeftChild { get; set; }
