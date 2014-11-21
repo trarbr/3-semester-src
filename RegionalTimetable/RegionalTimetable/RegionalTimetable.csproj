@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Edge.cs" />
-    <Compile Include="Graph.cs" />
-    <Compile Include="GraphDict.cs" />
+    <Compile Include="MatrixGraph.cs" />
+    <Compile Include="DictGraph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vertex.cs" />

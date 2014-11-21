@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RegionalTimetable
 {
-    class Graph
+    class MatrixGraph
     {
         private string[] cities = new string[] {"Odense", "Middelfart", "Assens", "Ringe", 
             "Svendborg", "Nyborg", "Kerteminde", "Bogense", "Otterup"};

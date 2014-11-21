@@ -11,14 +11,14 @@ namespace RegionalTimetable
     {
         static void Main(string[] args)
         {
-            TestGraphDict();
+            TestMatrixGraph();
 
             Console.ReadLine();
         }
 
-        static void TestGraphDict()
+        static void TestDictGraph()
         {
-            GraphDict g = new GraphDict();
+            DictGraph g = new DictGraph();
 
             var odense = g.AddVertex("Odense");
             var kerteminde = g.AddVertex("Kerteminde");
@@ -66,13 +66,13 @@ namespace RegionalTimetable
             }
         }
 
-        static void TestGraph()
+        static void TestMatrixGraph()
         {
-            Graph g = new Graph();
+            MatrixGraph g = new MatrixGraph();
 
             string s = g.GetMatrixAsString();
 
-            File.WriteAllText("lookatme.txt", s);
+            File.WriteAllText("graph_as_matrix.txt", s);
 
             Console.WriteLine(s);
             var cities = g.GetBreadthFirstTraversal();

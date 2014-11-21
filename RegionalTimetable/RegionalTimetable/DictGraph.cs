@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace RegionalTimetable
 {
-    public class GraphDict
+    public class DictGraph
     {
         private Dictionary<Vertex, List<Edge>> graph;
 
-        public GraphDict()
+        public DictGraph()
         {
             graph = new Dictionary<Vertex, List<Edge>>();
         }
