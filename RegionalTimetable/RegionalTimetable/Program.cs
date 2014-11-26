@@ -11,7 +11,9 @@ namespace RegionalTimetable
     {
         static void Main(string[] args)
         {
-            TestMatrixGraph();
+            //TestMatrixGraph();
+
+            TestDictGraph();
 
             Console.ReadLine();
         }
@@ -63,6 +65,18 @@ namespace RegionalTimetable
             foreach (var vertex in depth)
             {
                 Console.WriteLine(vertex.Name);
+            }
+
+            Console.WriteLine("==========");
+
+            var tree = g.RecursiveMinimumSpanningTreePrim();
+
+            var nodes = tree.Item1;
+            var edges = tree.Item2;
+
+            foreach (var edge in edges)
+            {
+                Console.WriteLine("{0}, {1}, {2}", edge.To.Name, edge.From.Name, edge.Weight.ToString());
             }
         }
 

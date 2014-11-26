@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RegionalTimetable
 {
-    public class Edge
+    public class Edge : IComparable<Edge>
     {
         public Vertex From { get; set; }
         public Vertex To { get; set; }
@@ -22,6 +22,11 @@ namespace RegionalTimetable
             {
                 return From;
             }
+        }
+
+        public int CompareTo(Edge other)
+        {
+            return Weight.CompareTo(other.Weight);
         }
     }
 }

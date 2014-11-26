@@ -17,22 +17,104 @@ namespace RegionalTimetable
 
         public Vertex AddVertex(string name)
         {
-            var vertex = new Vertex() { Name = name };
-            var edges = new List<Edge>();
-
-            graph.Add(vertex, edges);
+            // check if vertex already exists - assuming all vertexes must have unique names 
+            var vertex = graph.Keys.FirstOrDefault<Vertex>(v => v.Name == name);
+            if (vertex == null)
+            {
+                vertex = new Vertex() { Name = name };
+                var edges = new List<Edge>();
+                graph.Add(vertex, edges);
+            }
 
             return vertex;
         }
 
         public Edge AddEdge(Vertex from, Vertex to, int weight)
         {
-            var edge = new Edge() { From = from, To = to, Weight = weight };
+            Edge edge = null;
 
-            graph[from].Add(edge);
-            graph[to].Add(edge);
+            // Test that the vertexes exist
+            List<Edge> fromEdges;
+            List<Edge> toEdges; 
+            bool gotFrom = graph.TryGetValue(from, out fromEdges);
+            bool gotTo = graph.TryGetValue(to, out toEdges);
+
+            if (gotFrom && gotTo)
+            {
+                edge = new Edge() { From = from, To = to, Weight = weight };
+
+                fromEdges.Add(edge);
+                toEdges.Add(edge);
+            }
 
             return edge;
+        }
+
+        public Tuple<List<Vertex>, List<Edge>> RecursiveMinimumSpanningTreePrim(
+            List<Vertex> vertices = null, List<Edge> edges = null)
+        {
+            if (vertices == null)
+            {
+                vertices = new List<Vertex>();
+                edges = new List<Edge>();
+
+                // pick random starting vertex
+                var random = new Random();
+                var startingNumber = random.Next(0, graph.Keys.Count);
+                var startingVertex = graph.Keys.ToArray<Vertex>()[startingNumber];
+                //startingVertex = graph.Keys.ToArray<Vertex>()[0];
+
+                // find shortest path from starting vertex
+                var connectedEdges = graph[startingVertex];
+                var cheapestEdge = connectedEdges.Min<Edge>();
+
+                edges.Add(cheapestEdge);
+                vertices.Add(cheapestEdge.To);
+                vertices.Add(cheapestEdge.From);
+            }
+            else
+            {
+                // make a list of all edges that we are connected to...
+                var connectedEdges = new HashSet<Edge>();
+                foreach (var vertex in vertices)
+                {
+                    foreach (var edge in graph[vertex])
+                    {
+                        if (!edges.Contains(edge))
+                        {
+                            connectedEdges.Add(edge);
+                        }
+                    }
+                }
+
+                //  ...and filter those whose To and From are already in vertices
+                var newEdges = connectedEdges.Where<Edge>(
+                    e => !(vertices.Contains(e.From) && vertices.Contains(e.To))).ToList<Edge>();
+
+                // now get the cheapest edge..
+                var cheapestEdge = newEdges.Min<Edge>();
+                edges.Add(cheapestEdge);
+
+                // ... and add the vertex which is not already in the list
+                if (vertices.Contains(cheapestEdge.To))
+                {
+                    vertices.Add(cheapestEdge.From);
+                }
+                else
+                {
+                    vertices.Add(cheapestEdge.To);
+                }
+            }
+
+            // recurse
+            if (vertices.Count == graph.Keys.Count)
+            {
+                return new Tuple<List<Vertex>,List<Edge>>(vertices, edges);
+            }
+            else
+            {
+                return RecursiveMinimumSpanningTreePrim(vertices, edges);
+            }
         }
 
         public List<Vertex> BreadthFirstTraversal()
