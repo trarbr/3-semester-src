@@ -13,9 +13,27 @@ namespace RegionalTimetable
         {
             //TestMatrixGraph();
 
-            TestDictGraph();
+            //TestDictGraph();
+
+            TestLexer();
 
             Console.ReadLine();
+        }
+
+        static void TestLexer()
+        {
+            //var Lexer = new Lexer(new DummyTokenizer());
+            string filename = @"C:\Users\troels\troe3159\3-semester\Hand-out\EBNF_GrafSproglaerer_RuteplanCase\RKP.txt";
+            var lexer = new Lexer(new FileTokenizer(filename));
+
+            var tokens = lexer.GetTokens();
+            foreach (var token in tokens)
+            {
+                if (token.Type != Token.TokenType.Whitespace)
+                {
+                    Console.WriteLine(token.Type + " " + token.Lexeme);
+                }
+            }
         }
 
         static void TestDictGraph()

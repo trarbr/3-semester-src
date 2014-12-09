@@ -41,11 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyTokenizer.cs" />
     <Compile Include="Edge.cs" />
+    <Compile Include="FileTokenizer.cs" />
+    <Compile Include="ITokenizer.cs" />
+    <Compile Include="Lexer.cs" />
     <Compile Include="MatrixGraph.cs" />
     <Compile Include="DictGraph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Token.cs" />
     <Compile Include="Vertex.cs" />
   </ItemGroup>
   <ItemGroup>
