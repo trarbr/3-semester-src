@@ -17,8 +17,10 @@ namespace RegionalTimetableApp.Parsing
             index = -1;
             tokens = new List<Token>()
             {
+                // can't handle an end after a route number or city
                 new Token(Token.TokenType.RouteNumber, "#123", 0),
                 new Token(Token.TokenType.City, "odense", 1),
+                new Token(Token.TokenType.End, "\0", 1),
                 new Token(Token.TokenType.Time, "13:30", 1),
                 new Token(Token.TokenType.End, "\0", 1)
             };

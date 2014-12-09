@@ -28,10 +28,10 @@ namespace RegionalTimetableApp
 
         static void TestParser()
         {
-            //var parser = new Parser(new DummyTokenGenerator());
-            string filename = @"C:\Users\troels\troe3159\3-semester\Hand-out\EBNF_GrafSproglaerer_RuteplanCase\RKP.txt";
-            var lexer = new Lexer(new FileCharGenerator(filename));
-            var parser = new Parser(new LexerTokenGenerator(lexer));
+            var parser = new Parser(new DummyTokenGenerator());
+            //string filename = @"C:\Users\troels\troe3159\3-semester\Hand-out\EBNF_GrafSproglaerer_RuteplanCase\RKP.txt";
+            //var lexer = new Lexer(new FileCharGenerator(filename));
+            //var parser = new Parser(new LexerTokenGenerator(lexer));
 
             var result = parser.Parse();
 
