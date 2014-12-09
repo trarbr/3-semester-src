@@ -33,7 +33,7 @@ namespace RegionalTimetable
             {
                 if (token.Type != Token.TokenType.Whitespace)
                 {
-                    Console.WriteLine(token.Type + " " + token.Lexeme);
+                    Console.WriteLine(token.Type + " " + token.Lexeme + " " + token.LineNo);
                 }
             }
         }

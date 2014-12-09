@@ -9,18 +9,18 @@ namespace RegionalTimetable.LexicalAnalysis
 {
     class Lexer
     {
-        private ICharGenerator tokenizer;
+        private ICharGenerator charGenerator;
+        private int lineNo;
 
-        public Lexer(ICharGenerator tokenizer)
+        public Lexer(ICharGenerator charGenerator)
         {
-            this.tokenizer = tokenizer;
+            this.charGenerator = charGenerator;
         }
-
 
         public List<Token> GetTokens()
         {
             List<Token> tokens = new List<Token>();
-            tokenizer.MoveNext();
+            charGenerator.MoveNext();
 
             Token token;
             do 
@@ -36,7 +36,7 @@ namespace RegionalTimetable.LexicalAnalysis
         private Token getNextToken()
         {
             string lexeme = "";
-            char currentChar = tokenizer.GetCurrent();
+            char currentChar = charGenerator.GetCurrent();
             lexeme = currentChar.ToString();
             if (currentChar == '#')
             {
@@ -52,51 +52,55 @@ namespace RegionalTimetable.LexicalAnalysis
             }
             else if (char.IsWhiteSpace(currentChar)) // whitespace
             {
-                tokenizer.MoveNext();
-                return new Token(Token.TokenType.Whitespace, lexeme);
+                if (currentChar == '\n')
+                {
+                    lineNo++;
+                }
+                charGenerator.MoveNext();
+                return new Token(Token.TokenType.Whitespace, lexeme, lineNo);
             }
             else if (currentChar == '\0') // end of file
             {
-                return new Token(Token.TokenType.End, "");
+                return new Token(Token.TokenType.End, "", lineNo);
             }
             else
             {
-                tokenizer.MoveNext();
-                return new Token(Token.TokenType.Error, lexeme);
+                charGenerator.MoveNext();
+                return new Token(Token.TokenType.Error, lexeme, lineNo);
             }
         }
 
         private Token tokenizeTime(string lexeme)
         {
-            tokenizer.MoveNext();
-            char currentChar = tokenizer.GetCurrent();
+            charGenerator.MoveNext();
+            char currentChar = charGenerator.GetCurrent();
             lexeme += currentChar;
             if (char.IsDigit(currentChar))
             {
-                tokenizer.MoveNext();
-                currentChar = tokenizer.GetCurrent();
+                charGenerator.MoveNext();
+                currentChar = charGenerator.GetCurrent();
                 lexeme += currentChar;
                 if (currentChar == ':')
                 {
-                    tokenizer.MoveNext();
-                    currentChar = tokenizer.GetCurrent();
+                    charGenerator.MoveNext();
+                    currentChar = charGenerator.GetCurrent();
                     lexeme += currentChar;
                     if (char.IsDigit(currentChar))
                     {
-                        tokenizer.MoveNext();
-                        currentChar = tokenizer.GetCurrent();
+                        charGenerator.MoveNext();
+                        currentChar = charGenerator.GetCurrent();
                         lexeme += currentChar;
 
                         if (char.IsDigit(currentChar))
                         {
-                            tokenizer.MoveNext();
-                            return new Token(Token.TokenType.Time, lexeme);
+                            charGenerator.MoveNext();
+                            return new Token(Token.TokenType.Time, lexeme, lineNo);
                         }
                     }
                 }
             }
 
-            return new Token(Token.TokenType.Error, lexeme);
+            return new Token(Token.TokenType.Error, lexeme, lineNo);
         }
 
         private Token tokenizeCity(string lexeme)
@@ -104,8 +108,8 @@ namespace RegionalTimetable.LexicalAnalysis
             bool isChar;
             do
             {
-                tokenizer.MoveNext();
-                char currentChar = tokenizer.GetCurrent();
+                charGenerator.MoveNext();
+                char currentChar = charGenerator.GetCurrent();
                 isChar = char.IsLetter(currentChar);
                 if (isChar)
                 {
@@ -114,37 +118,37 @@ namespace RegionalTimetable.LexicalAnalysis
             }
             while (isChar);
 
-            return new Token(Token.TokenType.City, lexeme);
+            return new Token(Token.TokenType.City, lexeme, lineNo);
         }
 
         private Token tokenizeRouteNumber(string lexeme)
         {
-            tokenizer.MoveNext();
-            char currentChar = tokenizer.GetCurrent();
+            charGenerator.MoveNext();
+            char currentChar = charGenerator.GetCurrent();
             lexeme += currentChar;
             if (char.IsDigit(currentChar))
             {
-                tokenizer.MoveNext();
-                currentChar = tokenizer.GetCurrent();
+                charGenerator.MoveNext();
+                currentChar = charGenerator.GetCurrent();
                 lexeme += currentChar;
                 if (char.IsDigit(currentChar))
                 {
-                    tokenizer.MoveNext();
-                    currentChar = tokenizer.GetCurrent();
+                    charGenerator.MoveNext();
+                    currentChar = charGenerator.GetCurrent();
                     if (char.IsDigit(currentChar))
                     {
-                        tokenizer.MoveNext();
+                        charGenerator.MoveNext();
                         lexeme += currentChar;
-                        return new Token(Token.TokenType.RouteNumber, lexeme);
+                        return new Token(Token.TokenType.RouteNumber, lexeme, lineNo);
                     }
                     else
                     {
-                        return new Token(Token.TokenType.RouteNumber, lexeme);
+                        return new Token(Token.TokenType.RouteNumber, lexeme, lineNo);
                     }
                 }
             }
 
-            return new Token(Token.TokenType.Error, lexeme);
+            return new Token(Token.TokenType.Error, lexeme, lineNo);
         }
     }
 }
