@@ -51,7 +51,11 @@
     <Compile Include="Model\Departure.cs" />
     <Compile Include="Model\RegionalTimetable.cs" />
     <Compile Include="Model\Timetable.cs" />
+    <Compile Include="Parsing\DummyTokenGenerator.cs" />
+    <Compile Include="Parsing\ITokenGenerator.cs" />
+    <Compile Include="Parsing\LexerTokenGenerator.cs" />
     <Compile Include="Parsing\Parser.cs" />
+    <Compile Include="Parsing\ParseResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LexicalAnalysis\Token.cs" />

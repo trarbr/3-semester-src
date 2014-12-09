@@ -1,6 +1,7 @@
 ﻿using RegionalTimetableApp.Graph;
 using RegionalTimetableApp.LexicalAnalysis;
 using RegionalTimetableApp.Model;
+using RegionalTimetableApp.Parsing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,11 +19,41 @@ namespace RegionalTimetableApp
 
             //TestDictGraph();
 
-            TestLexer();
+            //TestLexer();
 
-            RegionalTimetable timetable = new RegionalTimetable();
+            TestParser();
 
             Console.ReadLine();
+        }
+
+        static void TestParser()
+        {
+            //var parser = new Parser(new DummyTokenGenerator());
+            string filename = @"C:\Users\troels\troe3159\3-semester\Hand-out\EBNF_GrafSproglaerer_RuteplanCase\RKP.txt";
+            var lexer = new Lexer(new FileCharGenerator(filename));
+            var parser = new Parser(new LexerTokenGenerator(lexer));
+
+            var result = parser.Parse();
+
+            if (result.Errors.Count > 0)
+            {
+                Console.WriteLine("Errors:");
+                foreach (var error in result.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No errors!");
+            }
+
+            Console.WriteLine("Created objects:");
+            foreach (var timetable in result.RegionalTimetable.Timetables)
+            {
+                Console.WriteLine(timetable);
+            }
+
         }
 
         static void TestLexer()

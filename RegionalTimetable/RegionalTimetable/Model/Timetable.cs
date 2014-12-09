@@ -15,5 +15,16 @@ namespace RegionalTimetableApp.Model
             RouteNumber = routeNumber;
             Departures = new List<Departure>();
         }
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(RouteNumber);
+            foreach (var departure in Departures)
+            {
+                stringBuilder.AppendLine(departure.ToString());
+            }
+            return stringBuilder.ToString();
+        }
     }
 }
