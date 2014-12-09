@@ -7,7 +7,7 @@
     <ProjectGuid>{23868283-174D-497B-9F29-2BC8ED36AD45}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RegionalTimetable</RootNamespace>
+    <RootNamespace>RegionalTimetableApp</RootNamespace>
     <AssemblyName>RegionalTimetable</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -48,6 +48,10 @@
     <Compile Include="LexicalAnalysis\Lexer.cs" />
     <Compile Include="Graph\MatrixGraph.cs" />
     <Compile Include="Graph\DictGraph.cs" />
+    <Compile Include="Model\Departure.cs" />
+    <Compile Include="Model\RegionalTimetable.cs" />
+    <Compile Include="Model\Timetable.cs" />
+    <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LexicalAnalysis\Token.cs" />

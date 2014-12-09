@@ -1,5 +1,6 @@
-﻿using RegionalTimetable.Graph;
-using RegionalTimetable.LexicalAnalysis;
+﻿using RegionalTimetableApp.Graph;
+using RegionalTimetableApp.LexicalAnalysis;
+using RegionalTimetableApp.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegionalTimetable
+namespace RegionalTimetableApp
 {
     class Program
     {
@@ -18,6 +19,8 @@ namespace RegionalTimetable
             //TestDictGraph();
 
             TestLexer();
+
+            RegionalTimetable timetable = new RegionalTimetable();
 
             Console.ReadLine();
         }

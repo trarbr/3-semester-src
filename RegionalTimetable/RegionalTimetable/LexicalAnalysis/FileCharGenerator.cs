@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegionalTimetable.LexicalAnalysis
+namespace RegionalTimetableApp.LexicalAnalysis
 {
     class FileCharGenerator : ICharGenerator
     {

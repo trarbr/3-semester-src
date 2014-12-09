@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegionalTimetableApp.LexicalAnalysis
+namespace RegionalTimetableApp.Parsing
 {
-    public interface ICharGenerator
+    class Parser
     {
-        char GetCurrent();
-        bool MoveNext();
     }
 }
