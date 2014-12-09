@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegionalTimetable
+namespace RegionalTimetable.Graph
 {
     public class Edge : IComparable<Edge>
     {

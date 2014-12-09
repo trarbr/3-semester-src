@@ -5,13 +5,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace RegionalTimetable
+namespace RegionalTimetable.LexicalAnalysis
 {
     class Lexer
     {
-        private ITokenizer tokenizer;
+        private ICharGenerator tokenizer;
 
-        public Lexer(ITokenizer tokenizer)
+        public Lexer(ICharGenerator tokenizer)
         {
             this.tokenizer = tokenizer;
         }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegionalTimetable
+namespace RegionalTimetable.LexicalAnalysis
 {
-    public class Vertex
+    public interface ICharGenerator
     {
-        public string Name { get; set; }
+        char GetCurrent();
+        bool MoveNext();
     }
 }

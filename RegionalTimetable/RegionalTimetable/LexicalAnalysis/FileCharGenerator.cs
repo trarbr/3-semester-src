@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegionalTimetable
+namespace RegionalTimetable.LexicalAnalysis
 {
-    class FileTokenizer : ITokenizer
+    class FileCharGenerator : ICharGenerator
     {
         StreamReader reader;
         char currentChar;
 
-        public FileTokenizer(string filename)
+        public FileCharGenerator(string filename)
         {
             reader = new StreamReader(filename);
         }

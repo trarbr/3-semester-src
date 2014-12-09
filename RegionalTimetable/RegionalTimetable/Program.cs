@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RegionalTimetable.Graph;
+using RegionalTimetable.LexicalAnalysis;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,7 +26,7 @@ namespace RegionalTimetable
         {
             //var Lexer = new Lexer(new DummyTokenizer());
             string filename = @"C:\Users\troels\troe3159\3-semester\Hand-out\EBNF_GrafSproglaerer_RuteplanCase\RKP.txt";
-            var lexer = new Lexer(new FileTokenizer(filename));
+            var lexer = new Lexer(new FileCharGenerator(filename));
 
             var tokens = lexer.GetTokens();
             foreach (var token in tokens)

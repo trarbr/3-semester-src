@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegionalTimetable
+namespace RegionalTimetable.LexicalAnalysis
 {
-    class DummyTokenizer : ITokenizer
+    class DummyCharGenerator : ICharGenerator
     {
         private string allText;
         private int index;
 
-        public DummyTokenizer()
+        public DummyCharGenerator()
         {
             allText = "#44 odense 14:00\n" + '\n';
             index = -1;
