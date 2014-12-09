@@ -15,6 +15,7 @@ namespace RegionalTimetable.LexicalAnalysis
         public Lexer(ICharGenerator charGenerator)
         {
             this.charGenerator = charGenerator;
+            lineNo = 0;
         }
 
         public List<Token> GetTokens()
@@ -35,9 +36,8 @@ namespace RegionalTimetable.LexicalAnalysis
 
         private Token getNextToken()
         {
-            string lexeme = "";
             char currentChar = charGenerator.GetCurrent();
-            lexeme = currentChar.ToString();
+            string lexeme = currentChar.ToString();
             if (currentChar == '#')
             {
                 return tokenizeRouteNumber(lexeme);
@@ -52,12 +52,13 @@ namespace RegionalTimetable.LexicalAnalysis
             }
             else if (char.IsWhiteSpace(currentChar)) // whitespace
             {
+                charGenerator.MoveNext();
+                Token token = new Token(Token.TokenType.Whitespace, lexeme, lineNo);
                 if (currentChar == '\n')
                 {
                     lineNo++;
                 }
-                charGenerator.MoveNext();
-                return new Token(Token.TokenType.Whitespace, lexeme, lineNo);
+                return token;
             }
             else if (currentChar == '\0') // end of file
             {
