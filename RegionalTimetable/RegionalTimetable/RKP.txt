@@ -1,0 +1,35 @@
+#44
+odense 14:00
+middelfart 15:07
+
+#72
+bogense 12:39
+otterup 13:46
+odense 14:08
+
+
+#531
+ringe 08:41
+assens 09:24
+odense 10:23
+kerteminde 10:56
+
+#62
+svendborg 07:45
+odense 09:15
+bogense 10:04
+
+#844
+bogense 09:08
+middelfart 09:46
+assens 10:47
+
+#22
+svendborg 13:31
+nyborg 14:16
+odense 15:14
+
+#32
+svendborg 12:39
+ringe 13:35
+odense 14:20

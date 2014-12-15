@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RegionalTimetableApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,61 @@ namespace RegionalTimetableApp.Graph
             graph = new Dictionary<Vertex, List<Edge>>();
         }
 
+        internal static DictGraph CreateGraphFromRegionalTimetable(RegionalTimetable regionalTimetable)
+        {
+            DictGraph graph = new DictGraph();
+
+            foreach (var timetable in regionalTimetable.Timetables)
+            {
+                // add the first city as vertex
+                Vertex fromVertex = graph.AddVertex(timetable.Departures[0].City);
+                string fromTime = timetable.Departures[0].Time;
+
+                for (int i = 1; i < timetable.Departures.Count; i++)
+                {
+                    // add the next city as vertex
+                    Vertex toVertex = graph.AddVertex(timetable.Departures[i].City);
+                    string toTime = timetable.Departures[i].Time;
+
+                    // add edge between the two of them
+                    int travelTime = calculateTravelTimeInMinutes(fromTime, toTime);
+                    graph.AddEdge(fromVertex, toVertex, travelTime);
+
+                    fromVertex = toVertex;
+                    fromTime = toTime;
+                }
+            }
+
+            return graph;
+        }
+
+        private static int calculateTravelTimeInMinutes(string fromTime, string toTime)
+        {
+            DateTime from = dateTimeFromString(fromTime);
+            DateTime to = dateTimeFromString(toTime);
+
+            // Handle times crossing midnight
+            if (from > to)
+            {
+                to = to.AddDays(1);
+            }
+
+            var time = to - from;
+
+            return (int)time.TotalMinutes;
+        }
+
+        private static DateTime dateTimeFromString(string time)
+        {
+            int hours = int.Parse(time.Substring(0, 2));
+            int minutes = int.Parse(time.Substring(3, 2));
+
+            return DateTime.MinValue.Add(new TimeSpan(hours, minutes, 0));
+        }
+
         public Vertex AddVertex(string name)
         {
-            // check if vertex already exists - assuming all vertexes must have unique names 
+            // check if vertex already exists - assuming all vertices must have unique names 
             var vertex = graph.Keys.FirstOrDefault<Vertex>(v => v.Name == name);
             if (vertex == null)
             {
@@ -33,7 +86,7 @@ namespace RegionalTimetableApp.Graph
         {
             Edge edge = null;
 
-            // Test that the vertexes exist
+            // Test that the vertices exist
             List<Edge> fromEdges;
             List<Edge> toEdges; 
             bool gotFrom = graph.TryGetValue(from, out fromEdges);
@@ -80,6 +133,7 @@ namespace RegionalTimetableApp.Graph
                 {
                     foreach (var edge in graph[vertex])
                     {
+                        // ...but we have not travelled yet...
                         if (!edges.Contains(edge))
                         {
                             connectedEdges.Add(edge);
@@ -91,11 +145,11 @@ namespace RegionalTimetableApp.Graph
                 var newEdges = connectedEdges.Where<Edge>(
                     e => !(vertices.Contains(e.From) && vertices.Contains(e.To))).ToList<Edge>();
 
-                // now get the cheapest edge..
+                // now get the cheapest edge...
                 var cheapestEdge = newEdges.Min<Edge>();
                 edges.Add(cheapestEdge);
 
-                // ... and add the vertex which is not already in the list
+                // ...and add the vertex which is not already in the list
                 if (vertices.Contains(cheapestEdge.To))
                 {
                     vertices.Add(cheapestEdge.From);

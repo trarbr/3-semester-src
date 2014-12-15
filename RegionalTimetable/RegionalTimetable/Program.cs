@@ -21,17 +21,38 @@ namespace RegionalTimetableApp
 
             //TestLexer();
 
-            TestParser();
+            //TestParser();
+
+            TestItAll();
 
             Console.ReadLine();
         }
 
-        static void TestParser()
+        private static void TestItAll()
         {
-            var parser = new Parser(new DummyTokenGenerator());
-            //string filename = @"C:\Users\troels\troe3159\3-semester\Hand-out\EBNF_GrafSproglaerer_RuteplanCase\RKP.txt";
-            //var lexer = new Lexer(new FileCharGenerator(filename));
-            //var parser = new Parser(new LexerTokenGenerator(lexer));
+            var result = TestParser();
+
+            if (result.Errors.Count == 0)
+            {
+                var graph = DictGraph.CreateGraphFromRegionalTimetable(result.RegionalTimetable);
+                Console.WriteLine("Printing the generated graph:");
+                Console.WriteLine(graph.GetAsString());
+                Console.WriteLine("=========");
+                Console.WriteLine("Printing hardcoded graph as control:");
+                TestDictGraph();
+            }
+            else
+            {
+                Console.WriteLine("Error in parsing! Not attempting to make graph!");
+            }
+        }
+
+        static ParseResult TestParser()
+        {
+            string filename = @"RKP.txt";
+            var realTokenGenerator = new LexerTokenGenerator(new Lexer(new FileCharGenerator(filename)));
+            var dummyTokenGenerator = new DummyTokenGenerator();
+            var parser = new Parser(realTokenGenerator);
 
             var result = parser.Parse();
 
@@ -53,6 +74,9 @@ namespace RegionalTimetableApp
             {
                 Console.WriteLine(timetable);
             }
+
+
+            return result;
 
         }
 
@@ -105,33 +129,33 @@ namespace RegionalTimetableApp
 
             Console.WriteLine(g.GetAsString());
 
-            var breadth = g.BreadthFirstTraversal();
+            //var breadth = g.BreadthFirstTraversal();
 
-            foreach (var vertex in breadth)
-            {
-                Console.WriteLine(vertex.Name);
-            }
+            //foreach (var vertex in breadth)
+            //{
+            //    Console.WriteLine(vertex.Name);
+            //}
 
-            Console.WriteLine("==========");
+            //Console.WriteLine("==========");
 
-            var depth = g.RecursiveDepthFirstTraversal();
+            //var depth = g.RecursiveDepthFirstTraversal();
 
-            foreach (var vertex in depth)
-            {
-                Console.WriteLine(vertex.Name);
-            }
+            //foreach (var vertex in depth)
+            //{
+            //    Console.WriteLine(vertex.Name);
+            //}
 
-            Console.WriteLine("==========");
+            //Console.WriteLine("==========");
 
-            var tree = g.RecursiveMinimumSpanningTreePrim();
+            //var tree = g.RecursiveMinimumSpanningTreePrim();
 
-            var nodes = tree.Item1;
-            var edges = tree.Item2;
+            //var nodes = tree.Item1;
+            //var edges = tree.Item2;
 
-            foreach (var edge in edges)
-            {
-                Console.WriteLine("{0}, {1}, {2}", edge.To.Name, edge.From.Name, edge.Weight.ToString());
-            }
+            //foreach (var edge in edges)
+            //{
+            //    Console.WriteLine("{0}, {1}, {2}", edge.To.Name, edge.From.Name, edge.Weight.ToString());
+            //}
         }
 
         static void TestMatrixGraph()

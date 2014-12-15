@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RegionalTimetableApp.Parsing
@@ -30,18 +31,18 @@ namespace RegionalTimetableApp.Parsing
             Token token;
             tokenGenerator.MoveNext();
 
+            bool parsingSuccess = false;
+
             do
             {
                 token = tokenGenerator.GetCurrent();
-                // if hell
                 if (token.Type == Token.TokenType.RouteNumber)
                 {
-                    parseRoute();
+                    parseTimetable();
                 }
                 else if (regionalTimetable.Timetables.Count > 0 && token.Type == Token.TokenType.End)
                 {
-                    // legal exit
-                    break;
+                    parsingSuccess = true;
                 }
                 else if (token.Type == Token.TokenType.Whitespace)
                 {
@@ -54,25 +55,25 @@ namespace RegionalTimetableApp.Parsing
                     errors.Add(error);
                     tokenGenerator.MoveNext();
                 }
-            } while (token.Type != Token.TokenType.End);
+            } while (!parsingSuccess && token.Type != Token.TokenType.End);
 
             ParseResult result = new ParseResult(regionalTimetable, errors);
 
             return result; // return both AST and error list
         }
 
-        private void parseRoute()
+        private void parseTimetable()
         {
-            // parse the route
+            // create the timetable
             Token token = tokenGenerator.GetCurrent();
             string routeNo = token.Lexeme;
             Timetable timetable = new Timetable(routeNo);
-            tokenGenerator.MoveNext();
 
-            // parse all the departures for the route
+            // parse all the departures for the timetable
+            tokenGenerator.MoveNext();
+            bool parsingSuccess = false;
             do
             {
-                // must have at least one departure
                 token = tokenGenerator.GetCurrent();
 
                 if (token.Type == Token.TokenType.City)
@@ -84,9 +85,9 @@ namespace RegionalTimetableApp.Parsing
                 else if (timetable.Departures.Count > 0 
                     && (token.Type == Token.TokenType.RouteNumber || token.Type == Token.TokenType.End))
                 {
-                    // legal exit
-                    // don't move next, this index must be kept if there are more routes
-                    break;
+                    // Don't call MoveNext, this index must be kept if we hit a RouteNumber, 
+                    // so it can parse the next Timetable
+                    parsingSuccess = true;
                 }
                 else if (token.Type == Token.TokenType.Whitespace)
                 {
@@ -99,7 +100,7 @@ namespace RegionalTimetableApp.Parsing
                     errors.Add(error);
                     tokenGenerator.MoveNext();
                 }
-            } while (token.Type != Token.TokenType.End);
+            } while (!parsingSuccess && token.Type != Token.TokenType.End);
 
             regionalTimetable.Timetables.Add(timetable);
         }
@@ -111,6 +112,7 @@ namespace RegionalTimetableApp.Parsing
 
             // look for time
             tokenGenerator.MoveNext();
+            bool parsingSuccess = false;
 
             do
             {
@@ -118,17 +120,22 @@ namespace RegionalTimetableApp.Parsing
                 if (token.Type == Token.TokenType.Time)
                 {
                     string time = token.Lexeme;
+                    // add warning if the time is invalid
+                    if (!validateTime(time))
+                    {
+                        string error = string.Format("Warning on line {0}: Departure time {1} is invalid",
+                            token.LineNo, time);
+                        errors.Add(error);
+                    }
 
                     Departure departure = new Departure(time, city);
-
                     timetable.Departures.Add(departure);
 
+                    parsingSuccess = true;
                     tokenGenerator.MoveNext();
-                    break; // parsing success
                 }
                 else if (token.Type == Token.TokenType.Whitespace)
                 {
-                    //tokenGenerator.MoveNext();
                     tokenGenerator.MoveNext();
                 }
                 else
@@ -138,7 +145,13 @@ namespace RegionalTimetableApp.Parsing
                     errors.Add(error);
                     tokenGenerator.MoveNext();
                 }
-            } while (token.Type != Token.TokenType.End);
+            } while (!parsingSuccess && token.Type != Token.TokenType.End);
+        }
+
+        private bool validateTime(string time)
+        {
+            const string validTimePattern = @"([01][0-9]|2[0-3]):[0-5][0-9]";
+            return Regex.IsMatch(time, validTimePattern);
         }
     }
 }
