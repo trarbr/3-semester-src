@@ -12,10 +12,12 @@ namespace ThreadedServer
     class DateTimeHandler
     {
         private Socket client;
+        List<string> commands;
 
         public DateTimeHandler(Socket client)
         {
             this.client = client;
+            commands = new List<string>();
         }
 
         public void Handle()
@@ -37,6 +39,8 @@ namespace ThreadedServer
             {
                 string input = reader.ReadLine().Trim().ToLower();
 
+                commands.Add(input);
+
                 switch (input)
                 {
                     case "time?":
@@ -45,6 +49,15 @@ namespace ThreadedServer
                         break;
                     case "date?":
                         writer.WriteLine(String.Format("{0:yyyy-MM-dd}", DateTime.Now));
+                        writer.Flush();
+                        break;
+                    case "commands?":
+                        string commandHistory = "";
+                        foreach (var command in commands)
+                        {
+                            commandHistory += command + ", ";
+                        }
+                        writer.WriteLine(commandHistory);
                         writer.Flush();
                         break;
                     case "exit":
