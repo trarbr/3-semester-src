@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddValutaForm.aspx" />
+    <Content Include="AllValutasForm.aspx" />
     <Content Include="SetExchangeRateForm.aspx" />
     <Content Include="Service References\ValutaService\ValutaService.disco" />
     <Content Include="Service References\ValutaService\configuration91.svcinfo" />
@@ -81,6 +82,13 @@
     </Compile>
     <Compile Include="AddValutaForm.aspx.designer.cs">
       <DependentUpon>AddValutaForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllValutasForm.aspx.cs">
+      <DependentUpon>AllValutasForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllValutasForm.aspx.designer.cs">
+      <DependentUpon>AllValutasForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="SetExchangeRateForm.aspx.cs">
       <DependentUpon>SetExchangeRateForm.aspx</DependentUpon>

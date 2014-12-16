@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SetExchangeRateForm.aspx.cs" Inherits="ValutaWebForm.FindValutaForm" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SetExchangeRateForm.aspx.cs" Inherits="ValutaWebForm.SetExchangeRateForm" %>
 
 <!DOCTYPE html>
 

@@ -10,7 +10,7 @@
 namespace ValutaWebForm {
     
     
-    public partial class FindValutaForm {
+    public partial class SetExchangeRateForm {
         
         /// <summary>
         /// form1 control.

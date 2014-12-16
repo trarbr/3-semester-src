@@ -9,7 +9,7 @@ using ValutaWebForm.ValutaService;
 
 namespace ValutaWebForm
 {
-    public partial class FindValutaForm : System.Web.UI.Page
+    public partial class SetExchangeRateForm : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -19,6 +19,12 @@ namespace ValutaWebForm
                 foreach (var valuta in valutas)
                 {
                     valutaDropDown.Items.Add(valuta.Iso);
+                }
+                string iso = Request.QueryString["iso"];
+                if (iso != null)
+                {
+                    var valuta = valutas.Where(v => v.Iso == iso).FirstOrDefault();
+                    valutaDropDown.SelectedIndex = Array.IndexOf(valutas, valuta);
                 }
             }
         }
@@ -32,9 +38,14 @@ namespace ValutaWebForm
             selectedValuta.ExchangeRate = exchangeRate;
 
             bool success = ValutaServiceContainer.ValutaService.SetValutaExchangeRate(selectedValuta);
+
             if (success)
             {
                 successLabel.Text = "Exchange Rate updated.";
+                if (Request.QueryString["iso"] != null)
+                {
+                    Response.Redirect("AllValutasForm.aspx");
+                }
             }
             else
             {
