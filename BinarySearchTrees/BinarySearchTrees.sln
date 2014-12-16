@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bt05", "bt05\bt05.csproj", "{FCC1BCF3-484D-4C96-8B64-CD4D6D981DBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{05FC052E-7310-411D-A5F2-65A471C97D1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryTreeVisualisation", "BinaryTreeVisualisation\BinaryTreeVisualisation.csproj", "{4BB39A7F-1DDB-4093-A8A1-65C40CDED075}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCC1BCF3-484D-4C96-8B64-CD4D6D981DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC1BCF3-484D-4C96-8B64-CD4D6D981DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC1BCF3-484D-4C96-8B64-CD4D6D981DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC1BCF3-484D-4C96-8B64-CD4D6D981DBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05FC052E-7310-411D-A5F2-65A471C97D1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05FC052E-7310-411D-A5F2-65A471C97D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05FC052E-7310-411D-A5F2-65A471C97D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05FC052E-7310-411D-A5F2-65A471C97D1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BB39A7F-1DDB-4093-A8A1-65C40CDED075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BB39A7F-1DDB-4093-A8A1-65C40CDED075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BB39A7F-1DDB-4093-A8A1-65C40CDED075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BB39A7F-1DDB-4093-A8A1-65C40CDED075}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,9 @@
+﻿<Window x:Class="BinaryTreeVisualisation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="650" Width="650">
+    <StackPanel>
+        <Canvas x:Name="canvas" Height="600" Width="600"></Canvas>
+    <Button x:Name="drawButton" Content="Click to draw" Click="drawButton_Click" Width="120"/>
+    </StackPanel>
+</Window>
