@@ -24,6 +24,7 @@ namespace ValutaWebForm
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            // BEWARE: selecteditem null
             var selectedItem = ListBox1.SelectedItem.ToString();
             var selectedIso = selectedItem.Split(' ')[0];
 

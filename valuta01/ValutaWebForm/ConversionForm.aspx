@@ -26,6 +26,7 @@
         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
             ErrorMessage="Amount must be a number!" ControlToValidate="amountTextBox" 
             ValidationExpression="\d+(,\d+)?"></asp:RegularExpressionValidator>
+        <asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="CustomValidator"></asp:CustomValidator>
         <br />
         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
             ControlToValidate="amountTextBox" ErrorMessage="Please fill in an amount!">

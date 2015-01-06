@@ -9,7 +9,6 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    
         <asp:Label ID="Label1" runat="server" Text="All valutas"></asp:Label>
         <br />
         <asp:ListBox ID="ListBox1" runat="server" Width="200" Height="300"></asp:ListBox>

@@ -58,7 +58,6 @@ namespace ValutaWcfService
         {
             decimal euroAmount = 0m;
             HttpContext.Current.Application.Lock();
-
             try
             {
                 decimal dkkToEurRate = findExchangeRate("EUR");

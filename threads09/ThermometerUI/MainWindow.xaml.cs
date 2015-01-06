@@ -47,7 +47,11 @@ namespace ThermometerUI
         {
             if (!this.Dispatcher.CheckAccess())
             {
-                this.Dispatcher.Invoke(new ThermometerMonitor.TemperatureAlert(handleThermometerAlert));
+                // Spørg Bjørk om det her! Hvad er det rigtige argument?!
+                this.Dispatcher.Invoke(handleThermometerAlert);
+                    //new ThermometerMonitor.TemperatureAlert(handleThermometerAlert));
+
+                Action x = this.handleThermometerAlert;
 
                 return;
             }
