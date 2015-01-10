@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace bt05
 {
+    // Searching through a binary search tree has complexity O(log(n))
+    // Searching through a list has complexity O(n)
     public class BinarySearchTree
     {
         public Node Root { get; private set; }
@@ -53,7 +55,6 @@ namespace bt05
         {
             Node nodeToInsert = new Node() { Value = value };
 
-            // move the null check into insert?
             if (Root == null)
             {
                 Root = nodeToInsert;
