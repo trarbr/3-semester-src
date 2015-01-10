@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graph\ListGraph.cs" />
     <Compile Include="LexicalAnalysis\DummyCharGenerator.cs" />
     <Compile Include="Graph\Edge.cs" />
     <Compile Include="LexicalAnalysis\FileCharGenerator.cs" />
