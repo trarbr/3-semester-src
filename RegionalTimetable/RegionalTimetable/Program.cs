@@ -15,12 +15,11 @@ namespace RegionalTimetableApp
     {
         static void Main(string[] args)
         {
-            var t1 = new Tuple<int, string>(1, "bla");
-            var t2 = new Tuple<int, string>(1, "bla");
+            TestMatrixGraph();
 
-            bool b = t1.Equals(t2);
+            Console.WriteLine("Kruskal");
 
-            //TestMatrixGraph();
+            TestMatrixGraphKruskal();
 
             //TestDictGraph();
 
@@ -32,9 +31,6 @@ namespace RegionalTimetableApp
 
             //TestItAll();
 
-            //Console.WriteLine("Kruskal");
-
-            //TestMatrixGraphKruskal();
 
             //Console.WriteLine("Prim");
 
@@ -283,7 +279,7 @@ namespace RegionalTimetableApp
 
             foreach (var item in mst)
             {
-                Console.WriteLine(item.Item1.ToString() + " " + item.Item2.ToString() + " " + item.Item3.ToString());
+                Console.WriteLine(item.Item1.ToString() + " " + item.Item2.ToString());
             }
         }
 

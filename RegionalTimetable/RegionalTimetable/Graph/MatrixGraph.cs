@@ -132,77 +132,78 @@ namespace RegionalTimetableApp.Graph
             return isInList;
         }
 
-        public List<Tuple<int, string, string>> GetMinimumSpanningTreeKruskal()
+        public List<Tuple<int, int>> GetMinimumSpanningTreeKruskal()
         {
             // This is a homecooked version - try making an "official" one with union-set datastructure
-            List<Tuple<int, string, string>> minimumSpanningTree = new List<Tuple<int, string, string>>();
-            List<Tuple<int, string, string>> allEdges = new List<Tuple<int, string, string>>();
+            List<Tuple<int, int>> minimumSpanningTree = new List<Tuple<int, int>>();
+            List<Tuple<int, int>> uniqueEdges = new List<Tuple<int, int>>();
+            List<Tuple<int, int>> allEdges = new List<Tuple<int, int>>();
 
             // Create a sorted list of all edges
-            // NOTE: Instead of using a listContainsEdge function
-            // you can use two lists, one called allEdges and one called uniqueEdges
-            // and then add both [weight, i, j] and [weight, j, i] to allEdges but only one to
-            // uniqueEdges
-            for (int i = 0; i < cities.Length; i++)
+            for (int from = 0; from < cities.Length; from++)
             {
-                for (int j = 0; j < cities.Length; j++)
+                for (int to = 0; to < cities.Length; to++)
                 {
-                    int currentWeight = adjencyMatrix[i, j];
-                    var currentEdge = new Tuple<int, string, string>(currentWeight, cities[i], cities[j]);
-                    // if edge exists (not -1) and it has not been added
-                    if (currentWeight != -1 && !listContainsEdge(allEdges, currentEdge))
+                    if (adjencyMatrix[from, to] > -1)
                     {
-                        allEdges.Add(currentEdge);
+                        var currentEdge = new Tuple<int, int>(from, to);
+                        var reverseEdge = new Tuple<int, int>(to, from);
+                        if (!allEdges.Contains(currentEdge))
+                        {
+                            allEdges.Add(currentEdge);
+                            allEdges.Add(reverseEdge);
+                            uniqueEdges.Add(currentEdge);
+                        }
                     }
                 }
             }
-            allEdges.Sort( (a, b) => a.Item1.CompareTo(b.Item1) );
+            uniqueEdges.Sort( (a, b) => 
+                adjencyMatrix[a.Item1, a.Item2].CompareTo(adjencyMatrix[b.Item1, b.Item2]));
 
-            List<List<string>> trees = new List<List<string>>();
-            int k = 0;
-            while (k < allEdges.Count && minimumSpanningTree.Count < (cities.Length - 1))
+            int[] trees = new int[cities.Length];
+            int nextTree = 0;
+            for (int i = 0; i < trees.Length; i++)
             {
-                var smallestEdge = allEdges[k];
+                trees[i] = -1;
+            }
+            int edgeNumber = 0;
+            while (edgeNumber < uniqueEdges.Count && minimumSpanningTree.Count < (cities.Length - 1))
+            {
+                var smallestEdge = uniqueEdges[edgeNumber];
 
-                bool treeFound = false;
-                foreach (var tree in trees)
-                {
-                    bool item2InTree = tree.Contains(smallestEdge.Item2);
-                    bool item3InTree = tree.Contains(smallestEdge.Item3);
-                    if (item2InTree && item3InTree)
-                    {
-                        // adding the edge will create a cycle, so do nothing
-                        treeFound = true;
-                        break;
-                    }
-                    else if (item2InTree)
-                    {
-                        minimumSpanningTree.Add(smallestEdge);
-                        // add item3 to the tree
-                        tree.Add(smallestEdge.Item3);
-                        treeFound = true;
-                        break;
-                    }
-                    else if (item3InTree)
-                    {
-                        minimumSpanningTree.Add(smallestEdge);
-                        // add item2 to the tree
-                        tree.Add(smallestEdge.Item2);
-                        treeFound = true;
-                        break;
-                    }
-                }
-                if (!treeFound)
+                if (trees[smallestEdge.Item1] == -1 && trees[smallestEdge.Item2] == -1)
                 {
                     minimumSpanningTree.Add(smallestEdge);
-                    // create new tree
-                    List<string> tree = new List<string>();
-                    tree.Add(smallestEdge.Item2);
-                    tree.Add(smallestEdge.Item3);
-                    trees.Add(tree);
+                    // both vertices are not in a tree
+                    trees[smallestEdge.Item1] = nextTree;
+                    trees[smallestEdge.Item2] = nextTree;
+                    nextTree++;
+                }
+                else if (trees[smallestEdge.Item1] == -1)
+                {
+                    minimumSpanningTree.Add(smallestEdge);
+                    // from should be added to the to tree
+                    trees[smallestEdge.Item1] = trees[smallestEdge.Item2];
+                }
+                else if (trees[smallestEdge.Item2] == -1)
+                {
+                    minimumSpanningTree.Add(smallestEdge);
+                    // to should be added to the from tree
+                    trees[smallestEdge.Item2] = trees[smallestEdge.Item1];
+                }
+                else if (trees[smallestEdge.Item1] != trees[smallestEdge.Item2])
+                {
+                    // both vertices are in a tree, but not the same, so join the trees
+                    for (int i = 0; i < trees.Length; i++)
+                    {
+                        if (trees[i] == trees[smallestEdge.Item2])
+                        {
+                            trees[i] = trees[smallestEdge.Item1];
+                        }
+                    }
                 }
 
-                k++;
+                edgeNumber++;
             }
 
             return minimumSpanningTree;
