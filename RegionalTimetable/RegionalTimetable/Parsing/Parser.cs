@@ -39,7 +39,8 @@ namespace RegionalTimetableApp.Parsing
             }
             else if (token.Type == Token.TokenType.End)
             {
-                errors.Add("Error!");
+                string error = string.Format("Unexpected end error at line {0}", token.LineNo);
+                errors.Add(error);
             }
             else
             {
