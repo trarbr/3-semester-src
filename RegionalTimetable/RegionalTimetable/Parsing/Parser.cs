@@ -24,7 +24,6 @@ namespace RegionalTimetableApp.Parsing
         public Parser(ITokenGenerator tokenGenerator)
         {
             this.tokenGenerator = tokenGenerator;
-            tokenGenerator.MoveNext();
             regionalTimetable = new RegionalTimetable();
             errors = new List<string>();
             parseResult = new ParseResult(regionalTimetable, errors);
@@ -32,6 +31,7 @@ namespace RegionalTimetableApp.Parsing
 
         public ParseResult Parse()
         {
+            tokenGenerator.MoveNext();
             Token token = tokenGenerator.GetCurrent();
             if (token.Type == Token.TokenType.RouteNumber)
             {
@@ -49,7 +49,6 @@ namespace RegionalTimetableApp.Parsing
                     string error = string.Format(ERROR_FORMAT, token.LineNo, Token.TokenType.RouteNumber, token.Type, token.Lexeme);
                     errors.Add(error);
                 }
-                tokenGenerator.MoveNext();
                 Parse();
             }
 
@@ -67,7 +66,6 @@ namespace RegionalTimetableApp.Parsing
                 Timetable timetable = new Timetable(routeNumber);
                 regionalTimetable.Timetables.Add(timetable);
 
-                tokenGenerator.MoveNext();
                 parseCity(timetable);
             }
             else if (token.Type == Token.TokenType.End)
@@ -95,13 +93,13 @@ namespace RegionalTimetableApp.Parsing
 
         private void parseCity(Timetable timetable)
         {
+            tokenGenerator.MoveNext();
             Token token = tokenGenerator.GetCurrent();
 
             if (token.Type == Token.TokenType.City)
             {
                 string city = token.Lexeme;
 
-                tokenGenerator.MoveNext();
                 parseTime(timetable, city);
             }
             else if (token.Type == Token.TokenType.RouteNumber && timetable.Departures.Count > 1)
@@ -126,13 +124,13 @@ namespace RegionalTimetableApp.Parsing
                         Token.TokenType.City, token.Type, token.Lexeme);
                     errors.Add(error);
                 }
-                tokenGenerator.MoveNext();
                 parseCity(timetable);
             }
         }
 
         private void parseTime(Timetable timetable, string city)
         {
+            tokenGenerator.MoveNext();
             Token token = tokenGenerator.GetCurrent();
 
             if (token.Type == Token.TokenType.Time)
@@ -146,7 +144,6 @@ namespace RegionalTimetableApp.Parsing
                 Departure departure = new Departure(time, city);
                 timetable.Departures.Add(departure);
 
-                tokenGenerator.MoveNext();
                 parseCity(timetable);
             }
             else if (token.Type == Token.TokenType.End)
@@ -164,7 +161,6 @@ namespace RegionalTimetableApp.Parsing
                         Token.TokenType.Time, token.Type, token.Lexeme);
                     errors.Add(error);
                 }
-                tokenGenerator.MoveNext();
                 parseTime(timetable, city);
             }
         }
