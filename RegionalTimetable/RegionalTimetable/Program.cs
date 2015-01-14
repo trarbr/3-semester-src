@@ -20,11 +20,11 @@ namespace RegionalTimetableApp
 
             bool b = t1.Equals(t2);
 
-            //TestMatrixGraph();
+            TestMatrixGraph();
 
             //TestDictGraph();
 
-            TestListGraph();
+            //TestListGraph();
 
             //TestLexer();
 
@@ -272,6 +272,13 @@ namespace RegionalTimetableApp
             foreach (var city in cities)
             {
                 Console.WriteLine(city);
+            }
+
+            Console.WriteLine("Dijkstra");
+            var x = g.ShortestPathDijkstra(5, 7);
+            foreach (var c in x)
+            {
+                Console.WriteLine(c);
             }
         }
 
