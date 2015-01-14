@@ -212,6 +212,88 @@ namespace RegionalTimetableApp.Graph
             return minimumSpanningTree;
         }
 
+        public List<string> ShortestPathDijkstra(int origin, int destination)
+        {
+            // previous is used to keep track of which city I visited before I got to the current 
+            // city, so I can work my way back through the shortest path
+            int[] previous = new int[cities.Length];
+            // citiesToVisit is a list of all cities I haven't visited yet
+            List<string> citiesToVisit = new List<string>(cities);
+            citiesToVisit.Remove(cities[origin]);
+
+            // set up an array to track the lowest calculated weight from origin to all cities
+            var lowestWeightToCity = new int[cities.Length];
+            for (int cityIndex = 0; cityIndex < cities.Length; cityIndex++)
+            {
+                lowestWeightToCity[cityIndex] = int.MaxValue;
+            }
+            lowestWeightToCity[origin] = 0;
+
+            var currentCity = origin;
+            bool destinationReached = false;
+            while (!destinationReached)
+            {
+                // for each edge connected to currentCity, if to has not been visited
+                // calculate the weight from origin to to (newWeightToCity)
+                // and if the new weight is lower than the currently lowest weight, replace it
+                // and note that the previous city to to is currentCity
+                for (int to = 0; to < cities.Length; to++)
+                {
+                    int currentWeight = adjencyMatrix[currentCity, to];
+                    if (currentWeight != -1 && citiesToVisit.Contains(cities[to]))
+                    {
+                        int newWeightToCity = lowestWeightToCity[currentCity]
+                            + currentWeight;
+                        if (newWeightToCity < lowestWeightToCity[to])
+                        {
+                            lowestWeightToCity[to] = newWeightToCity;
+                            previous[to] = currentCity;
+                        }
+                    }
+                }
+                citiesToVisit.Remove(cities[currentCity]);
+
+                // Find out where to go next. 
+                // The next city must be in citiesToVisit
+                // and should have the edge with current lowest weight
+                int minimumWeight = int.MaxValue;
+                int nextCity = -1;
+
+                for (int city = 0; city < lowestWeightToCity.Length; city++)
+                {
+                    if (lowestWeightToCity[city] < minimumWeight && citiesToVisit.Contains(cities[city]))
+                    {
+                        minimumWeight = lowestWeightToCity[city];
+                        nextCity = city;
+                    }
+                }
+
+                if (nextCity == destination)
+                {
+                    destinationReached = true;
+                }
+                else if (nextCity == -1)
+                {
+                    throw new Exception("Can't find the way!");
+                }
+
+                currentCity = nextCity;
+            }
+
+            // construct shortest path here by backtracking
+            var shortestPath = new List<string>();
+            var v = destination;
+            while (!v.Equals(origin))
+            {
+                shortestPath.Add(cities[v]);
+                v = previous[v];
+            }
+            shortestPath.Add(cities[origin]);
+            shortestPath.Reverse();
+
+            return shortestPath;
+        }
+
         public string GetMatrixAsString()
         {
             StringBuilder matrixAsString = new StringBuilder();

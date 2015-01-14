@@ -268,6 +268,13 @@ namespace RegionalTimetableApp
             {
                 Console.WriteLine(city);
             }
+
+            Console.WriteLine("Dijkstra");
+            var x = g.ShortestPathDijkstra(5, 7);
+            foreach (var c in x)
+            {
+                Console.WriteLine(c);
+            }
         }
 
         static void TestMatrixGraphKruskal()
