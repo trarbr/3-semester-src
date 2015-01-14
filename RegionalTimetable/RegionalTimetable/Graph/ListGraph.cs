@@ -174,28 +174,46 @@ namespace RegionalTimetableApp.Graph
 
             visitedVertices.Add(startingVertex);
 
-            while (minimumSpanningTree.Count < vertices.Count - 1)
+            bool done = false;
+            while (!done && minimumSpanningTree.Count < vertices.Count - 1)
             {
                 // Find the lightest edge we are connected to.
-                int lightestWeight = int.MaxValue;
-                ListEdge<T> lightestEdge = graph[0][0];
+                ListEdge<T> lightestEdge = null;
                 foreach (var vertex in visitedVertices)
                 {
                     int vertexIndex = vertices.IndexOf(vertex);
                     foreach (var edge in graph[vertexIndex])
                     {
-                        if (!visitedVertices.Contains(edge.To)
-                            && edge.Weight < lightestWeight)
+                        if (!visitedVertices.Contains(edge.To))
                         {
-                            lightestWeight = edge.Weight;
-                            lightestEdge = edge;
+                            if (lightestEdge == null)
+                            {
+                                lightestEdge = edge;
+                            }
+                            else if (edge.Weight < lightestEdge.Weight)
+                            {
+                                lightestEdge = edge;
+                            }
                         }
                     }
                 }
 
-                // add it to the minimum spanning tree
-                minimumSpanningTree.Add(lightestEdge);
-                visitedVertices.Add(lightestEdge.To);
+                if (lightestEdge == null)
+                {
+                    // All reachable nodes added to minimum spanning tree 
+                    done = true;
+                    // If you want to be able to handle disconnected graphs, find a new vertex
+                    // not in visitedVertices and add it, then loop again instead of setting done.
+                    //var disconnectedVertex = vertices.
+                    //    Where(v => !visitedVertices.Contains(v)).First();
+                    //visitedVertices.Add(disconnectedVertex);
+                }
+                else
+                {
+                    // add it to the minimum spanning tree
+                    minimumSpanningTree.Add(lightestEdge);
+                    visitedVertices.Add(lightestEdge.To);
+                }
             }
 
             return minimumSpanningTree;
