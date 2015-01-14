@@ -22,7 +22,12 @@ namespace RegionalTimetableApp.Parsing
                 new Token(Token.TokenType.Time, "23:30", 1),
                 new Token(Token.TokenType.City, "middelfart", 1),
                 new Token(Token.TokenType.Time, "00:15", 1),
-                new Token(Token.TokenType.End, "\0", 1)
+                new Token(Token.TokenType.RouteNumber, "#234", 2),
+                new Token(Token.TokenType.City, "odense", 3),
+                new Token(Token.TokenType.Time, "23:30", 3),
+                new Token(Token.TokenType.City, "middelfart", 3),
+                new Token(Token.TokenType.Time, "00:15", 3),
+                new Token(Token.TokenType.End, "\0", 3)
             };
         }
 

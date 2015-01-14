@@ -15,20 +15,15 @@ namespace RegionalTimetableApp
     {
         static void Main(string[] args)
         {
-            var t1 = new Tuple<int, string>(1, "bla");
-            var t2 = new Tuple<int, string>(1, "bla");
-
-            bool b = t1.Equals(t2);
-
             //TestMatrixGraph();
 
             //TestDictGraph();
 
-            TestListGraph();
+            //TestListGraph();
 
             //TestLexer();
 
-            //TestParser();
+            TestParser();
 
             //TestItAll();
 
@@ -67,7 +62,7 @@ namespace RegionalTimetableApp
             string filename = @"RKP.txt";
             var realTokenGenerator = new LexerTokenGenerator(new Lexer(new FileCharGenerator(filename)));
             var dummyTokenGenerator = new DummyTokenGenerator();
-            var parser = new Parser(realTokenGenerator);
+            var parser = new Parser(dummyTokenGenerator);
 
             var result = parser.Parse();
 

@@ -17,135 +17,152 @@ namespace RegionalTimetableApp.Parsing
         */
         private ITokenGenerator tokenGenerator;
         private RegionalTimetable regionalTimetable;
+        private ParseResult parseResult;
         private List<string> errors;
+        const string ERROR_FORMAT = "Error on line {0}: Expected {1} token, got {2} with text {3}.";
 
         public Parser(ITokenGenerator tokenGenerator)
         {
             this.tokenGenerator = tokenGenerator;
             regionalTimetable = new RegionalTimetable();
             errors = new List<string>();
+            parseResult = new ParseResult(regionalTimetable, errors);
         }
 
         public ParseResult Parse()
         {
-            Token token;
             tokenGenerator.MoveNext();
-
-            bool parsingSuccess = false;
-
-            do
+            Token token = tokenGenerator.GetCurrent();
+            if (token.Type == Token.TokenType.RouteNumber)
             {
-                token = tokenGenerator.GetCurrent();
-                if (token.Type == Token.TokenType.RouteNumber)
+                parseTimetable();
+            }
+            else if (token.Type == Token.TokenType.End)
+            {
+                string error = string.Format("Unexpected end error at line {0}", token.LineNo);
+                errors.Add(error);
+            }
+            else
+            {
+                if (token.Type != Token.TokenType.Whitespace)
                 {
-                    parseTimetable();
-                }
-                else if (regionalTimetable.Timetables.Count > 0 && token.Type == Token.TokenType.End)
-                {
-                    parsingSuccess = true;
-                }
-                else if (token.Type == Token.TokenType.Whitespace)
-                {
-                    tokenGenerator.MoveNext();
-                }
-                else
-                {
-                    string error = string.Format("Error on line {0}: Expected RouteNumber token, got {1} with text {2}.",
-                        token.LineNo, token.Type.ToString(), token.Lexeme);
+                    string error = string.Format(ERROR_FORMAT, token.LineNo, Token.TokenType.RouteNumber, token.Type, token.Lexeme);
                     errors.Add(error);
-                    tokenGenerator.MoveNext();
                 }
-            } while (!parsingSuccess && token.Type != Token.TokenType.End);
+                Parse();
+            }
 
-            ParseResult result = new ParseResult(regionalTimetable, errors);
-
-            return result; // return both AST and error list
+            return parseResult;
         }
 
         private void parseTimetable()
         {
-            // create the timetable
             Token token = tokenGenerator.GetCurrent();
-            string routeNo = token.Lexeme;
-            Timetable timetable = new Timetable(routeNo);
 
-            // parse all the departures for the timetable
-            tokenGenerator.MoveNext();
-            bool parsingSuccess = false;
-            do
+            if (token.Type == Token.TokenType.RouteNumber)
             {
-                token = tokenGenerator.GetCurrent();
+                string routeNumber = token.Lexeme;
 
-                if (token.Type == Token.TokenType.City)
+                Timetable timetable = new Timetable(routeNumber);
+                regionalTimetable.Timetables.Add(timetable);
+
+                parseCity(timetable);
+            }
+            else if (token.Type == Token.TokenType.End)
+            {
+                if (regionalTimetable.Timetables.Count < 1)
                 {
-                    // the success of this step depends on parseDeparture, so parseDeparture gets
-                    // to call movenext
-                    parseDeparture(timetable);
-                }
-                else if (timetable.Departures.Count > 0 
-                    && (token.Type == Token.TokenType.RouteNumber || token.Type == Token.TokenType.End))
-                {
-                    // Don't call MoveNext, this index must be kept if we hit a RouteNumber, 
-                    // so it can parse the next Timetable
-                    parsingSuccess = true;
-                }
-                else if (token.Type == Token.TokenType.Whitespace)
-                {
-                    tokenGenerator.MoveNext();
-                }
-                else
-                {
-                    string error = string.Format("Error on line {0}: Expected City token, got {1} with text {2}.",
-                        token.LineNo, token.Type, token.Lexeme);
+                    string error = string.Format("Unexpected end error at line {0}", token.LineNo);
                     errors.Add(error);
-                    tokenGenerator.MoveNext();
                 }
-            } while (!parsingSuccess && token.Type != Token.TokenType.End);
 
-            regionalTimetable.Timetables.Add(timetable);
+                return;
+            }
+            else
+            {
+                if (token.Type != Token.TokenType.Whitespace)
+                {
+                    string error = string.Format(ERROR_FORMAT, token.LineNo, 
+                        Token.TokenType.RouteNumber, token.Type, token.Lexeme);
+                    errors.Add(error);
+                }
+                tokenGenerator.MoveNext();
+                parseTimetable();
+            }
         }
 
-        private void parseDeparture(Timetable timetable)
+        private void parseCity(Timetable timetable)
         {
-            Token token = tokenGenerator.GetCurrent();
-            string city = token.Lexeme;
-
-            // look for time
             tokenGenerator.MoveNext();
-            bool parsingSuccess = false;
+            Token token = tokenGenerator.GetCurrent();
 
-            do
+            if (token.Type == Token.TokenType.City)
             {
-                token = tokenGenerator.GetCurrent();
-                if (token.Type == Token.TokenType.Time)
-                {
-                    string time = token.Lexeme;
-                    // add warning if the time is invalid
-                    if (!validateTime(time))
-                    {
-                        string error = string.Format("Warning on line {0}: Departure time {1} is invalid",
-                            token.LineNo, time);
-                        errors.Add(error);
-                    }
+                string city = token.Lexeme;
 
-                    Departure departure = new Departure(time, city);
-                    timetable.Departures.Add(departure);
-
-                    parsingSuccess = true;
-                    tokenGenerator.MoveNext();
-                }
-                else if (token.Type == Token.TokenType.Whitespace)
+                parseTime(timetable, city);
+            }
+            else if (token.Type == Token.TokenType.RouteNumber && timetable.Departures.Count > 1)
+            {
+                parseTimetable();
+            }
+            else if (token.Type == Token.TokenType.End)
+            {
+                if (timetable.Departures.Count < 1)
                 {
-                    tokenGenerator.MoveNext();
-                }
-                else
-                {
-                    string error = string.Format("Error on line {0}: Expected Time token, got {1} with text {2}.",
-                        token.LineNo, token.Type, token.Lexeme);
+                    string error = string.Format("Unexpected end error at line {0}", token.LineNo);
                     errors.Add(error);
-                    tokenGenerator.MoveNext();
                 }
-            } while (!parsingSuccess && token.Type != Token.TokenType.End);
+
+                return;
+            }
+            else
+            {
+                if (token.Type != Token.TokenType.Whitespace)
+                {
+                    string error = string.Format(ERROR_FORMAT, token.LineNo, 
+                        Token.TokenType.City, token.Type, token.Lexeme);
+                    errors.Add(error);
+                }
+                parseCity(timetable);
+            }
+        }
+
+        private void parseTime(Timetable timetable, string city)
+        {
+            tokenGenerator.MoveNext();
+            Token token = tokenGenerator.GetCurrent();
+
+            if (token.Type == Token.TokenType.Time)
+            {
+                string time = token.Lexeme;
+                if (!validateTime(time))
+                {
+                    errors.Add(string.Format("Warning! Time at line {0} is bad!", token.LineNo));
+                }
+
+                Departure departure = new Departure(time, city);
+                timetable.Departures.Add(departure);
+
+                parseCity(timetable);
+            }
+            else if (token.Type == Token.TokenType.End)
+            {
+                string error = string.Format("Unexpected end error at line {0}", token.LineNo);
+                errors.Add(error);
+
+                return;
+            }
+            else
+            {
+                if (token.Type != Token.TokenType.Whitespace)
+                {
+                    string error = string.Format(ERROR_FORMAT, token.LineNo, 
+                        Token.TokenType.Time, token.Type, token.Lexeme);
+                    errors.Add(error);
+                }
+                parseTime(timetable, city);
+            }
         }
 
         private bool validateTime(string time)
