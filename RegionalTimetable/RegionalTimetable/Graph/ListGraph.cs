@@ -223,42 +223,44 @@ namespace RegionalTimetableApp.Graph
         {
             List<ListEdge<T>> minimumSpanningTree = new List<ListEdge<T>>();
             List<ListEdge<T>> allAddedEdges = new List<ListEdge<T>>();
+            List<Tuple<T, ListEdge<T>>> uniqueEdges = new List<Tuple<T, ListEdge<T>>>();
 
-            List<List<T>> trees = new List<List<T>>();
-            while (minimumSpanningTree.Count < (vertices.Count - 1))
+            // Create a list of all unique edges and sort by weight
+            for (int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++)
             {
-                int smallestWeight = int.MaxValue;
-                ListEdge<T> lightestEdge = null;
-                T from = default(T);
-
-                foreach (var vertex in vertices)
+                foreach (var edge in graph[vertexIndex])
                 {
-                    int vertexIndex = vertices.IndexOf(vertex);
-                    foreach (var edge in graph[vertexIndex])
+                    if (!allAddedEdges.Contains(edge))
                     {
-                        if (edge.Weight < smallestWeight && !allAddedEdges.Contains(edge))
-                        {
-                            smallestWeight = edge.Weight;
-                            lightestEdge = edge;
-                            from = vertex;
-                        }
+                        T from = vertices[vertexIndex];
+                        uniqueEdges.Add(new Tuple<T, ListEdge<T>>(from, edge));
+
+                        // Find reverse edge
+                        int indexTo = vertices.IndexOf(edge.To);
+                        var reverseEdge = graph[indexTo]
+                            .Where(e => e.Weight == edge.Weight && e.To.Equals(from))
+                            .First();
+                        
+                        allAddedEdges.Add(edge);
+                        allAddedEdges.Add(reverseEdge);
                     }
                 }
+            }
+            var sortedEdges = uniqueEdges.OrderBy(t => t.Item2.Weight).ToList();
 
-                allAddedEdges.Add(lightestEdge);
-                var to = lightestEdge.To;
-                int indexTo = vertices.IndexOf(to);
-                var reverseEdge = graph[indexTo]
-                    .Where(e => e.Weight == lightestEdge.Weight && e.To.Equals(from))
-                    .First();
-                allAddedEdges.Add(reverseEdge);
-
-                // now grow trees
+            // Create the minimum spanning tree
+            List<List<T>> trees = new List<List<T>>();
+            int edgeIndex = 0;
+            while(minimumSpanningTree.Count < vertices.Count - 1)
+            {
+                var vertexEdgePair = sortedEdges[edgeIndex];
+                T from = vertexEdgePair.Item1;
+                T to = vertexEdgePair.Item2.To;
                 bool treeFound = false;
                 foreach (var tree in trees)
                 {
                     bool fromInTree = tree.Contains(from);
-                    bool toInTree = tree.Contains(to); 
+                    bool toInTree = tree.Contains(to);
                     if (fromInTree && toInTree)
                     {
                         // adding the edge will create a cycle, so do nothing
@@ -267,14 +269,14 @@ namespace RegionalTimetableApp.Graph
                     }
                     else if (fromInTree)
                     {
-                        minimumSpanningTree.Add(lightestEdge);
+                        minimumSpanningTree.Add(vertexEdgePair.Item2);
                         tree.Add(to);
                         treeFound = true;
                         break;
                     }
                     else if (toInTree)
                     {
-                        minimumSpanningTree.Add(lightestEdge);
+                        minimumSpanningTree.Add(vertexEdgePair.Item2);
                         tree.Add(from);
                         treeFound = true;
                         break;
@@ -282,12 +284,14 @@ namespace RegionalTimetableApp.Graph
                 }
                 if (!treeFound)
                 {
-                    minimumSpanningTree.Add(lightestEdge);
+                    minimumSpanningTree.Add(vertexEdgePair.Item2);
                     // create new tree
                     List<T> tree = new List<T>();
                     tree.Add(from);
                     tree.Add(to);
                 }
+
+                edgeIndex++;
             }
 
             return minimumSpanningTree;
