@@ -176,24 +176,23 @@ namespace RegionalTimetableApp.Graph
 
             while (minimumSpanningTree.Count < vertices.Count - 1)
             {
-                // make a list of all reachable edges, which are not already in the tree
-                // and which lead to a unvisited vertex
-                List<ListEdge<T>> reachableEdges = new List<ListEdge<T>>();
+                // Find the lightest edge we are connected to.
+                int lightestWeight = int.MaxValue;
+                ListEdge<T> lightestEdge = graph[0][0];
                 foreach (var vertex in visitedVertices)
                 {
                     int vertexIndex = vertices.IndexOf(vertex);
                     foreach (var edge in graph[vertexIndex])
                     {
-                        if (!minimumSpanningTree.Contains(edge) && !visitedVertices.Contains(edge.To))
+                        if (!visitedVertices.Contains(edge.To)
+                            && edge.Weight < lightestWeight)
                         {
-                            reachableEdges.Add(edge);
+                            lightestWeight = edge.Weight;
+                            lightestEdge = edge;
                         }
                     }
                 }
-                // sort the list
-                var sortedEdges = reachableEdges.OrderBy<ListEdge<T>, int>(edge => edge.Weight);
-                // pick the edge with the lowest weight
-                var lightestEdge = sortedEdges.First();
+
                 // add it to the minimum spanning tree
                 minimumSpanningTree.Add(lightestEdge);
                 visitedVertices.Add(lightestEdge.To);
