@@ -23,13 +23,13 @@ namespace RegionalTimetableApp
 
             //TestLexer();
 
-            TestParser();
+            //TestParser();
 
             //TestItAll();
 
             //Console.WriteLine("Kruskal");
 
-            //TestMatrixGraphKruskal();
+            TestMatrixGraphKruskal();
 
             //Console.WriteLine("Prim");
 

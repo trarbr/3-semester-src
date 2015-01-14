@@ -136,33 +136,37 @@ namespace RegionalTimetableApp.Graph
         {
             // This is a homecooked version - try making an "official" one with union-set datastructure
             List<Tuple<int, string, string>> minimumSpanningTree = new List<Tuple<int, string, string>>();
+            List<Tuple<int, string, string>> uniqueEdges = new List<Tuple<int, string, string>>();
             List<Tuple<int, string, string>> allEdges = new List<Tuple<int, string, string>>();
 
             // Create a sorted list of all edges
-            // NOTE: Instead of using a listContainsEdge function
-            // you can use two lists, one called allEdges and one called uniqueEdges
-            // and then add both [weight, i, j] and [weight, j, i] to allEdges but only one to
-            // uniqueEdges
             for (int i = 0; i < cities.Length; i++)
             {
                 for (int j = 0; j < cities.Length; j++)
                 {
                     int currentWeight = adjencyMatrix[i, j];
-                    var currentEdge = new Tuple<int, string, string>(currentWeight, cities[i], cities[j]);
                     // if edge exists (not -1) and it has not been added
-                    if (currentWeight != -1 && !listContainsEdge(allEdges, currentEdge))
+                    if (currentWeight > -1)
                     {
-                        allEdges.Add(currentEdge);
+                        var currentEdge = new Tuple<int, string, string>(currentWeight, cities[i], cities[j]);
+                        var reverseEdge = new Tuple<int, string, string>(currentWeight, cities[i], cities[j]);
+                        if (!allEdges.Contains(currentEdge))
+                        {
+                            uniqueEdges.Add(currentEdge);
+                            allEdges.Add(currentEdge);
+                            allEdges.Add(reverseEdge);
+                        }
+
                     }
                 }
             }
-            allEdges.Sort( (a, b) => a.Item1.CompareTo(b.Item1) );
+            uniqueEdges.Sort( (a, b) => a.Item1.CompareTo(b.Item1) );
 
             List<List<string>> trees = new List<List<string>>();
             int k = 0;
-            while (k < allEdges.Count && minimumSpanningTree.Count < (cities.Length - 1))
+            while (k < uniqueEdges.Count && minimumSpanningTree.Count < (cities.Length - 1))
             {
-                var smallestEdge = allEdges[k];
+                var smallestEdge = uniqueEdges[k];
 
                 bool treeFound = false;
                 foreach (var tree in trees)
